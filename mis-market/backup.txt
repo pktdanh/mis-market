@@ -1,0 +1,163 @@
+import React, {useState } from 'react'
+import { Link } from 'react-router-dom'
+import styled from "styled-components";
+import ImgSlide1 from '../assets/xslide-01.jpg.pagespeed.ic.XotvXKn0Mi.webp'
+import ImgSlide2 from '../assets/xslide-02.jpg.pagespeed.ic.__MQeyG5T4.webp'
+import ImgSlide3 from '../assets/xslide-03.jpg.pagespeed.ic.tP-L47NU9M.webp'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
+
+const Container = styled.div`
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+`;
+
+const ImageSilder = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Slide = styled.div`
+  width: 100%;
+  height:calc(calc(100vw / 1930) * 920);
+  background-image: url(${props => props.image});
+  background-size: cover;
+`;
+Slide.defaultProps = {
+  image: "",
+}
+
+const GroupSlide = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+`;
+
+const ImageTag = styled.div`
+  position: absolute;
+  width: 400px;
+  height: 200px;
+  margin-left: 100px;
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 120px;
+  }
+  @media (max-width: 425px) {
+    width: 120px;
+    height: 80px;
+  }
+`;
+
+const ImageTagCollection = styled.div`
+  font-size: 28px;
+  color: #333;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media (max-width: 425px) {
+    font-size: 10px;
+  }
+`;
+
+const ImageTagSeason = styled.div`
+  font-size: 60px;
+  text-transform: uppercase;
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
+  @media (max-width: 425px) {
+    font-size: 16px;
+  }
+`;
+
+const ImageTagButton = styled.div`
+  width: 140px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  border: 0;
+  background-color: rgb(99,113,198);
+  color: #fff;
+  font-size: 16px;
+  border-radius: 1em;
+  padding-top: 7px;
+  cursor: pointer;
+  outline: none;
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 20px;
+    font-size: 10px;
+    padding-top: 2px;
+  }
+`;
+
+const Homepage = (props) => {
+  const [idSlide, setIdSlide] = useState(1);
+  return (
+    <Container>
+      <ImageSilder>
+      <i className="fas fa-chevron-left" onClick={()=>{
+        let s1 = document.getElementById("slide-img-1");
+        let s2 = document.getElementById("slide-img-2");
+        let s3 = document.getElementById("slide-img-3");
+        console.log(idSlide)
+        if(idSlide == 1){
+          setIdSlide(3);
+          s1.classList.add("hide");
+          s3.classList.remove("hide");
+        } else if(idSlide == 2){
+          setIdSlide(1);
+          s2.classList.add("hide");
+          s1.classList.remove("hide");
+        } else if(idSlide == 3){
+          setIdSlide(2);
+          s3.classList.add("hide");
+          s2.classList.remove("hide");
+        }
+      }} 
+      style={{position: 'absolute', fontSize: '5em', cursor: 'pointer', color: '#656565', opacity: '0.5', zIndex: '10'}}></i>
+        <GroupSlide>
+        <Slide id="slide-img-1" image={ImgSlide1} >
+        </Slide>
+        <Slide id="slide-img-2" image={ImgSlide2} className="hide">
+        </Slide>
+        <Slide id="slide-img-3" image={ImgSlide3} className="hide">
+        </Slide>
+        </GroupSlide>
+        {/* có 1 cách khác là cho 3 ảnh absolute lên nhau rồi opacity 0 từng thằng sẽ có hiệu ứng mờ dần*/}
+        <ImageTag>
+          <ImageTagCollection>Collection 2021</ImageTagCollection>
+          <ImageTagSeason>NEW SEASON</ImageTagSeason>
+          <ImageTagButton>SHOP NOW</ImageTagButton>
+        </ImageTag>
+        <i className="fas fa-chevron-right" onClick={()=>{
+          let s1 = document.getElementById("slide-img-1");
+          let s2 = document.getElementById("slide-img-2");
+          let s3 = document.getElementById("slide-img-3");
+          console.log(idSlide)
+          if(idSlide == 1){
+            setIdSlide(2);
+            s1.classList.add("hide");
+            s2.classList.remove("hide");
+          } else if(idSlide == 2){
+            setIdSlide(3);
+            s2.classList.add("hide");
+            s3.classList.remove("hide");
+          } else if(idSlide == 3){
+            setIdSlide(1);
+            s3.classList.add("hide");
+            s1.classList.remove("hide");
+          }
+        }} 
+        style={{position: 'absolute', fontSize: '5em', cursor: 'pointer', color: '#656565', opacity: '0.5', right: '0'}}></i>
+      </ImageSilder>
+    </Container>
+  )
+}
+
+export default Homepage;
