@@ -47,3 +47,11 @@
   background-color: #fff !important;
   border: 1px solid #cdcdcd;
 }
+
+.changeColor > a{
+  color: #000 !important;
+}
+
+.changeColorToBlack {
+  color: #000 !important;
+}

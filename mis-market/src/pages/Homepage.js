@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
-import ImgSlide1 from '../assets/xslide-01.jpg.pagespeed.ic.XotvXKn0Mi.webp'
-import ImgSlide2 from '../assets/xslide-02.jpg.pagespeed.ic.__MQeyG5T4.webp'
-import ImgSlide3 from '../assets/xslide-03.jpg.pagespeed.ic.tP-L47NU9M.webp'
-import Banner1 from '../assets/banner1.webp'
+import ImgSlide1 from '../assets/hp3.jpg'
+import ImgSlide2 from '../assets/hp2.jpg'
+import ImgSlide3 from '../assets/hp1.jpg'
+import Banner1 from '../assets/pho.png'
 import Banner2 from '../assets/banner2.webp'
 import Banner3 from '../assets/banner3.webp'
-import Product from '../components/Product';
+import Product from '../components/Products';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
@@ -74,7 +74,7 @@ const ImageTag = styled.div`
 
 const ImageTagCollection = styled.div`
   font-size: 28px;
-  color: #333;
+  color: #f1f1f1;
   @media (max-width: 768px) {
     font-size: 14px;
   }
@@ -86,6 +86,7 @@ const ImageTagCollection = styled.div`
 const ImageTagSeason = styled.div`
   font-size: 60px;
   text-transform: uppercase;
+  color: #f1f1f1;
   @media (max-width: 768px) {
     font-size: 30px;
   }
@@ -121,24 +122,24 @@ const ImageTagButton = styled.div`
 `;
 // End slider
 const BannerButton = styled.div`
+  position: absolute;
   width: fit-content;
   height: 20px;
   font-size: 1em;
   border-bottom: 2px solid #fff;
-  margin-left: 28px;
-  margin-top: 100px;
-  margin-bottom: 5px;
+  bottom: 40px;
+  left: 28px;
   line-height: 20px;
   text-transform: uppercase;
-  display: none;;
+  display: none;
 `;
 
 const Banner = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 400px);
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   height: auto;
   margin-top: 30px;
   @media (max-width: 1024px) {
@@ -155,7 +156,7 @@ const BannerItem = styled.div`
   margin: 20px;
   background-image: url(${props => props.image});
   background-size: cover;
-  position: relative;;
+  position: relative;
 `;
 BannerItem.defaultProps = {
   image: "",
@@ -197,7 +198,9 @@ const BannerTag = styled.div`
   font-size: 0.8em;
   margin-left: 30px;
 `;
-
+const WrapProduct = styled.div`
+  width: 1200px;
+`
 // End banner
 
 
@@ -229,14 +232,29 @@ const Homepage = (props) => {
   }, [])
   useEffect(() => {
     let header = document.getElementById('header')
-    document.onscroll = () => {
+    let center = document.getElementById('center')
+    let brandNameRight = document.getElementById('brandNameRight')
+    let shoppingIcon = document.getElementById('shopping-icon')
+    const handleScroll = () =>{
       const y = window.scrollY;
       if (y > 100) {
+
         header.classList.add('changeHeaderColor');
+        center.classList.add('changeColor');
+        brandNameRight.classList.add('changeColorToBlack');
+        shoppingIcon.classList.add('changeColorToBlack');
       }
       else {
         header.classList.remove('changeHeaderColor');
+        center.classList.remove('changeColor');
+        brandNameRight.classList.remove('changeColorToBlack');
+        shoppingIcon.classList.remove('changeColorToBlack');
       }
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll',handleScroll)
+      
     }
   }, []);
 
@@ -302,30 +320,39 @@ const Homepage = (props) => {
       </ImageSilder>
       <Banner>
         <BannerItem image={Banner1}>
-          <BannerWrapper>
-            <BannerTitle>Women</BannerTitle>
+          <BannerWrapper onClick={() => window.location = "/category/nsp001"}>
+            <BannerTitle>Thực phẩm tươi sống</BannerTitle>
             <BannerTag>Spring 2021</BannerTag>
             <BannerButton>SHOP NOW</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem image={Banner2}>
+        <BannerItem onClick={() => window.location = "/category/nsp002"} image={Banner1}>
           <BannerWrapper>
-            <BannerTitle>Men</BannerTitle>
+            <BannerTitle>Công nghệ phẩm</BannerTitle>
             <BannerTag>Spring 2021</BannerTag>
             <BannerButton>SHOP NOW</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem image={Banner3}>
+        <BannerItem onClick={() => window.location = "/category/nsp003"} image={Banner2}>
           <BannerWrapper>
-            <BannerTitle>Accesories</BannerTitle>
+            <BannerTitle>Lương thực</BannerTitle>
+            <BannerTag>Spring 2021</BannerTag>
+            <BannerButton>SHOP NOW</BannerButton>
+          </BannerWrapper>
+        </BannerItem>
+        <BannerItem onClick={() => window.location = "/category/nsp004"} image={Banner3}>
+          <BannerWrapper>
+            <BannerTitle>Nhu yếu phẩm cần thiết</BannerTitle>
             <BannerTag>New Trend</BannerTag>
             <BannerButton>SHOP NOW</BannerButton>
           </BannerWrapper>
         </BannerItem>
       </Banner>
-      
-        <Product>
+      <WrapProduct>
+        <Product typeQuery='all'>
         </Product>
+      </WrapProduct>
+        
       
     </Container>
   )

@@ -33,19 +33,7 @@ const Information = styled.div`
 const Heading = styled.h3`
 
 `;
-const Name = styled.div`
-    display: flex;
-    padding: 10px 10px 10px 90px;
-`;
-const Sex = styled.div`
-    display: flex;
-    padding: 10px 10px 10px 90px;
-`;
-const Phone = styled.div`
-    display: flex;
-    padding: 10px 10px 10px 90px;
-`;
-const Birthday = styled.div`
+const FormGroup = styled.div`
     display: flex;
     padding: 10px 10px 10px 90px;
 `;
@@ -116,26 +104,26 @@ const AboutMe = () => {
             </Avatar>
             <Information>
                 <Heading>Your Information</Heading>
-                <Name>
+                <FormGroup>
                     <Label htmlFor="name">Name</Label>
                     <Input type="text" placeholder={data.name_Customer} name="name" onChange={() => {submit == false ? setSubmit(!submit) : setSubmit(true)}}></Input>
-                </Name>
-                <Sex>
+                </FormGroup>
+                <FormGroup>
                     <Label htmlFor="sex">Sex</Label>
                     <Input type="text" placeholder={data.sex_Customer} name="sex" onChange={() => {submit == false ? setSubmit(!submit) : setSubmit(true)}}></Input>
-                </Sex>
-                <Phone>
+                </FormGroup>
+                <FormGroup>
                     <Label htmlFor="phone">Phone</Label>
                     <Input type="number" placeholder={data.phone_Customer} name="phone" onChange={() => {submit == false ? setSubmit(!submit) : setSubmit(true)}}></Input>
-                </Phone>
-                <Name>
+                </FormGroup>
+                <FormGroup>
                     <Label htmlFor="address">Address</Label>
                     <Input type="text" placeholder={data.address_Customer} name="address" onChange={() => {submit == false ? setSubmit(!submit) : setSubmit(true)}}></Input>
-                </Name>
-                <Birthday>
+                </FormGroup>
+                <FormGroup>
                     <Label htmlFor="birthday">Birthday</Label>
                     <Input type="text" placeholder={data.birth_Customer} name="birthday" onChange={() => {submit == false ? setSubmit(!submit) : setSubmit(true)}}></Input>
-                </Birthday>
+                </FormGroup>
             </Information>
         </Container>
         {submit && <Submit onClick={()=> submitFunc()}>Submit</Submit>}

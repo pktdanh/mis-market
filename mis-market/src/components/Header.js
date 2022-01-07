@@ -48,6 +48,7 @@ const BrandNameLeft = styled.div`
   text-align: center;
   font-size: 20px;
   font-weight: bold;
+  color: #44bbbb;
   border-bottom: 2px solid transparent;
   &:hover{
       border-bottom: 2px solid transparent !important;
@@ -105,14 +106,14 @@ const MenuItem = styled.div`
 // change style Link
 const StyledLink = styled(Link)`
     text-decoration: none;
-    color: #000;
+    color: #fff;
     border-bottom: 2px solid transparent;
     &:hover{
-      border-bottom: 2px solid rgb(99,113,198);
+      border-bottom: 2px solid #44bbbb;
+      color: #44bbbb;
     }
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
-        color: #000;
     }
 `;
 
@@ -136,13 +137,13 @@ export class Header extends Component {
           <StyledLink to="/">
             <Left>
               <BrandNameLeft>MIS</BrandNameLeft>
-              <BrandNameRight>STORE</BrandNameRight>
+              <BrandNameRight id="brandNameRight">STORE</BrandNameRight>
             </Left>
           </StyledLink>
-          <Center>
-            <StyledLink to="/">Home</StyledLink>
-            <StyledLink to="/collections">Shop</StyledLink>
-            <StyledLink to="/myorder">My Order</StyledLink>
+          <Center id="center">
+            <StyledLink to="/">Trang chủ</StyledLink>
+            <StyledLink to="/collections">Sản phẩm</StyledLink>
+            <StyledLink to="/myorder">Đơn hàng</StyledLink>
             {/* <StyledLink to="/">Blog</StyledLink> */}
             {/* <StyledLink to="/about">About</StyledLink> */}
             <StyledLink to="/aboutme">{localStorage.getItem('user') ? localStorage.getItem('user') : "ME"}</StyledLink>
@@ -154,7 +155,7 @@ export class Header extends Component {
             <MenuItem>
               <Link to="/carts">
                 <Badge badgeContent={this.props.numberCart} color="primary">
-                  <ShoppingCartIcon style={{color: "#000"}}></ShoppingCartIcon>
+                  <ShoppingCartIcon id="shopping-icon" style={{color: "#fff"}}></ShoppingCartIcon>
                 </Badge>
               </Link>
             </MenuItem>

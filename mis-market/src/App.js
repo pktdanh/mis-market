@@ -9,11 +9,12 @@ import {
  } from "react-router-dom";
 import Cart from './components/Cart';
 import Header from './components/Header';
-import Product from './components/Product';
+import Product from './components/Products';
 import Homepage from './pages/Homepage'
 import Footer from './components/Footter';
 import ItemProduct from './components/ItemProduct';
 import About from './components/About';
+import Category from './pages/Category';
 import AboutMe from './pages/AboutMe';
 import MyOrder from './pages/MyOrder';
 import OrderDetail from './pages/OrderDetail';
@@ -29,6 +30,7 @@ function App() {
             <Switch>
                <Route path="/" exact component={Homepage} />
                <Route path="/collections" exact component={Product}/>
+               <Route path="/category/:id" exact component={Category}/>
                <Route path="/carts" exact component={Cart} />
                <Route path="/product/:id" exact component={ItemProduct}/>
                <Route path="/about" exact component={About} />
