@@ -18,6 +18,7 @@ namespace MIS_Project.Models
         public string Email { get; set; }
         public string DiaChi { get; set; }
         public string MaPhuongXa { get; set; }
+        public DiaChi DiaChiChiTiet { get; set; }
 
 
         public List<Shipper> getAll()
@@ -26,7 +27,7 @@ namespace MIS_Project.Models
             SqlDataReader dr;
             SqlConnection con = new SqlConnection();
             con.ConnectionString = MIS_Project.Properties.Resources.ConnectionString;
-            List<Shipper> Stores = new List<Shipper>();
+            List<Shipper> Shippers = new List<Shipper>();
             try
             {
                 con.Open();
@@ -35,7 +36,7 @@ namespace MIS_Project.Models
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
-                    Stores.Add(new Shipper()
+                    Shippers.Add(new Shipper()
                     {
                         AccountID = dr["AccountID"].ToString(),
                         HoTen = dr["HoTen"].ToString(),
@@ -46,7 +47,8 @@ namespace MIS_Project.Models
                         SDT = dr["SDT"].ToString(),
                         Email = dr["Email"].ToString(),
                         DiaChi = dr["DiaChi"].ToString(),
-                        MaPhuongXa = dr["MaPhuongXa"].ToString()
+                        MaPhuongXa = dr["MaPhuongXa"].ToString(),
+                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString())
                     });
                 }
                 con.Close();
@@ -55,7 +57,46 @@ namespace MIS_Project.Models
             {
                 throw exc;
             }
-            return Stores;
+            return Shippers;
+        }
+
+        public List<Shipper> getOne(string accountID)
+        {
+            SqlCommand com = new SqlCommand();
+            SqlDataReader dr;
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = MIS_Project.Properties.Resources.ConnectionString;
+            List<Shipper> Shippers = new List<Shipper>();
+            try
+            {
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "SELECT * FROM Shipper WHERE AccountID = '" + accountID + "'";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    Shippers.Add(new Shipper()
+                    {
+                        AccountID = dr["AccountID"].ToString(),
+                        HoTen = dr["HoTen"].ToString(),
+                        CMND = dr["CMND"].ToString(),
+                        NgaySinh = dr["NgaySinh"].ToString(),
+                        BienSo = dr["BienSo"].ToString(),
+                        MaBangLai = dr["MaBangLai"].ToString(),
+                        SDT = dr["SDT"].ToString(),
+                        Email = dr["Email"].ToString(),
+                        DiaChi = dr["DiaChi"].ToString(),
+                        MaPhuongXa = dr["MaPhuongXa"].ToString(),
+                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString())
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            return Shippers;
         }
     }
 }

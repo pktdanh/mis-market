@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MIS_Project.Controllers
 {
-    [Route("api/giohang")]
+    [Route("api/cart")]
     [ApiController]
     public class GioHangController : Controller
     {

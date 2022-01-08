@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MIS_Project.Controllers
 {
-    [Route("api/hoadon")]
+    [Route("api/invoice")]
     public class HoaDonController : Controller
     {
         [HttpGet("all")]

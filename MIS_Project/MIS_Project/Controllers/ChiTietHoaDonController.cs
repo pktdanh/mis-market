@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MIS_Project.Controllers
 {
-    [Route("api/chitiethoadon")]
+    [Route("api/detailinvoice")]
     [ApiController]
     public class ChiTietHoaDonController : Controller
     {

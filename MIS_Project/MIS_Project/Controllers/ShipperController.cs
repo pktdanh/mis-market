@@ -19,5 +19,14 @@ namespace MIS_Project.Controllers
             shippers = shipper.getAll();
             return shippers;
         }
+
+        [HttpPost("one")]
+        public List<Shipper> One([FromBody]Shipper data)
+        {
+            Shipper shipper = new Shipper();
+            List<Shipper> shippers = new List<Shipper>();
+            shippers = shipper.getOne(data.AccountID);
+            return shippers;
+        }
     }
 }

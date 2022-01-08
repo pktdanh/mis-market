@@ -7,7 +7,7 @@ using MIS_Project.Models;
 
 namespace MIS_Project.Controllers
 {
-    [Route("api/nhanvien")]
+    [Route("api/employee")]
     [ApiController]
     public class NhanVienController : Controller
     {

@@ -6,39 +6,41 @@ using System.Threading.Tasks;
 
 namespace MIS_Project.Models
 {
-    public class DiaChiKhachHang
+    public class KhachHang
     {
-        public string MaDC { get; set; }
         public string AccountID { get; set; }
-        public string DiaChi { get; set; }
-        public string IsDefault { get; set; }
-        public string MaPhuongXa { get; set; }
-        public DiaChi DiaChiChiTiet { get; set; }
-
-
-        public List<DiaChiKhachHang> getAll()
+        public string HoTen { get; set; }
+        public string CMND { get; set; }
+        public string NgaySinh { get; set; }
+        public string GioiTinh { get; set; }
+        public string SDT { get; set; }
+        public string Email { get; set; }
+        
+        public List<KhachHang> getAll()
         {
+            string DiaChiChiTiet = "";
             SqlCommand com = new SqlCommand();
             SqlDataReader dr;
             SqlConnection con = new SqlConnection();
             con.ConnectionString = MIS_Project.Properties.Resources.ConnectionString;
-            List<DiaChiKhachHang> addresses = new List<DiaChiKhachHang>();
+            List<KhachHang> customers = new List<KhachHang>();
             try
             {
                 con.Open();
                 com.Connection = con;
-                com.CommandText = "SELECT * FROM DiaChiKhachHang";
+                com.CommandText = "";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
-                    addresses.Add(new DiaChiKhachHang()
+                    customers.Add(new KhachHang()
                     {
-                        MaDC = dr["MaDC"].ToString(),
                         AccountID = dr["AccountID"].ToString(),
-                        DiaChi = dr["DiaChi"].ToString(),
-                        IsDefault = dr["IsDefault"].ToString(),
-                        MaPhuongXa = dr["MaPhuongXa"].ToString(),
-                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString())
+                        HoTen = dr["HoTen"].ToString(),
+                        CMND = dr["CMND"].ToString(),
+                        NgaySinh = dr["NgaySinh"].ToString(),
+                        GioiTinh = dr["GioiTinh"].ToString(),
+                        SDT = dr["SDT"].ToString(),
+                        Email = dr["Email"].ToString()
                     });
                 }
                 con.Close();
@@ -47,7 +49,7 @@ namespace MIS_Project.Models
             {
                 throw exc;
             }
-            return addresses;
+            return customers;
         }
     }
 }

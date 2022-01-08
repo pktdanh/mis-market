@@ -7,7 +7,7 @@ using MIS_Project.Models;
 
 namespace MIS_Project.Controllers
 {
-    [Route("api/tinhthanhpho")]
+    [Route("api/province")]
     public class TinhThanhPhoController : Controller
     {
         [HttpGet("all")]
