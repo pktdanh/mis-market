@@ -19,6 +19,7 @@ namespace MIS_Project.Models
         public string DiaChi { get; set; }
         public string MaPhuongXa { get; set; }
         public DiaChi DiaChiChiTiet { get; set; }
+        public TaiKhoan TaiKhoan { get; set; }
 
 
         public List<Shipper> getAll()
@@ -48,7 +49,8 @@ namespace MIS_Project.Models
                         Email = dr["Email"].ToString(),
                         DiaChi = dr["DiaChi"].ToString(),
                         MaPhuongXa = dr["MaPhuongXa"].ToString(),
-                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString())
+                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString()),
+                        TaiKhoan = new TaiKhoan(dr["AccountID"].ToString())
                     });
                 }
                 con.Close();
@@ -87,7 +89,8 @@ namespace MIS_Project.Models
                         Email = dr["Email"].ToString(),
                         DiaChi = dr["DiaChi"].ToString(),
                         MaPhuongXa = dr["MaPhuongXa"].ToString(),
-                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString())
+                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString()),
+                        TaiKhoan = new TaiKhoan(dr["AccountID"].ToString())
                     });
                 }
                 con.Close();

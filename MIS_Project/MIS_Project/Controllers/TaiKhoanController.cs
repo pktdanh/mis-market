@@ -32,5 +32,13 @@ namespace MIS_Project.Controllers
             account = account.checkLogin(account);
             return account;
         }
+
+        [HttpPost("register/shipper")]
+        public TaiKhoan RegisterShipper([FromBody]Shipper data)
+        {
+            TaiKhoan account = new TaiKhoan();
+            account = account.registerShipper(data);
+            return account;
+        }
     }
 }
