@@ -1,0 +1,40 @@
+** API login
+- Body:
++ username
++ password 
+- Return:
++ 
+
+** API register
+- Body:
++ fullname
++ CMND
++ gioi tinh
++ ngay sinh
++ email
++ dia chi
++ so Nha 
++ so Dien Thoai
++ ma bang Lai Xe
++ bien so xe
++ username
++ password
+- return: true
+
+** API list invoice:
+- Body
++ accountID
+- Return: Danh sach cac don hang phu hop voi shipper
+Moi don hang bao gom tat ca thong tin co the
+
+** API Thong tin ca nhan;
+- Body
++ accountID
+- Return: Tat ca thong tin ca nhan
+
+** API Cac don hang da giao:
+- Body
++ accountID
+- Return: Danh scah cac don hang da giao voi tai khoan nay 
+Moi don hang bao gom tat ca thong tin co the 
+
