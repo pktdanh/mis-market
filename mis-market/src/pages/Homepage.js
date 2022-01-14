@@ -4,9 +4,10 @@ import styled from "styled-components";
 import ImgSlide1 from '../assets/hp3.jpg'
 import ImgSlide2 from '../assets/hp2.jpg'
 import ImgSlide3 from '../assets/hp1.jpg'
-import Banner1 from '../assets/pho.png'
-import Banner2 from '../assets/banner2.webp'
-import Banner3 from '../assets/banner3.webp'
+import Banner1 from '../assets/h1.png'
+import Banner2 from '../assets/h2.png'
+import Banner3 from '../assets/h3.png'
+import Banner4 from '../assets/h4.png'
 import Product from '../components/Products';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchIcon from '@mui/icons-material/Search';
@@ -49,7 +50,7 @@ const GroupSlide = styled.div`
 
 const ImageTag = styled.div`
   position: absolute;
-  width: 400px;
+  width: 800px;
   height: 200px;
   margin-left: 100px;
   /* animation: shimmy 3s infinite;
@@ -109,6 +110,8 @@ const ImageTagButton = styled.div`
   padding-top: 7px;
   cursor: pointer;
   outline: none;
+  -webkit-box-shadow: -4px 5px 10px 1px rgba(0,0,0,0.69); 
+box-shadow: -4px 5px 10px 1px rgba(0,0,0,0.69);
   &:hover{
     background-color: #000;
     transition:0.4s ease-out;
@@ -153,6 +156,7 @@ const Banner = styled.div`
 const BannerItem = styled.div`
   height: 250px;
   border: 1px solid #cdcdcd;
+  border-radius: 4px;
   margin: 20px;
   background-image: url(${props => props.image});
   background-size: cover;
@@ -235,6 +239,7 @@ const Homepage = (props) => {
     let center = document.getElementById('center')
     let brandNameRight = document.getElementById('brandNameRight')
     let shoppingIcon = document.getElementById('shopping-icon')
+    let menuItem = document.querySelectorAll('.menu-item')
     const handleScroll = () =>{
       const y = window.scrollY;
       if (y > 100) {
@@ -243,12 +248,19 @@ const Homepage = (props) => {
         center.classList.add('changeColor');
         brandNameRight.classList.add('changeColorToBlack');
         shoppingIcon.classList.add('changeColorToBlack');
+        menuItem.forEach(function(item) {
+          item.classList.add('changeColorToBlack')
+        })
       }
       else {
         header.classList.remove('changeHeaderColor');
         center.classList.remove('changeColor');
         brandNameRight.classList.remove('changeColorToBlack');
         shoppingIcon.classList.remove('changeColorToBlack');
+        menuItem.forEach(function(item) {
+          item.classList.remove('changeColorToBlack')
+        })
+
       }
     }
     window.addEventListener('scroll', handleScroll);
@@ -298,9 +310,9 @@ const Homepage = (props) => {
         </GroupSlide>
         {/* có 1 cách khác là cho 3 ảnh absolute lên nhau rồi opacity 0 từng thằng sẽ có hiệu ứng mờ dần*/}
         <ImageTag>
-          <ImageTagCollection>Collection 2021</ImageTagCollection>
-          <ImageTagSeason>NEW SEASON</ImageTagSeason>
-          <ImageTagButton>SHOP NOW</ImageTagButton>
+          <ImageTagCollection>ĐI CHỢ THUÊ</ImageTagCollection>
+          <ImageTagSeason>CHUNG TAY CÙNG CHỐNG DỊCH COVID-19</ImageTagSeason>
+          <ImageTagButton>MUA NGAY</ImageTagButton>
         </ImageTag>
         <i className="fas fa-chevron-right" onClick={() => {
           let s1 = document.getElementById("slide-img-1");
@@ -322,29 +334,29 @@ const Homepage = (props) => {
         <BannerItem image={Banner1}>
           <BannerWrapper onClick={() => window.location = "/category/nsp001"}>
             <BannerTitle>Thực phẩm tươi sống</BannerTitle>
-            <BannerTag>Spring 2021</BannerTag>
-            <BannerButton>SHOP NOW</BannerButton>
+            <BannerTag></BannerTag>
+            <BannerButton>MUA NGAY</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem onClick={() => window.location = "/category/nsp002"} image={Banner1}>
+        <BannerItem onClick={() => window.location = "/category/nsp002"} image={Banner2}>
           <BannerWrapper>
             <BannerTitle>Công nghệ phẩm</BannerTitle>
-            <BannerTag>Spring 2021</BannerTag>
-            <BannerButton>SHOP NOW</BannerButton>
+            <BannerTag></BannerTag>
+            <BannerButton>MUA NGAY</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem onClick={() => window.location = "/category/nsp003"} image={Banner2}>
+        <BannerItem onClick={() => window.location = "/category/nsp003"} image={Banner3}>
           <BannerWrapper>
             <BannerTitle>Lương thực</BannerTitle>
-            <BannerTag>Spring 2021</BannerTag>
-            <BannerButton>SHOP NOW</BannerButton>
+            <BannerTag></BannerTag>
+            <BannerButton>MUA NGAY</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem onClick={() => window.location = "/category/nsp004"} image={Banner3}>
+        <BannerItem onClick={() => window.location = "/category/nsp004"} image={Banner4}>
           <BannerWrapper>
             <BannerTitle>Nhu yếu phẩm cần thiết</BannerTitle>
-            <BannerTag>New Trend</BannerTag>
-            <BannerButton>SHOP NOW</BannerButton>
+            <BannerTag></BannerTag>
+            <BannerButton>MUA NGAY</BannerButton>
           </BannerWrapper>
         </BannerItem>
       </Banner>

@@ -26,7 +26,7 @@ const Login = () => {
       data: values
     }).then(function (res) {
       // console.log(res.data == "") // login failed
-      if(res.data == ""){
+      if(res.data == ""){values
         return;
       } else {
         console.log(res.data)

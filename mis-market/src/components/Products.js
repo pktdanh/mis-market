@@ -326,7 +326,7 @@ export const Products = (props) => {
     }).catch(err => {
       console.log(err);
     }).then(res => {
-      console.log('res.data: ',res.data)
+      console.log('data:',res.data)
       setProducts(res.data)
       setproducts(res.data)
     });
@@ -340,7 +340,7 @@ export const Products = (props) => {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
-          <ProductWrapperTitle>PRODUCT OVERVIEW</ProductWrapperTitle>
+          <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
           <Filter></Filter>
           <Container>
             {
@@ -357,11 +357,11 @@ export const Products = (props) => {
                   </StyledLink>
 
                   <StyledLink style={{marginLeft: "30px"}} to={"/store/" + item.iD_Store}>
-                    <p>Cửa hàng: <Highlight>{item.account_CH}</Highlight></p>
+                    <p>Cửa hàng: <Highlight style={{marginLeft: "-8px"}}>{item.tenCH}</Highlight></p>
                   </StyledLink>
 
                   <ProducAddtocart onClick={() => props.AddCart(item)}>
-                      Add To Cart
+                      Thêm vào giỏ hàng
                     </ProducAddtocart>
                 </WrapItem>
               ))

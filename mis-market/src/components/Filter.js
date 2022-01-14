@@ -71,7 +71,7 @@ const ProductSearchButton = styled.div`
 // OPTION FILTER
 const OptionFilter = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
   padding: 0px 50px;
   margin-top: 5px;
@@ -146,60 +146,46 @@ const Filter = (props) => {
                     option.style.maxHeight = "0";
                     // option.style.transitionTimingFunction = "cubic-bezier(0.46, 0.14, 0.93, 0.76)"
                 } else {
-                    option.style.maxHeight = "1000px"
+                    option.style.maxHeight = "1000px";
                     // option.style.transitionTimingFunction ="cubic-bezier(0.18, 0.28, 0, 0.95)"
                 }
                 return setShowFilter(!showFilter)
                 }}>
                 <FilterListIcon></FilterListIcon>
-                Filter
+                Bộ lọc
                 </ProductFilterButton>
                 <ProductSearchButton>
                 <SearchIcon></SearchIcon>
-                Search
+                Tìm kiếm
                 </ProductSearchButton>
             </ProductFilterAndSearch>
             <SearchBar>
             <i class="fas fa-search"></i>
-            <SearchInput type="text" name="search" id="searchbar" placeholder='Search here...' />
+            <SearchInput type="text" name="search" id="searchbar" placeholder='Tìm kiếm...' />
           </SearchBar>
           <OptionFilter id="option-filter">
             <SortBy>
-              <div>Sort By</div>
+              <div>Sắp xếp theo</div>
               <ul>
-                <FilterLink><a href="#">Default</a></FilterLink>
-                <FilterLink><a href="#">Popularity</a></FilterLink>
-                <FilterLink><a href="#">Average Rating</a></FilterLink>
-                <FilterLink><a href="#">Newness</a></FilterLink>
-                <FilterLink><a href="#">Price: Low to High</a></FilterLink>
-                <FilterLink><a href="#">Price: High to Low</a></FilterLink>
+                <FilterLink><a href="#">Mặc định</a></FilterLink>
+                <FilterLink><a href="#">Phổ biến</a></FilterLink>
+                <FilterLink><a href="#">Đánh giá</a></FilterLink>
+                <FilterLink><a href="#">Mới nhâts</a></FilterLink>
+                <FilterLink><a href="#">Giá: Thấp đến Cao</a></FilterLink>
+                <FilterLink><a href="#">Giá: Cao đến Thấp</a></FilterLink>
               </ul>
             </SortBy>
             <Price>
-              <div>Price</div>
+              <div>Giá</div>
               <ul>
-                <FilterLink><a href="#">All</a></FilterLink>
-                <FilterLink><a href="#">$0.00 - $50.00</a></FilterLink>
-                <FilterLink><a href="#">$50.00 - $100.00</a></FilterLink>
-                <FilterLink><a href="#">$100.00 - $150.00</a></FilterLink>
-                <FilterLink><a href="#">$150.00 - $200.00</a></FilterLink>
-                <FilterLink><a href="#">$200.00+</a></FilterLink>
+                <FilterLink><a href="#">Tất cả</a></FilterLink>
+                <FilterLink><a href="#">1 000VND - 50 000VND</a></FilterLink>
+                <FilterLink><a href="#">50 000VND - 100 000VND</a></FilterLink>
+                <FilterLink><a href="#">100 000VND - 200 000VND</a></FilterLink>
+                <FilterLink><a href="#">200 000VND - 500 000VND</a></FilterLink>
+                <FilterLink><a href="#">500 000VND+</a></FilterLink>
               </ul>
             </Price>
-            <Color>
-              <div>Color</div>
-              <ul>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "black", marginRight: "10px" }}></i></span><a href="">Black</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "blue", marginRight: "10px" }}></i></span><a href="">Blue</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "grey", marginRight: "10px" }}></i></span><a href="">Grey</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "green", marginRight: "10px" }}></i></span><a href="">Green</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "bred", marginRight: "10px" }}></i></span><a href="">Red</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "white", marginRight: "10px" }}></i></span><a href="">White</a></FilterLink>
-              </ul>
-            </Color>
-            <Tags>
-              <div>Tags</div>
-            </Tags>
           </OptionFilter>
           <OptionSearch></OptionSearch>
 
