@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { actFetchProductsRequest, AddCart } from './actions'
 import { connect } from 'react-redux';
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import axios from 'axios';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom'
+import { FilterContext } from './Products';
 
 const ProductFilterAndSearch = styled.div`
   width: 100%;
@@ -92,10 +93,13 @@ const FilterLink = styled.li`
   color: #aaa;
   margin-top: 10px;
   font-size: 0.9rem;
-  & > a{
-    color: #aaa;
-  }
-  & a:hover{
+  cursor: pointer;
+  color: #aaa;
+  width: 250px;
+  padding: 10px;
+  border: 2px solid ${props => props.choosen ? "palevioletred" : "white"};
+  border-radius: 10px;
+  &:hover{
     color: #717fe0;
   }
 `;
@@ -136,7 +140,58 @@ const SearchInput = styled.input`
 `;
 
 const Filter = (props) => {
+    const context = useContext(FilterContext)
+    console.log(context)
+
+    let changeproductInFilter = (filterOrderBy, filterPrice) => {
+      let _products = context.products
+      
+      if(filterOrderBy == "default"){
+
+      } else if(filterOrderBy == "vote"){
+        _products.sort((a, b) => b.avgRating - a.avgRating);
+      } else if(filterOrderBy == "newest"){
+        _products.sort((a, b) => b.ngayDang - a.ngayDang);
+      } else if(filterOrderBy == "lowtohigh"){
+        _products.sort((a, b) => a.giaSP - b.giaSP);
+      } else if(filterOrderBy == "hightolow"){
+        _products.sort((a, b) => b.giaSP - a.giaSP);
+      }
+
+      if(filterPrice == "all"){
+  
+      } else if(filterPrice == "1"){
+        // 1000-50000
+        const result = _products.filter((item) => item.giaSP > 1000 && item.giaSP < 50000)
+        console.log("Result filter: ", result)
+    
+      } else if(filterPrice == "2"){
+        // 50000-100000
+        const result = _products.filter((item) => item.giaSP > 50000 && item.giaSP < 100000)
+        console.log("Result filter: ", result)
+    
+      } else if(filterPrice == "3"){
+        // 100000-200000
+    
+      } else if(filterPrice == "4"){
+        // 200000-500000
+    
+      } else if(filterPrice == "5"){
+        //  > 500000
+      }
+      console.log("P after filter: ", _products)
+      context.updateproducts(_products)
+    }
+
+    
+  
+    
+
+
+
     const [showFilter, setShowFilter] = useState(false);
+    const [orderBy, setOrderBy] = useState("default")
+    const [price, setPrice] = useState("all")
     return (
         <React.Fragment>
             <ProductFilterAndSearch>
@@ -160,33 +215,33 @@ const Filter = (props) => {
                 </ProductSearchButton>
             </ProductFilterAndSearch>
             <SearchBar>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
             <SearchInput type="text" name="search" id="searchbar" placeholder='Tìm kiếm...' />
           </SearchBar>
           <OptionFilter id="option-filter">
             <SortBy>
               <div>Sắp xếp theo</div>
               <ul>
-                <FilterLink><a href="#">Mặc định</a></FilterLink>
-                <FilterLink><a href="#">Phổ biến</a></FilterLink>
-                <FilterLink><a href="#">Đánh giá</a></FilterLink>
-                <FilterLink><a href="#">Mới nhâts</a></FilterLink>
-                <FilterLink><a href="#">Giá: Thấp đến Cao</a></FilterLink>
-                <FilterLink><a href="#">Giá: Cao đến Thấp</a></FilterLink>
+                <FilterLink choosen={ orderBy === "default" ? true : false} onClick={() => changeproductInFilter("default")}>Mặc định</FilterLink>
+                <FilterLink choosen={ orderBy === "popular" ? true : false} onClick={() => changeproductInFilter("popular")}>Phổ biến</FilterLink>
+                <FilterLink choosen={ orderBy === "vote" ? true : false} onClick={() => changeproductInFilter("vote")}>Đánh giá</FilterLink>
+                <FilterLink choosen={ orderBy === "newest" ? true : false} onClick={() => changeproductInFilter("newest")}>Mới nhất</FilterLink>
+                <FilterLink choosen={ orderBy === "lowtohigh" ? true : false} onClick={() => changeproductInFilter("lowtohigh")}>Giá: Thấp đến Cao</FilterLink>
+                <FilterLink choosen={ orderBy === "hightolow" ? true : false} onClick={() => changeproductInFilter("hightolow")}>Giá: Cao đến Thấp</FilterLink>
               </ul>
             </SortBy>
             <Price>
               <div>Giá</div>
               <ul>
-                <FilterLink><a href="#">Tất cả</a></FilterLink>
-                <FilterLink><a href="#">1 000VND - 50 000VND</a></FilterLink>
-                <FilterLink><a href="#">50 000VND - 100 000VND</a></FilterLink>
-                <FilterLink><a href="#">100 000VND - 200 000VND</a></FilterLink>
-                <FilterLink><a href="#">200 000VND - 500 000VND</a></FilterLink>
-                <FilterLink><a href="#">500 000VND+</a></FilterLink>
+                <FilterLink choosen={ price === "all" ? true : false} onClick={() => changeproductInFilter("all")}>Tất cả</FilterLink>
+                <FilterLink choosen={ price === "1" ? true : false} onClick={() => changeproductInFilter("1")}>1 000VND - 50 000VND</FilterLink>
+                <FilterLink choosen={ price === "2" ? true : false} onClick={() => changeproductInFilter("2")}>50 000VND - 100 000VND</FilterLink>
+                <FilterLink choosen={ price === "3" ? true : false} onClick={() => changeproductInFilter("3")}>100 000VND - 200 000VND</FilterLink>
+                <FilterLink choosen={ price === "4" ? true : false} onClick={() => changeproductInFilter("4")}>200 000VND - 500 000VND</FilterLink>
+                <FilterLink choosen={ price === "5" ? true : false} onClick={() => changeproductInFilter("5")}>500 000VND+</FilterLink>
               </ul>
             </Price>
-            <Color>
+            {/* <Color>
               <div>Color</div>
               <ul>
                 <FilterLink><span><i className="fas fa-circle" style={{ color: "black", marginRight: "10px" }}></i></span><a href="">Black</a></FilterLink>
@@ -199,7 +254,7 @@ const Filter = (props) => {
             </Color>
             <Tags>
               <div>Tags</div>
-            </Tags>
+            </Tags> */}
           </OptionFilter>
           <OptionSearch></OptionSearch>
 

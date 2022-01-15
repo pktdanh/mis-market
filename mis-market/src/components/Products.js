@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState, useCallback } from 'react'
 import { actFetchProductsRequest, AddCart } from './actions'
 import { connect } from 'react-redux';
 import styled from "styled-components";
@@ -285,10 +285,12 @@ const Highlight = styled.span`
 `;
 
 
+export const FilterContext = createContext();
+
 export const Products = (props) => {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // }, [])
   useEffect(() => {
     let header = document.getElementById('header')
     document.onscroll = () => {
@@ -302,11 +304,12 @@ export const Products = (props) => {
     }
   }, []);
   // eslint-disable-next-line no-useless-constructor
-  const [_products, setProducts] = useState([])
-  const [products, setproducts] = useState([])
+  const [_products, setProducts] = useState([]) // use this list to filter
+  const [products, setproducts] = useState([]) // use this list to get all product for other filter
   let API_URL 
   useEffect(() => {
-    // props.actFetchProductsRequest();  
+    // props.actFetchProductsRequest(); 
+    let isMounted = true;  
     let method = 'GET'
     if (props.typeQuery === 'all'){
       API_URL = 'https://localhost:44352/api/product/all';
@@ -328,9 +331,11 @@ export const Products = (props) => {
       console.log(err);
     }).then(res => {
       console.log('data:',res.data)
-      setProducts(res.data)
-      setproducts(res.data)
+      
+      if (isMounted) setProducts(res.data)
+      if (isMounted) setproducts(res.data)
     });
+    return () => { isMounted = false };
   }, [])
   
 
@@ -339,6 +344,10 @@ export const Products = (props) => {
   if (_products.length > 0) {
     
     return (
+      <FilterContext.Provider value={{
+        products: _products,
+        updateproducts: (lp) => {console.log("f: ", lp); console.log("p: ", _products) ;return setProducts(lp)}
+        }}>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
           <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
@@ -373,6 +382,7 @@ export const Products = (props) => {
 
         </ProductWrapper>
       </div>
+      </FilterContext.Provider>
     )
   }
   return (
