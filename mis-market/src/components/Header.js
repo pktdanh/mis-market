@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react'
+import React, { useState, Component, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styled from "styled-components";
@@ -95,6 +95,7 @@ const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
+  padding: 0 10px;
   @media (max-width: 768px) {
       
   }
@@ -117,6 +118,22 @@ const StyledLink = styled(Link)`
     }
 `;
 
+const LogoutItem = styled(Link)`
+    margin-left: 25px;
+    padding: 0 10px;
+    text-decoration: none;
+    color: #fff;
+    border-bottom: 2px solid transparent;
+    &:hover{
+      border-bottom: 2px solid #44bbbb;
+      color: #44bbbb;
+    }
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
+
+
 const StyledMenuIcon = styled(MenuIcon)`
   display: none !important;
   margin-right: 10px;
@@ -127,7 +144,6 @@ const StyledMenuIcon = styled(MenuIcon)`
 `;
 
 export class Header extends Component {
-
   render() {
     return (
       <Container id="header">
@@ -142,16 +158,17 @@ export class Header extends Component {
           </StyledLink>
           <Center id="center">
             <StyledLink to="/">Trang chủ</StyledLink>
-            <StyledLink to="/collections">Sản phẩm</StyledLink>
-            <StyledLink to="/myorder">Đơn hàng</StyledLink>
+            <StyledLink to="/collections/1">Sản phẩm</StyledLink>
+            {localStorage.getItem('MISisLogin') && <StyledLink to="/myorder">Đơn hàng</StyledLink>}
             {/* <StyledLink to="/">Blog</StyledLink> */}
             {/* <StyledLink to="/about">About</StyledLink> */}
-            <StyledLink to="/aboutme">{localStorage.getItem('user') ? localStorage.getItem('user') : "ME"}</StyledLink>
           </Center>
           <Right>
+            {localStorage.getItem('MISisLogin') &&<StyledLink to="/aboutme"><MenuItem className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
             {/* <MenuIcon></MenuIcon> */}
-            <StyledLink to="/signin"><MenuItem>{localStorage.getItem('user') ? "" : "SIGN UP"}</MenuItem></StyledLink>
-            <StyledLink to="/signin"><MenuItem>{localStorage.getItem('user') ? "" : "SIGN IN"}</MenuItem></StyledLink>
+            {!localStorage.getItem('MISisLogin') && <><StyledLink to="/signin"><MenuItem className="menu-item">Đăng nhập</MenuItem></StyledLink><StyledLink to="/signin"><MenuItem className="menu-item">Đăng ký</MenuItem></StyledLink></>}
+            {localStorage.getItem('MISisLogin') && <LogoutItem className="menu-item" onClick={() => {localStorage.clear(); window.location.reload();}}>Đăng xuất</LogoutItem>}
+            
             <MenuItem>
               <Link to="/carts">
                 <Badge badgeContent={this.props.numberCart} color="primary">

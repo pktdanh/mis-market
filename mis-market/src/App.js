@@ -20,6 +20,7 @@ import MyOrder from './pages/MyOrder';
 import OrderDetail from './pages/OrderDetail';
 import Store from './pages/Store';
 import Login from './pages/Login';
+import Collection from './pages/Collection';
 
 import './App.css'
 function App() {
@@ -29,7 +30,7 @@ function App() {
             <Header />
             <Switch>
                <Route path="/" exact component={Homepage} />
-               <Route path="/collections" exact component={Product}/>
+               <Route path="/collections/:id" exact component={Collection}/>
                <Route path="/category/:id" exact component={Category}/>
                <Route path="/carts" exact component={Cart} />
                <Route path="/product/:id" exact component={ItemProduct}/>

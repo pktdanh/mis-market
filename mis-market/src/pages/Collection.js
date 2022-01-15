@@ -139,7 +139,7 @@ const StyledLink = styled(Link)`
     }
 `;
 
-const Category = (props) => {
+const Collection = (props) => {
     const location = useLocation();
     let cateID = location.pathname.split("/").pop();
     const [subCate, setSubCate] = useState()
@@ -148,16 +148,16 @@ const Category = (props) => {
 
    let lsp = ''
     switch (cateID){
-      case 'nsp001':
+      case '1':
         lsp = 'lsp001'
         break;
-      case 'nsp002':
+      case '2':
         lsp ='lsp006'
         break;
-      case 'nsp003':
+      case '3':
         lsp ='lsp011'
         break;
-      case 'nsp004':
+      case '4':
         lsp ='lsp014'
         break;
       default:
@@ -181,9 +181,7 @@ const Category = (props) => {
     }, []);
 
     
-
-    
-    let API_URL = `https://localhost:44352/api/subcategory/many/${cateID}`;
+    let API_URL = `https://localhost:44352/api/subcategory/many/nsp00${cateID}`;
     useEffect(() => {
         let endpoint = ''
         let method = 'GET'
@@ -203,27 +201,27 @@ const Category = (props) => {
         <Container>
         <Banner>
         <BannerItem image={Banner1}>
-          <BannerWrapper onClick={() => window.location = "/category/nsp001"}>
+          <BannerWrapper onClick={() => window.location = "/collections/1"}>
             <BannerTitle>Thực phẩm tươi sống</BannerTitle>
             <BannerTag></BannerTag>
             <BannerButton>MUA NGAY</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem onClick={() => window.location = "/category/nsp002"} image={Banner2}>
+        <BannerItem onClick={() => window.location = "/collections/2"} image={Banner2}>
           <BannerWrapper>
             <BannerTitle>Công nghệ phẩm</BannerTitle>
             <BannerTag></BannerTag>
             <BannerButton>MUA NGAY</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem onClick={() => window.location = "/category/nsp003"} image={Banner3}>
+        <BannerItem onClick={() => window.location = "/collections/3"} image={Banner3}>
           <BannerWrapper>
             <BannerTitle>Lương thực</BannerTitle>
             <BannerTag></BannerTag>
             <BannerButton>MUA NGAY</BannerButton>
           </BannerWrapper>
         </BannerItem>
-        <BannerItem onClick={() => window.location = "/category/nsp004"} image={Banner4}>
+        <BannerItem onClick={() => window.location = "/collections/4"} image={Banner4}>
           <BannerWrapper>
             <BannerTitle>Nhu yếu phẩm cần thiết</BannerTitle>
             <BannerTag></BannerTag>
@@ -252,4 +250,4 @@ const Category = (props) => {
     );
 };
 
-export default Category;
+export default Collection;

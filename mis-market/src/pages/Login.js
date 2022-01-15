@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import axios from 'axios';
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
+import { LoginContext } from '../LoginContext'
 
 const Container = styled.div`
     display: flex;
@@ -34,42 +35,50 @@ const Row = styled.div`
 
 
 const Login = () => {
-    const API_URL = 'https://localhost:44328/api/Account/login';
 
-    const [data, setData] = useState({})
+    const [data, setData] = useState({
+        username: "",
+        password: "",
+    })
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
     const [message, setmessage] = useState("")
 
+    const loginContext = useContext(LoginContext)
+
     const handleSubmit = () => {
-        console.log(username, password); 
         setData({username, password});
         setUsername(""); 
         setPassword("");
-        login()
+        login(data)
     }
-
+    const login = (values) => {
+        console.log('Success:', values);
     
-    let login = () => {
-        // let endpoint = '/signin'
-        let method = 'GET'
-        console.log(`${API_URL}/${username}/${password}`)
-        let d = axios({
-        method,
-        url: `${API_URL}/${username}/${password}`
-        }).then(res => {
-            console.log(res.data);
-            setmessage(res.data.message)
-            localStorage.clear();
-            localStorage.setItem('user', username);
-            setTimeout(() => {
-                window.location = "http://localhost:3000"
-            }, 2000);
-        }).catch(err => {
-            alert(err);
-        });
-    }
+        axios({
+          method: 'post',
+          url: 'https://localhost:44352/api/account/login',
+          data: values
+        }).then(function (res) {
+          console.log("res.data: ",res.data)
+          if(res.data == ""){
+            return;
+          } else {
+            console.log("hello: ",res.data)
+            loginContext.updateLogin(loginContext.isLogin)
+            loginContext.updateUser(JSON.stringify(res.data))
+            window.location = "http://localhost:3000/"
+
+          }
+          
+        })
+        .catch(function (err) {
+            console.log(err)
+        }
+        )
+        // context.updateLogin(context.isLogin)
+      };
 
     return (<Container>
         <h2>Login</h2>
@@ -80,7 +89,7 @@ const Login = () => {
                     <label for="username">
                         Username:
                     </label>
-                    <input onChange={e => setUsername(e.target.value)} id="username" placeholder="username..."></input>
+                    <input onChange={e => setData({username: e.target.value, password: data.password})} id="username" placeholder="username..."></input>
                 </div>
             </Row>
            
@@ -89,7 +98,7 @@ const Login = () => {
                     <label for="password">
                         Password:
                     </label>
-                    <input onChange={e => setPassword(e.target.value)} type="password" id="password" placeholder="username..."></input>
+                    <input onChange={e => setData({username: data.username, password: e.target.value})} type="password" id="password" placeholder="username..."></input>
                 </div>
            </Row>
            <button onClick={handleSubmit} style={{marginTop: "12px", padding: "6px 20px", borderRadius:"6px", cursor:"pointer"}}>Sign in</button>

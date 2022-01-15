@@ -132,7 +132,7 @@ const ProductQuantity = styled.div`
 `;
 const ProductQuantityTitle = styled.label`
     text-transform: uppercase;
-    font-weight: 600; ;
+    font-weight: 600; 
 `;
 const ProductChooseQuantity = styled.div`
     display: flex;
@@ -245,15 +245,52 @@ const RelatedProductPrice = styled.div`
 `;
 
 export const ItemProduct = (props) => {
-    useLayoutEffect(() => {
+    // useEffect(() => {
+    //     let header = document.getElementById('header')
+    //     let center = document.getElementById('center')
+    //     let brandNameRight = document.getElementById('brandNameRight')
+    //     let shoppingIcon = document.getElementById('shopping-icon')
+    //     let menuItem = document.querySelectorAll('.menu-item')
+    //     const handleScroll = () =>{
+    //       const y = window.scrollY;
+    //       if (y > 100) {
+    
+    //         header.classList.add('changeHeaderColor');
+    //         center.classList.add('changeColor');
+    //         brandNameRight.classList.add('changeColorToBlack');
+    //         shoppingIcon.classList.add('changeColorToBlack');
+    //         menuItem.forEach(function(item) {
+    //           item.classList.add('changeColorToBlack')
+    //         })
+    //       }
+    //       else {
+    //         header.classList.remove('changeHeaderColor');
+    //         center.classList.remove('changeColor');
+    //         brandNameRight.classList.remove('changeColorToBlack');
+    //         shoppingIcon.classList.remove('changeColorToBlack');
+    //         menuItem.forEach(function(item) {
+    //           item.classList.remove('changeColorToBlack')
+    //         })
+    
+    //       }
+    //     }
+    //     window.addEventListener('scroll', handleScroll);
+    //     return () => {
+    //       window.removeEventListener('scroll',handleScroll)
+          
+    //     }
+    //   }, []);
+    useEffect(() => {
+        window.scrollTo(0, 0);
         document.getElementById("header").classList.add("changeHeaderColor");
         document.getElementById("center").classList.add("changeColor");
-        document
-            .getElementById("brandNameRight")
-            .classList.add("changeColorToBlack");
-        document
-            .getElementById("shopping-icon")
-            .classList.add("changeColorToBlack");
+        document.getElementById("brandNameRight").classList.add("changeColorToBlack");
+        document.getElementById("shopping-icon").classList.add("changeColorToBlack");
+        let menuItem = document.querySelectorAll('.menu-item')
+        menuItem.forEach(function(item) {
+          item.classList.add('changeColorToBlack')
+        })
+
     }, []);
 
     const location = useLocation();
