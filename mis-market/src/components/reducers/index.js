@@ -21,29 +21,29 @@ function todoProduct(state = initProduct,action){
         case ADD_CART:
             if(state.numberCart==0){
                 let cart = {
-                    id:action.payload.id,
+                    id:action.payload.maSP,
                     quantity:1,
-                    name:action.payload.name,
-                    image:action.payload.images[0],
-                    price:action.payload.price
+                    name:action.payload.tenSP,
+                    image: action.payload.anhSP,
+                    price:action.payload.giaSP
                 }
                 state.Carts.push(cart);
             }
             else{
                 let check = false;
                 state.Carts.map((item,key)=>{
-                    if(item.id==action.payload.id){
+                    if(item.id==action.payload.maSP){
                         state.Carts[key].quantity++;
                         check=true;
                     }
                 });
                 if(!check){
                     let _cart = {
-                        id:action.payload.id,
+                        id:action.payload.maSP,
                         quantity:1,
-                        name:action.payload.name,
-                        image:action.payload.images[0],
-                        price:action.payload.price
+                        name:action.payload.tenSP,
+                        image: action.payload.anhSP,
+                        price:action.payload.giaSP
                     }
                     state.Carts.push(_cart);
                 }

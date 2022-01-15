@@ -160,7 +160,7 @@ const Filter = (props) => {
                 </ProductSearchButton>
             </ProductFilterAndSearch>
             <SearchBar>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
             <SearchInput type="text" name="search" id="searchbar" placeholder='Search here...' />
           </SearchBar>
           <OptionFilter id="option-filter">
@@ -189,12 +189,12 @@ const Filter = (props) => {
             <Color>
               <div>Color</div>
               <ul>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "black", marginRight: "10px" }}></i></span><a href="">Black</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "blue", marginRight: "10px" }}></i></span><a href="">Blue</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "grey", marginRight: "10px" }}></i></span><a href="">Grey</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "green", marginRight: "10px" }}></i></span><a href="">Green</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "bred", marginRight: "10px" }}></i></span><a href="">Red</a></FilterLink>
-                <FilterLink><span><i class="fas fa-circle" style={{ color: "white", marginRight: "10px" }}></i></span><a href="">White</a></FilterLink>
+                <FilterLink><span><i className="fas fa-circle" style={{ color: "black", marginRight: "10px" }}></i></span><a href="">Black</a></FilterLink>
+                <FilterLink><span><i className="fas fa-circle" style={{ color: "blue", marginRight: "10px" }}></i></span><a href="">Blue</a></FilterLink>
+                <FilterLink><span><i className="fas fa-circle" style={{ color: "grey", marginRight: "10px" }}></i></span><a href="">Grey</a></FilterLink>
+                <FilterLink><span><i className="fas fa-circle" style={{ color: "green", marginRight: "10px" }}></i></span><a href="">Green</a></FilterLink>
+                <FilterLink><span><i className="fas fa-circle" style={{ color: "bred", marginRight: "10px" }}></i></span><a href="">Red</a></FilterLink>
+                <FilterLink><span><i className="fas fa-circle" style={{ color: "white", marginRight: "10px" }}></i></span><a href="">White</a></FilterLink>
               </ul>
             </Color>
             <Tags>

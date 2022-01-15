@@ -123,7 +123,7 @@ const Footer = () => {
     </FooterColumn>
     </WrapperUp>
     <WrapperDown>
-      <Coppyright>Copyright ©2021 All rights reserved | This template is made with <i class="far fa-heart"></i> by <CoppyrightName>Shiro</CoppyrightName></Coppyright>
+      <Coppyright>Copyright ©2021 All rights reserved | This template is made with <i className="far fa-heart"></i> by <CoppyrightName>Shiro</CoppyrightName></Coppyright>
     </WrapperDown>
   </Container>
 }

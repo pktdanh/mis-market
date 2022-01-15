@@ -319,6 +319,7 @@ export const Products = (props) => {
     else if (props.typeQuery === 'one'){
       API_URL = `https://localhost:44352/api/product/one/${props.query}`;
     }
+    console.log(API_URL)
     let d = axios({
       method,
       url: API_URL,
@@ -344,10 +345,10 @@ export const Products = (props) => {
           <Filter></Filter>
           <Container>
             {
-              _products.map((item, index) => (
-                <WrapItem>
+              _products.map((item) => (
+                <WrapItem key={item.maSP}>
                   <StyledLink to={"/product/"+ item.maSP}>
-                  <ProductItem key={index}>
+                  <ProductItem key={item.maSP}>
                     <ProductImage src={item.anhSP} alt="TEE" />
                     <ProductTitle>{item.tenSP}</ProductTitle>
                     <ProductPrice>Giá: <Highlight>{item.giaSP} VNĐ</Highlight></ProductPrice>
@@ -360,7 +361,7 @@ export const Products = (props) => {
                     <p>Cửa hàng: <Highlight>{item.account_CH}</Highlight></p>
                   </StyledLink>
 
-                  <ProducAddtocart onClick={() => props.AddCart(item)}>
+                  <ProducAddtocart onClick={() => { console.log("Item: ", item); return props.AddCart(item)}}>
                       Add To Cart
                     </ProducAddtocart>
                 </WrapItem>
