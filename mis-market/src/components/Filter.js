@@ -7,7 +7,7 @@ import axios from 'axios';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom'
-import { FilterContext } from './Products';
+import { FilterProductContext } from '../FilterProductContext'
 
 const ProductFilterAndSearch = styled.div`
   width: 100%;
@@ -139,48 +139,53 @@ const SearchInput = styled.input`
   /* background-color: #f2f2f2; */
 `;
 
-const Filter = (props) => {
-    const context = useContext(FilterContext)
-    console.log(context)
+const Filter = ({productList}) => {
+    // const context = useContext(FilterContext)
+    const filterProductContext = useContext(FilterProductContext)
+
+
 
     let changeproductInFilter = (filterOrderBy, filterPrice) => {
-      let _products = context.products
+      let _products = productList
       
-      if(filterOrderBy == "default"){
+      if(filterOrderBy === "default"){
 
-      } else if(filterOrderBy == "vote"){
+      } else if(filterOrderBy === "vote"){
         _products.sort((a, b) => b.avgRating - a.avgRating);
-      } else if(filterOrderBy == "newest"){
+      } else if(filterOrderBy === "newest"){
         _products.sort((a, b) => b.ngayDang - a.ngayDang);
-      } else if(filterOrderBy == "lowtohigh"){
+      } else if(filterOrderBy === "lowtohigh"){
         _products.sort((a, b) => a.giaSP - b.giaSP);
-      } else if(filterOrderBy == "hightolow"){
+      } else if(filterOrderBy === "hightolow"){
         _products.sort((a, b) => b.giaSP - a.giaSP);
       }
 
-      if(filterPrice == "all"){
+      if(filterPrice === "all"){
   
-      } else if(filterPrice == "1"){
+      } else if(filterPrice === "1"){
         // 1000-50000
         const result = _products.filter((item) => item.giaSP > 1000 && item.giaSP < 50000)
-        console.log("Result filter: ", result)
+        _products = result
+        console.log("Result filter: ", _products)
     
-      } else if(filterPrice == "2"){
+      } else if(filterPrice === "2"){
         // 50000-100000
         const result = _products.filter((item) => item.giaSP > 50000 && item.giaSP < 100000)
+        _products = result
         console.log("Result filter: ", result)
     
-      } else if(filterPrice == "3"){
+      } else if(filterPrice === "3"){
         // 100000-200000
     
-      } else if(filterPrice == "4"){
+      } else if(filterPrice === "4"){
         // 200000-500000
     
-      } else if(filterPrice == "5"){
+      } else if(filterPrice === "5"){
         //  > 500000
       }
-      console.log("P after filter: ", _products)
-      context.updateproducts(_products)
+      console.log("Products after filter: ", _products)
+      // context.updateproducts(_products)
+      filterProductContext.updateCount(_products)
     }
 
     
@@ -233,12 +238,12 @@ const Filter = (props) => {
             <Price>
               <div>Giá</div>
               <ul>
-                <FilterLink choosen={ price === "all" ? true : false} onClick={() => changeproductInFilter("all")}>Tất cả</FilterLink>
-                <FilterLink choosen={ price === "1" ? true : false} onClick={() => changeproductInFilter("1")}>1 000VND - 50 000VND</FilterLink>
-                <FilterLink choosen={ price === "2" ? true : false} onClick={() => changeproductInFilter("2")}>50 000VND - 100 000VND</FilterLink>
-                <FilterLink choosen={ price === "3" ? true : false} onClick={() => changeproductInFilter("3")}>100 000VND - 200 000VND</FilterLink>
-                <FilterLink choosen={ price === "4" ? true : false} onClick={() => changeproductInFilter("4")}>200 000VND - 500 000VND</FilterLink>
-                <FilterLink choosen={ price === "5" ? true : false} onClick={() => changeproductInFilter("5")}>500 000VND+</FilterLink>
+                <FilterLink choosen={ price === "all" ? true : false} onClick={() => changeproductInFilter(null,"all")}>Tất cả</FilterLink>
+                <FilterLink choosen={ price === "1" ? true : false} onClick={() => changeproductInFilter(null,"1")}>1 000VND - 50 000VND</FilterLink>
+                <FilterLink choosen={ price === "2" ? true : false} onClick={() => changeproductInFilter(null,"2")}>50 000VND - 100 000VND</FilterLink>
+                <FilterLink choosen={ price === "3" ? true : false} onClick={() => changeproductInFilter(null,"3")}>100 000VND - 200 000VND</FilterLink>
+                <FilterLink choosen={ price === "4" ? true : false} onClick={() => changeproductInFilter(null,"4")}>200 000VND - 500 000VND</FilterLink>
+                <FilterLink choosen={ price === "5" ? true : false} onClick={() => changeproductInFilter(null,"5")}>500 000VND+</FilterLink>
               </ul>
             </Price>
             {/* <Color>

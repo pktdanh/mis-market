@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useCallback } from 'react'
+import React, { createContext, useEffect, useState, useCallback, useContext } from 'react'
 import { actFetchProductsRequest, AddCart } from './actions'
 import { connect } from 'react-redux';
 import styled from "styled-components";
@@ -9,6 +9,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import StarIcon from '@mui/icons-material/Star';
 import { Link } from 'react-router-dom'
 import Filter from './Filter'
+import { FilterProductContext } from '../FilterProductContext'
+
+
 
 const Container = styled.div`
     display: grid;
@@ -285,12 +288,24 @@ const Highlight = styled.span`
 `;
 
 
-export const FilterContext = createContext();
+// export const FilterContext = createContext();
 
 export const Products = (props) => {
   // useEffect(() => {
   //   window.scrollTo(0, 0)
   // }, [])
+
+  // const testContext = useContext(TestContext)
+
+  // useEffect(() => {
+  //   console.log("isTest: ",testContext.isTest)
+  // }, [testContext.isTest])
+
+  const filterProductContext = useContext(FilterProductContext)
+
+  console.log("filterContext: ",filterProductContext)
+  
+
   useEffect(() => {
     let header = document.getElementById('header')
     document.onscroll = () => {
@@ -306,9 +321,18 @@ export const Products = (props) => {
   // eslint-disable-next-line no-useless-constructor
   const [_products, setProducts] = useState([]) // use this list to filter
   const [products, setproducts] = useState([]) // use this list to get all product for other filter
+
+  useEffect(() => {
+      setProducts(filterProductContext.list)
+      console.log("useEffect re-assign")
+  }, [filterProductContext.count])
+
+
+  console.log("re-render Product component")
   let API_URL 
   useEffect(() => {
     // props.actFetchProductsRequest(); 
+    console.log("chay zo day")
     let isMounted = true;  
     let method = 'GET'
     if (props.typeQuery === 'all'){
@@ -334,6 +358,7 @@ export const Products = (props) => {
       
       if (isMounted) setProducts(res.data)
       if (isMounted) setproducts(res.data)
+      
     });
     return () => { isMounted = false };
   }, [])
@@ -344,17 +369,17 @@ export const Products = (props) => {
   if (_products.length > 0) {
     
     return (
-      <FilterContext.Provider value={{
-        products: _products,
-        updateproducts: (lp) => {console.log("f: ", lp); console.log("p: ", _products) ;return setProducts(lp)}
-        }}>
+      // <FilterContext.Provider value={{
+      //   products: _products,
+      //   updateproducts: (lp) => {console.log("f: ", lp); console.log("p: ", _products) ;return setProducts(lp)}
+      //   }}>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
           <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
-          <Filter></Filter>
+          <Filter productList={_products}></Filter>
           <Container>
             {
-              _products.map((item) => (
+              _products.map((item) => { console.log(item.tenSP); return (
                 <WrapItem key={item.maSP}>
                   <StyledLink to={"/product/"+ item.maSP}>
                   <ProductItem key={item.maSP}>
@@ -375,14 +400,14 @@ export const Products = (props) => {
                       Add To Cart
                     </ProducAddtocart>
                 </WrapItem>
-              ))
+              )})
             }
 
           </Container>
 
         </ProductWrapper>
       </div>
-      </FilterContext.Provider>
+      // </FilterContext.Provider>
     )
   }
   return (
