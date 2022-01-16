@@ -144,7 +144,7 @@ const Category = (props) => {
     let cateID = location.pathname.split("/").pop();
     const [subCate, setSubCate] = useState()
     const [categories, setCategories] = useState([])
-   console.log('re-render', subCate) 
+    console.log('re-render', subCate) 
 
    let lsp = ''
     switch (cateID){

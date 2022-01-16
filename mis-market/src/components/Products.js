@@ -133,6 +133,7 @@ border-bottom: 2px solid #fff;
     border-bottom: 2px solid rgb(99,113,198);
   }
 `;
+
 const ProductFilterButton = styled.div`
   margin-left: 350px;
   cursor: pointer;
@@ -387,7 +388,7 @@ export const Products = (props) => {
                     <ProductTitle>{item.tenSP}</ProductTitle>
                     <ProductPrice>Giá: <Highlight>{item.giaSP} VNĐ</Highlight></ProductPrice>
                     <ProductPrice>Đã bán: <Highlight>{item.soSPDaBan}</Highlight></ProductPrice>
-                    <ProductPrice>Rating: <Highlight>{item.avgRating}</Highlight><StarIcon style={{fontSize: "18px",transform:"translateY(-1px)",color:"#dd9d0d",marginLeft:"2px"}}></StarIcon></ProductPrice>
+                    <ProductPrice>Đánh giá: <Highlight>{item.avgRating}</Highlight><StarIcon style={{fontSize: "18px",transform:"translateY(-1px)",color:"#dd9d0d",marginLeft:"2px"}}></StarIcon></ProductPrice>
                   </ProductItem>
                   </StyledLink>
 
@@ -397,7 +398,7 @@ export const Products = (props) => {
 
 
                   <ProducAddtocart onClick={() => props.AddCart(item)}>
-                      Add To Cart
+                      Thêm vào giỏ hàng
                     </ProducAddtocart>
                 </WrapItem>
               )})
@@ -411,9 +412,14 @@ export const Products = (props) => {
     )
   }
   return (
-    <div className="row" style={{"marginTop": "500px", "marginBottom": "500px"}}>
-      <h2>Loading...!</h2>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <ProductWrapper>
+            <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
+            <Filter productList={products}></Filter>
+        </ProductWrapper>
+        <h2 style={{margin: "50px 0 50px 20px"}}>Không có sản phẩm</h2>
     </div>
+    
   )
 
 
