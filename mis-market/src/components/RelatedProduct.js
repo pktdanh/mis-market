@@ -171,11 +171,11 @@ const RelatedProduct = (props) => {
                         {_products.map((item, index) => {
                             if (index < 4) {
                                 return (
-                                    <WrapItem>
+                                    <WrapItem key={index}>
                                         <StyledLink
                                             to={"/product/" + item.maSP}
                                         >
-                                            <ProductItem key={index}>
+                                            <ProductItem>
                                                 <ProductImage
                                                     src={item.anhSP}
                                                     alt="TEE"

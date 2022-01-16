@@ -152,38 +152,54 @@ const Filter = ({productList}) => {
 
       } else if(filterOrderBy === "vote"){
         _products.sort((a, b) => b.avgRating - a.avgRating);
+        setOrderBy("vote")
       } else if(filterOrderBy === "newest"){
         _products.sort((a, b) => b.ngayDang - a.ngayDang);
+        setOrderBy("newest")
       } else if(filterOrderBy === "lowtohigh"){
         _products.sort((a, b) => a.giaSP - b.giaSP);
+        setOrderBy("lowtohigh")
       } else if(filterOrderBy === "hightolow"){
         _products.sort((a, b) => b.giaSP - a.giaSP);
+        setOrderBy("hightolow")
       }
 
       if(filterPrice === "all"){
-  
+        setPrice("all")
       } else if(filterPrice === "1"){
         // 1000-50000
-        const result = _products.filter((item) => item.giaSP > 1000 && item.giaSP < 50000)
-        _products = result
-        console.log("Result filter: ", _products)
-    
+        const result = _products.filter((item) => item.giaSP >= 1000 && item.giaSP < 50000)
+        
+        if(result.length !== 0) _products = result  
+        setPrice("1")         
       } else if(filterPrice === "2"){
         // 50000-100000
-        const result = _products.filter((item) => item.giaSP > 50000 && item.giaSP < 100000)
-        _products = result
-        console.log("Result filter: ", result)
-    
+        const result = _products.filter((item) => item.giaSP >= 50000 && item.giaSP < 100000)
+        
+        if(result.length !== 0) _products = result   
+        setPrice("2")                  
       } else if(filterPrice === "3"){
         // 100000-200000
+        const result = _products.filter((item) => item.giaSP >= 100000 && item.giaSP < 200000)
+        
+        if(result.length !== 0) _products = result  
+        setPrice("3")         
     
       } else if(filterPrice === "4"){
         // 200000-500000
+        const result = _products.filter((item) => item.giaSP >= 200000 && item.giaSP < 500000)
+        
+        if(result.length !== 0) _products = result  
+        setPrice("4")
     
       } else if(filterPrice === "5"){
         //  > 500000
+        const result = _products.filter((item) => item.giaSP >= 500000)
+        
+        if(result.length !== 0) _products = result  
+        setPrice("5")
       }
-      console.log("Products after filter: ", _products)
+      
       // context.updateproducts(_products)
       filterProductContext.updateCount(_products)
     }

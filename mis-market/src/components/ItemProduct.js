@@ -361,7 +361,7 @@ export const ItemProduct = (props) => {
                                         : setquantity(quantity - 1);
                                 }}
                             >
-                                <i class="fas fa-minus"></i>
+                                <i className="fas fa-minus"></i>
                             </DownQuantity>
                             <Quantity>{quantity}</Quantity>
                             <UpQuantity
@@ -370,7 +370,7 @@ export const ItemProduct = (props) => {
                                       setquantity(quantity + 1);
                                 }}
                             >
-                                <i class="fas fa-plus"></i>
+                                <i className="fas fa-plus"></i>
                             </UpQuantity>
                         </ProductChooseQuantity>
                     </ProductQuantity>

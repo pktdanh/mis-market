@@ -376,10 +376,10 @@ export const Products = (props) => {
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
           <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
-          <Filter productList={_products}></Filter>
+          <Filter productList={products}></Filter>
           <Container>
             {
-              _products.map((item) => { console.log(item.tenSP); return (
+              _products.map((item) => {  return (
                 <WrapItem key={item.maSP}>
                   <StyledLink to={"/product/"+ item.maSP}>
                   <ProductItem key={item.maSP}>

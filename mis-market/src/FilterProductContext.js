@@ -7,7 +7,7 @@ function Compare2Array(oldArr, newArr) {
     console.log("In 2 array NEW: ", newArr)
     if (oldArr.length !== newArr.length) return false
     for (let i = 0; i < oldArr.length; i++) {
-        if (oldArr[i].maSP != newArr[i].maSP) return false 
+        if (oldArr[i].maSP !== newArr[i].maSP) return false 
     }
 
     return true
@@ -20,7 +20,7 @@ function FilterProductProvider({children}){
         list: listProduct,
         count: count,
         updateListProduct: (newListProduct) => {
-            console.log("bi set lai rui ne")
+            // console.log("bi set lai rui ne")
             setListProduct(newListProduct)
 
             // if (Compare2Array(listProduct, newListProduct) === false){
@@ -33,7 +33,7 @@ function FilterProductProvider({children}){
         updateCount: (newListProduct) => {
             setListProduct(newListProduct)
             setCount(count+1)
-            console.log("hehehe", count)
+            // console.log("hehehe", count)
         }
     }
     return (
