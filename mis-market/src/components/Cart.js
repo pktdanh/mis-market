@@ -21,12 +21,12 @@ const ItemInCart = styled.div``;
 
 const ButtonInCart = styled.div`
     display: inline-block;
-    width: 40px;
-    height: 40px;
-    
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
     border:1px solid #717fe0;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
     transition: 0.3s ease-in-out;
     cursor: pointer;
     &:hover{
@@ -121,11 +121,28 @@ const ButtonCheckout = styled.div`
         color: #fff;
     }
 `;
+const TableData = styled.td`
+    vertical-align: middle !important;
+`;
 
 function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
   //  console.log(items)
     let ListCart = [];
     let TotalCart=0;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.getElementById("header").classList.add("changeHeaderColor");
+        document.getElementById("center").classList.add("changeColor");
+        document.getElementById("brandNameRight").classList.add("changeColorToBlack");
+        document.getElementById("shopping-icon").classList.add("changeColorToBlack");
+        let menuItem = document.querySelectorAll('.menu-item')
+        menuItem.forEach(function(item) {
+          item.classList.add('changeColorToBlack')
+        })
+
+    }, []);
+
     Object.keys(items.Carts).forEach(function(item){
         TotalCart+=items.Carts[item].quantity * items.Carts[item].price;
         ListCart.push(items.Carts[item]);
@@ -147,11 +164,11 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Hình ảnh</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng giá</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -159,25 +176,25 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                         ListCart.map((item,key)=>{
                             return(
                                 <tr key={key}>   
-                                <td><HighlightOffIcon onClick={()=>DeleteCart(key)} style={{cursor: "pointer"}}></HighlightOffIcon></td>
-                                {/* <td><i className="badge badge-danger" onClick={()=>DeleteCart(key)}>X</i></td> */}
-                                <td><h5>{item.name}</h5></td>
-                                <td><img src={item.image} style={{width:'100px',height:'auto'}} alt=""/></td>
-                                <td>{item.price} $</td>
-                                <td>
+                                <TableData><HighlightOffIcon onClick={()=>DeleteCart(key)} style={{cursor: "pointer",transform:"translateY(-4px)"}}></HighlightOffIcon></TableData>
+                                {/* <TableData><i className="badge badge-danger" onClick={()=>DeleteCart(key)}>X</i></TableData> */}
+                                <TableData><h5 style={{fontSize: "18px"}}>{item.name}</h5></TableData>
+                                <TableData><img src={item.image} style={{width:'100px',height:'auto'}} alt=""/></TableData>
+                                <TableData>{item.price} VNĐ</TableData>
+                                <TableData>
                                         <ButtonInCart style={{margin:'2px'}} onClick={()=>DecreaseQuantity(key)}>-</ButtonInCart>
                                         <ButtonInCart>{item.quantity}</ButtonInCart>
                                         <ButtonInCart style={{margin:'2px'}} onClick={()=>IncreaseQuantity(key)}>+</ButtonInCart>
-                                </td>
-                                <td>{ TotalPrice(item.price,item.quantity)} $</td>
+                                </TableData>
+                                <TableData>{ TotalPrice(item.price,item.quantity)} VNĐ</TableData>
                             </tr>
                             )
                         })
                             
                     }
                     <tr>
-                        <td colSpan="5">Total Carts</td>
-                        <td style={{fontWeight: "bold"}}>{Number(TotalCart).toLocaleString('en-US')} $</td>
+                        <td colSpan="5">Tổng giỏ hàng</td>
+                        <td style={{fontWeight: "bold"}}>{Number(TotalCart).toLocaleString('en-US')} VNĐ</td>
                     </tr>
                     </tbody>
                 
@@ -185,9 +202,9 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                 </div>
             </CartSide>
             <CheckoutSide>
-                <CheckoutTitle>CART TOTALS</CheckoutTitle>
+                <CheckoutTitle>TỔNG GIỎ HÀNG</CheckoutTitle>
                 <Subtotal>
-                    <span style={{fontWeight: "bold"}}>Subtotal:</span>
+                    <span style={{fontWeight: "bold"}}>Tạm tính:</span>
                     <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
                 </Subtotal>
                 <Shipping>
@@ -196,10 +213,10 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                 </Shipping>
                 
                 <Total>
-                    <span style={{fontWeight: "bold"}}>Total:</span>
+                    <span style={{fontWeight: "bold"}}>Tổng:</span>
                     <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
                 </Total>
-                <ButtonCheckout>checkout</ButtonCheckout>
+                <ButtonCheckout>Thanh toán</ButtonCheckout>
             </CheckoutSide>
         </Container>
         )
