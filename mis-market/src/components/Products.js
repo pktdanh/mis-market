@@ -357,14 +357,14 @@ export const Products = (props) => {
       console.log('data:',res.data)
       
       if (isMounted) setProducts(res.data)
+      // check
+      console.log("call api")
       if (isMounted) setproducts(res.data)
       
     });
     return () => { isMounted = false };
   }, [])
-  
-
-  
+   
 
   if (_products.length > 0) {
     
@@ -376,7 +376,7 @@ export const Products = (props) => {
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
           <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
-          <Filter productList={products}></Filter>
+          <Filter productList={_products} productListDefault={products}></Filter>
           <Container>
             {
               _products.map((item) => {  return (
