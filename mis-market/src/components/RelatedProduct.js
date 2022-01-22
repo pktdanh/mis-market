@@ -220,7 +220,7 @@ const RelatedProduct = (props) => {
                                             <p>
                                                 Cửa hàng:{" "}
                                                 <Highlight>
-                                                    {item.account_CH}
+                                                    {item.tenCH}
                                                 </Highlight>
                                             </p>
                                         </StyledLink>

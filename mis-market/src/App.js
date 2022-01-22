@@ -35,7 +35,7 @@ function App() {
                <Route path="/carts" exact component={Cart} />
                <Route path="/product/:id" exact component={ItemProduct}/>
                <Route path="/about" exact component={About} />
-               <Route path="/aboutme" exact component={AboutMe} />
+               <Route path="/aboutme/:id" exact component={AboutMe} />
                <Route path="/myorder" exact component={MyOrder} />
                <Route path="/myorder/:id" exact component={OrderDetail} />
                <Route path="/store" exact component={Store} />

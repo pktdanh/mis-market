@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import axios from 'axios';
+import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 // const data = {
 //     id: "CUS001",
@@ -72,6 +73,8 @@ const Input = styled.input`
 `;
 
 const AboutMe = () => {
+    const location = useLocation();
+    let cateID = location.pathname.split("/").pop();
     const [submit, setSubmit] = useState(false)
 
     let submitFunc = () => {
@@ -79,7 +82,7 @@ const AboutMe = () => {
     }
 
     const [data, setdata] = useState([])
-    let API_URL = 'https://localhost:44328/api/Customer/' + localStorage.getItem('MISuser');
+    let API_URL = 'https://localhost:44352/api/customer/one';
     console.log(API_URL)
     useEffect(() => {
         // props.actFetchProductsRequest();  

@@ -309,7 +309,7 @@ export const ItemProduct = (props) => {
     const [listColor, setlistColor] = useState([]);
     const [listSize, setlistSize] = useState([]);
     const [size, setsize] = useState("");
-    const [quantity, setquantity] = useState(0);
+    const [quantity, setquantity] = useState(1);
 
     useEffect(() => {
         let method = "GET";
@@ -365,8 +365,8 @@ export const ItemProduct = (props) => {
                         <ProductChooseQuantity>
                             <DownQuantity
                                 onClick={() => {
-                                    quantity == 0
-                                        ? setquantity(0)
+                                    quantity == 1
+                                        ? setquantity(1)
                                         : setquantity(quantity - 1);
                                 }}
                             >
