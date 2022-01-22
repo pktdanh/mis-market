@@ -49,5 +49,73 @@ namespace MIS_Project.Models
             }
             return addresses;
         }
+
+        public List<DiaChiKhachHang> getMany(string CusID)
+        {
+            SqlCommand com = new SqlCommand();
+            SqlDataReader dr;
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = MIS_Project.Properties.Resources.ConnectionString;
+            List<DiaChiKhachHang> addresses = new List<DiaChiKhachHang>();
+            try
+            {
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "SELECT * FROM DiaChiKhachHang WHERE accountID = '" + CusID + "'";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    addresses.Add(new DiaChiKhachHang()
+                    {
+                        MaDC = dr["MaDC"].ToString(),
+                        AccountID = dr["AccountID"].ToString(),
+                        DiaChi = dr["DiaChi"].ToString(),
+                        IsDefault = dr["IsDefault"].ToString(),
+                        MaPhuongXa = dr["MaPhuongXa"].ToString(),
+                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString())
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            return addresses;
+        }
+
+        public DiaChiKhachHang getOne(string CusID)
+        {
+            SqlCommand com = new SqlCommand();
+            SqlDataReader dr;
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = MIS_Project.Properties.Resources.ConnectionString;
+            List<DiaChiKhachHang> addresses = new List<DiaChiKhachHang>();
+            try
+            {
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "SELECT * FROM DiaChiKhachHang WHERE isDefault = 1 and accountID = '" + CusID + "'";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    addresses.Add(new DiaChiKhachHang()
+                    {
+                        MaDC = dr["MaDC"].ToString(),
+                        AccountID = dr["AccountID"].ToString(),
+                        DiaChi = dr["DiaChi"].ToString(),
+                        IsDefault = dr["IsDefault"].ToString(),
+                        MaPhuongXa = dr["MaPhuongXa"].ToString(),
+                        DiaChiChiTiet = new DiaChi(dr["MaPhuongXa"].ToString(), dr["DiaChi"].ToString())
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            return addresses[0];
+        }
     }
 }

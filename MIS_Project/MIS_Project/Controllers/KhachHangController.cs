@@ -19,5 +19,14 @@ namespace MIS_Project.Controllers
             customers = customer.getAll();
             return customers;
         }
+
+        [HttpPost("one")]
+        public List<KhachHang> One([FromBody]KhachHang data)
+        {
+            KhachHang customer = new KhachHang();
+            List<KhachHang> customers = new List<KhachHang>();
+            customers = customer.getAll(data.AccountID);
+            return customers;
+        }
     }
 }
