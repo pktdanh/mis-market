@@ -223,7 +223,7 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
     else 
     return (
         <div style={{width: "100%", height: "490px", display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <i>Cart is empty</i>
+            <i>Giỏ hàng trống</i>
         </div>
     )
 }

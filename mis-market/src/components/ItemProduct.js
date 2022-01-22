@@ -5,7 +5,9 @@ import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
+import RemoveIcon from '@mui/icons-material/Remove';
 import RelatedProduct from "./RelatedProduct";
+import AddIcon from '@mui/icons-material/Add';
 
 const Container = styled.div`
     display: flex;
@@ -142,6 +144,7 @@ const UpQuantity = styled.div`
     border: 1px solid #ced4da;
     border-radius: 5px;
     cursor: pointer;
+    padding: 0 4px;
     background-color: #ffffff;
     transition: background-color 0.2s ease-in-out;
     & > i {
@@ -157,6 +160,7 @@ const DownQuantity = styled.div`
     border-radius: 5px;
     cursor: pointer;
     background-color: #ffffff;
+    padding: 0 4px;
     transition: background-color 0.2s ease-in-out;
     & > i {
         padding: 10px;
@@ -176,7 +180,6 @@ const AddToCart = styled.div`
     text-transform: uppercase;
     display: inline-block;
     text-align: center;
-    border: 0;
     background-color: #1f1f1f;
     color: #ffffff;
     font-size: 20px;
@@ -186,6 +189,12 @@ const AddToCart = styled.div`
     cursor: pointer;
     outline: none;
     margin-top: 30px;
+    transition: all 0.2s linear;
+    border: solid 1px #000;
+    &:hover {
+        background-color: #e7a39b;
+        color: #000;
+    }
 `;
 
 // Related product
@@ -361,7 +370,7 @@ export const ItemProduct = (props) => {
                                         : setquantity(quantity - 1);
                                 }}
                             >
-                                <i className="fas fa-minus"></i>
+                                <RemoveIcon style={{height:"100%"}}></RemoveIcon>
                             </DownQuantity>
                             <Quantity>{quantity}</Quantity>
                             <UpQuantity
@@ -370,7 +379,7 @@ export const ItemProduct = (props) => {
                                       setquantity(quantity + 1);
                                 }}
                             >
-                                <i className="fas fa-plus"></i>
+                                <AddIcon style={{height:"100%"}}></AddIcon>
                             </UpQuantity>
                         </ProductChooseQuantity>
                     </ProductQuantity>

@@ -79,7 +79,7 @@ const AboutMe = () => {
     }
 
     const [data, setdata] = useState([])
-    let API_URL = 'https://localhost:44328/api/Customer/' + localStorage.getItem('user').substring(4, 5);
+    let API_URL = 'https://localhost:44328/api/Customer/' + localStorage.getItem('MISuser');
     console.log(API_URL)
     useEffect(() => {
         // props.actFetchProductsRequest();  
