@@ -145,9 +145,15 @@ const StyledMenuIcon = styled(MenuIcon)`
   }
 `;
 
-const linkTo = `/aboutme/${JSON.parse(localStorage.getItem('MISuser')).username}`
 
 export class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      linkToMyUser: `/aboutme/${JSON.parse(localStorage.getItem('MISuser')).username}`,
+      linkToMyOrder: `/myorder/${JSON.parse(localStorage.getItem('MISuser')).username}`
+    };
+  }
   render() {
     return (
       <Container id="header">
@@ -163,12 +169,12 @@ export class Header extends Component {
           <Center id="center">
             <StyledLink to="/">Trang chủ</StyledLink>
             <StyledLink to="/collections/1">Sản phẩm</StyledLink>
-            {localStorage.getItem('MISisLogin') && <StyledLink to="/myorder">Đơn hàng</StyledLink>}
+            {localStorage.getItem('MISisLogin') && <StyledLink to={this.state.linkToMyOrder}>Đơn hàng</StyledLink>}
             {/* <StyledLink to="/">Blog</StyledLink> */}
             {/* <StyledLink to="/about">About</StyledLink> */}
           </Center>
           <Right>
-            {localStorage.getItem('MISisLogin') &&<StyledLink to={linkTo}><MenuItem className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
+            {localStorage.getItem('MISisLogin') &&<StyledLink to={this.state.linkToMyUser}><MenuItem className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
             {/* <MenuIcon></MenuIcon> */}
             {!localStorage.getItem('MISisLogin') && <><StyledLink to="/signin"><MenuItem className="menu-item">Đăng nhập</MenuItem></StyledLink><StyledLink to="/signin"><MenuItem className="menu-item">Đăng ký</MenuItem></StyledLink></>}
             {localStorage.getItem('MISisLogin') && <LogoutItem className="menu-item" onClick={() => {localStorage.clear(); window.location.reload();}}>Đăng xuất</LogoutItem>}
