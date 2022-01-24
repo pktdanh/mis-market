@@ -9,8 +9,12 @@ import {
   UploadOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
+import Table from '../components/table/Table';
+import Model from '../components/model/Model';
 
 const { Header, Content, Footer, Sider } = Layout;
+
+
 
 function Home() {
 
@@ -29,11 +33,11 @@ function Home() {
       }}
     >
       <div className="logo" style={{height: "32px", margin: "16px", background: "rgba(255, 255, 255, 0.2)"}}/>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
-        <Menu.Item key="1" icon={<UserOutlined />} onClick={changeView(1)}>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu.Item key="1" icon={<UserOutlined />} onClick={() => changeView(1)}>
           Tai khoan nguoi dung
         </Menu.Item>
-        <Menu.Item key="2" icon={<ShopOutlined />}>
+        <Menu.Item key="2" icon={<ShopOutlined />} onClick={() => changeView(2)}>
           Cua hang
         </Menu.Item>
         <Menu.Item key="3" icon={<TeamOutlined />}>
@@ -41,18 +45,18 @@ function Home() {
         </Menu.Item>
         <Menu.Item key="4" icon={<BarChartOutlined />}>
           Thong ke
-        </Menu.Item>
-        <Menu.Item key="5" icon={<CloudOutlined />}>
-          nav 5
-        </Menu.Item>
-        <Menu.Item key="6" icon={<AppstoreOutlined />}>
-          nav 6
-        </Menu.Item>
-        <Menu.Item key="7" icon={<UploadOutlined />}>
+        </Menu.Item>        
+        <Menu.Item key="5" icon={<UploadOutlined />}>
           Dia diem dieu tri/ cach ly
         </Menu.Item>
-        <Menu.Item key="8" icon={<VideoCameraOutlined />}>
+        <Menu.Item key="6" icon={<VideoCameraOutlined />}>
           Nguoi quan li
+        </Menu.Item>
+        <Menu.Item key="7" icon={<CloudOutlined />}>
+          nav 5
+        </Menu.Item>
+        <Menu.Item key="8" icon={<AppstoreOutlined />}>
+          nav 6
         </Menu.Item>
       </Menu>
     </Sider>
@@ -60,104 +64,11 @@ function Home() {
       <Header className="site-layout-background" style={{ padding: 0 }} />
       <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
         <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
-          ...
-          <br />
-          Really
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          long
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          ...
-          <br />
-          content
+          <Table></Table>
+          
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer style={{ textAlign: 'center' }}>ADMIN TOOLS - 2022</Footer>
     </Layout>
   </Layout>
     )
