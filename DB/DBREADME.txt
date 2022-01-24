@@ -4,4 +4,11 @@ A lot of Data
 -----------
 3.1
 Full data shipper
+-----------
+3.2
+Add data shop for full quan/huyen
+Add data khachhang
+Add data hoadon
+Add data chitiethoadon
+Add data lsgiaohang
 
