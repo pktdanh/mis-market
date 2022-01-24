@@ -37,7 +37,7 @@ function App() {
                <Route path="/about" exact component={About} />
                <Route path="/aboutme/:id" exact component={AboutMe} />
                <Route path="/myorder" exact component={MyOrder} />
-               <Route path="/myorder/:id" exact component={OrderDetail} />
+               <Route path="/myorder/:id" exact component={AboutMe} />
                <Route path="/store" exact component={Store} />
                <Route path="/store/:id" exact component={Store} />
                <Route path="/signin" exact component={Login} />
