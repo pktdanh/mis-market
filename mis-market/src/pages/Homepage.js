@@ -135,8 +135,26 @@ const BannerButton = styled.div`
   line-height: 20px;
   text-transform: uppercase;
   display: none;
+  & > a {
+    color: white !important;
+  }
+  & > a:hover {
+    text-decoration: none !important;
+    color: white !important;
+  }
+  & > a:focus, & > a:hover, & > a:visited, & > a:link, & > a:active {
+    text-decoration: none;
+    color: #fff;
+  }
 `;
-
+const ATag = styled.a`
+  color: white !important;
+  text-decoration: none !important;
+  &:hover {
+    text-decoration: none !important;
+    color: white !important;
+  }
+`
 const Banner = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -312,7 +330,7 @@ const Homepage = (props) => {
         <ImageTag>
           <ImageTagCollection>ĐI CHỢ THUÊ</ImageTagCollection>
           <ImageTagSeason>CHUNG TAY CÙNG CHỐNG DỊCH COVID-19</ImageTagSeason>
-          <ImageTagButton>MUA NGAY</ImageTagButton>
+          <ImageTagButton><ATag href="#product">MUA NGAY</ATag></ImageTagButton>
         </ImageTag>
         <i className="fas fa-chevron-right" onClick={() => {
           let s1 = document.getElementById("slide-img-1");
@@ -360,8 +378,8 @@ const Homepage = (props) => {
           </BannerWrapper>
         </BannerItem>
       </Banner>
-      <WrapProduct>
-        <Product typeQuery='all'>
+      <WrapProduct id="product">
+        <Product  typeQuery='all'>
         </Product>
       </WrapProduct>
         

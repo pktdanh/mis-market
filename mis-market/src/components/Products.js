@@ -332,55 +332,97 @@ export const Products = (props) => {
   console.log("re-render Product component")
   let API_URL 
   useEffect(() => {
-    // props.actFetchProductsRequest(); 
     console.log("chay zo day")
     let isMounted = true;  
-    let method = 'GET'
-    if (props.typeQuery === 'all'){
-      API_URL = 'https://localhost:44352/api/product/all';
+    
+    if (props.typeQuery === 'store') {
+      if (isMounted) setProducts(props.data)
+        // check
+        console.log("data:", props.data)
+        if (isMounted) setproducts(props.data)
     }
-    else if (props.typeQuery === 'many'){
-      console.log("many")
-      API_URL = `https://localhost:44352/api/product/many/${props.query}`;
+    else {
+      let method = 'GET'
+      if (props.typeQuery === 'all'){
+        API_URL = 'https://localhost:44352/api/product/all';
+      }
+      else if (props.typeQuery === 'many'){
+        console.log("many")
+        API_URL = `https://localhost:44352/api/product/many/${props.query}`;
+        console.log(API_URL)
+      }
+      else if (props.typeQuery === 'one'){
+        API_URL = `https://localhost:44352/api/product/one/${props.query}`;
+      }
       console.log(API_URL)
+      let d = axios({
+        method,
+        url: API_URL,
+        data: null
+      }).catch(err => {
+        console.log(err);
+      }).then(res => {
+        console.log('data:',res.data)
+        
+        if (isMounted) setProducts(res.data)
+        // check
+        console.log("call api")
+        if (isMounted) setproducts(res.data)
+        
+      });
     }
-    else if (props.typeQuery === 'one'){
-      API_URL = `https://localhost:44352/api/product/one/${props.query}`;
-    }
-    console.log(API_URL)
-    let d = axios({
-      method,
-      url: API_URL,
-      data: null
-    }).catch(err => {
-      console.log(err);
-    }).then(res => {
-      console.log('data:',res.data)
-      
-      if (isMounted) setProducts(res.data)
-      // check
-      console.log("call api")
-      if (isMounted) setproducts(res.data)
-      
-    });
     return () => { isMounted = false };
   }, [])
    
 
   if (_products.length > 0) {
-    
+    if (props.typeQuery === 'store'){
+      return (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <ProductWrapper>
+            <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
+            <Filter productList={_products} productListDefault={products}></Filter>
+            <Container>
+              {
+                _products.map((item) => {  
+                  return (
+                  <WrapItem key={item.maSP}>
+                    <StyledLink to={"/product/"+ item.maSP}>
+                    <ProductItem key={item.MaSP}>
+                      <ProductImage src={item.AnhSP} alt="TEE" />
+                      <ProductTitle>{item.TenSP}</ProductTitle>
+                      <ProductPrice>Giá: <Highlight>{item.GiaSP} VNĐ</Highlight></ProductPrice>
+                      <ProductPrice>Đã bán: <Highlight>{item.SoSPDaBan}</Highlight></ProductPrice>
+                      <ProductPrice>Đánh giá: <Highlight>{item.AvgRating}</Highlight><StarIcon style={{fontSize: "18px",transform:"translateY(-1px)",color:"#dd9d0d",marginLeft:"2px"}}></StarIcon></ProductPrice>
+                    </ProductItem>
+                    </StyledLink>
+  
+              
+  
+  
+                    <ProducAddtocart onClick={() => props.AddCart(item)}>
+                        Thêm vào giỏ hàng
+                      </ProducAddtocart>
+                  </WrapItem>
+                )})
+              }
+  
+            </Container>
+  
+          </ProductWrapper>
+        </div>
+      )
+    }
+    else {
     return (
-      // <FilterContext.Provider value={{
-      //   products: _products,
-      //   updateproducts: (lp) => {console.log("f: ", lp); console.log("p: ", _products) ;return setProducts(lp)}
-      //   }}>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
           <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
           <Filter productList={_products} productListDefault={products}></Filter>
           <Container>
             {
-              _products.map((item) => {  return (
+              _products.map((item) => {  
+                return (
                 <WrapItem key={item.maSP}>
                   <StyledLink to={"/product/"+ item.maSP}>
                   <ProductItem key={item.maSP}>
@@ -392,7 +434,7 @@ export const Products = (props) => {
                   </ProductItem>
                   </StyledLink>
 
-                  <StyledLink style={{marginLeft: "30px"}} to={"/store/" + item.iD_Store}>
+                  <StyledLink style={{marginLeft: "30px"}} to={"/store/" + item.account_CH}>
                     <p>Cửa hàng: <Highlight style={{marginLeft: "-8px"}}>{item.tenCH}</Highlight></p>
                   </StyledLink>
 
@@ -408,8 +450,7 @@ export const Products = (props) => {
 
         </ProductWrapper>
       </div>
-      // </FilterContext.Provider>
-    )
+    )}
   }
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
