@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ConfigProvider } from 'antd';
+import enUS from 'antd/lib/locale/vi_VN';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ConfigProvider locale={enUS}>
+    <React.StrictMode>
     <App />
-  </React.StrictMode>,
+    </React.StrictMode>
+  </ConfigProvider>,
   document.getElementById('root')
 );
 

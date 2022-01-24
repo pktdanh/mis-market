@@ -4,6 +4,13 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@ant-design/pro-card": "^1.18.25",
+    "@ant-design/pro-descriptions": "^1.10.35",
+    "@ant-design/pro-form": "^1.52.13",
+    "@ant-design/pro-layout": "^6.32.6",
+    "@ant-design/pro-list": "^1.21.20",
+    "@ant-design/pro-skeleton": "^1.0.4",
+    "@ant-design/pro-table": "^2.62.7",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -16,6 +23,10 @@
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+ },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

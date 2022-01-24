@@ -1,70 +1,123 @@
-# Getting Started with Create React App
+------------------------------------------------------------------------------------------------------------------------
+					SERVER C#
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+REGISTER BODY
+{
+  "hoTen": "Tran Van B",
+  "cmnd": "123456789",
+  "ngaySinh": "11-06-2000",
+  "bienSo": "60H30101",
+  "maBangLai": "123123123",
+  "sdt": "0123432151",
+  "email": "bcdef@gmail.com",
+  "diaChi": "mot noi xa",
+  "maPhuongXa": "hcmpn01",
+  "taiKhoan": {
+    "username": "sp12301",
+    "password": "abcdef"
+  }
+}
 
-## Available Scripts
+------------------------------------------------------------
 
-In the project directory, you can run:
+LOGIN BODY:
+{
+  "username": "sp12301",
+  "password": "abcdef"
+}
 
-### `npm start`
+------------------------------------------------------------
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+POST ONE SHIPPER BODY:
+{
+  "accountID": "sp0201"
+}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+------------------------------------------------------------
 
-### `npm test`
+POST HISTORY SHIPPER BODY:
+{
+  "accountID": "sp0201"
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+------------------------------------------------------------
 
-### `npm run build`
+POST INVOICE SHIPPER BODY:
+{
+  "account_S": "sp0201"
+}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+------------------------------------------------------------
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+POST INVOICE CUSTOMER:
+{
+  "account_S": "kh001"
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+------------------------------------------------------------
 
-### `npm run eject`
+POST INVOICE DETAIL:
+{
+  "maHD": "kh00101"
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+------------------------------------------------------------
+POST INVOICE STORE HANDLING:
+{
+  "account_CH": "ch001"
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+----------------------------------------------------------------------------------------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+				SERVER JAVA
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+GET ALL STORE: 
+http://localhost:8080/api/store/all
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+------------------------------------------------------------
 
-### Deployment
+POST ONE STORE:
+http://localhost:8080/api/store/one
+{
+  "accountID": "ch001"
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+POST ACCOUNT PAGING:
+http://localhost:8080/api/account/all/paging
+{
+  "AccountPerPage": 8
+}
 
-### `npm run build` fails to minify
+POST DELETE STORE:
+http://localhost:8080/api/store/delete
+{
+  "accountID": "ch008"
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+POST ADD PRODUCT:
+http://localhost:8080/api/store/upproduct
+{
+  "maSP": "sp121",
+  "tenSP": "Test",
+  "anhSP": "",
+  "moTaSP": "",
+  "ngayDang": "2022-01-23",
+  "giaSP": "10000",
+  "soLuongTon": "10",
+  "soSPDaBan": "0",
+  "avgRating": "0",
+  "soRating": "0",
+  "loaiSP": "lsp001",
+  "account_CH": "ch001" 
+}
+
