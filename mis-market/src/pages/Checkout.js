@@ -191,6 +191,8 @@ function Checkout({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
     const [wardID, setWardID] = useState('')
     let ListCart = [];
     let TotalCart=0;
+    let orderArray = [];
+    let numbOfStore =  new Set()
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -230,8 +232,69 @@ function Checkout({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
     Object.keys(items.Carts).forEach(function(item){
         TotalCart+=items.Carts[item].quantity * items.Carts[item].price;
         ListCart.push(items.Carts[item]);
-        console.log(ListCart);
+        // console.log("listcart ne:",ListCart);
+        numbOfStore.add(items.Carts[item].storeID)
     });
+
+    (function(){
+        if (numbOfStore.size > 1){
+            numbOfStore.forEach((item,index) => {
+                orderArray.push({
+                    storeID: item,
+                    listProduct: [],
+                    totalOrder: 0,
+                })
+            })
+              
+            if (orderArray.length > 0){
+                orderArray.forEach((item,index) => {
+                    ListCart.forEach((item2,index2)=>{
+                        if (item2.storeID === item.storeID){
+                            item.listProduct = [...item.listProduct,item2] 
+                            item.totalOrder += (item2.price - 0)*(item2.quantity - 0)
+                        }
+                    })
+                })
+            }
+                
+            
+        }
+        // console.log("hehe:",orderArray)
+    })();
+
+    function handleOrder(values){
+        orderArray.forEach((item,index)=>{
+            let value = {
+                "phiShip": "20000",
+                "tongTien": `${item.TotalPrice}`,
+                "account_CH": `${item.storeID}`,
+                "account_KH": `${userID}`,
+                "danhSachSanPham": [
+                    
+                ]
+
+            }
+            item.listProduct.forEach((item2,index2)=>{
+                value.danhSachSanPham.push({
+                    "maSP": item2.id,
+                    "soLuong": item2.quantity,
+                })
+            })
+            axios({
+                method: 'post',
+                url: 'https://localhost:44352/api/invoice/buy',
+                data: values
+              }).then(function (res) {
+                console.log("res.data: ",res.data)                
+                
+              })
+              .catch(function (err) {
+                  console.log(err)
+              }
+              )
+        })
+    }
+
     function TotalPrice(price,tonggia){
         return Number(price * tonggia).toLocaleString('en-US');
     }
@@ -280,9 +343,9 @@ function Checkout({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                     <span style={{fontWeight: "bold"}}>Tổng:</span>
                     <span>{Number(TotalCart).toLocaleString('en-US')} vnđ</span>
                 </Total>
-                <StyledLink style={{}} to={"/checkout/" + userID}>
-                    <ButtonCheckout>Thanh toán</ButtonCheckout>
-                </StyledLink>
+                
+                <ButtonCheckout onClick={handleOrder}>Thanh toán</ButtonCheckout>
+                
 
             </CheckoutSide>
         </Container>
