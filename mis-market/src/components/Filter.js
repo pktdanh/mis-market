@@ -141,23 +141,47 @@ const SearchInput = styled.input`
 const Filter = ({ productList, defaultProductList }) => {
     console.log("re-render Filter")
     const filterProductContext = useContext(FilterProductContext);
-
+    const [search, setSearch] = useState('')
     
+
+    let handleSearch = () => {
+        handleShowHide()
+        let _products = filterProductContext.listDef;
+        if (search !== ''){
+            console.log("search",search)
+            const result = _products.filter(
+                (item) => item.tenSP.includes(search)
+            );
+            if (result.length === 0){
+                filterProductContext.updateCount(filterProductContext.listDef);
+                return
+            }
+            filterProductContext.updateCount(result);
+        }
+    } 
 
     let changeproductInFilter = (filterOrderBy, filterPrice, check=1) => {
         let _products
         if (check === 2){
+            console.log("Ccccccc")
             _products = defaultProductList;
         }
         else {
             _products = productList;
         }
-        let ls = defaultProductList;
-        console.log("ls begin:",ls)
+        let ls = productList;
+        console.log("ls begin:",defaultProductList)
+        
+        
+        
         if (filterPrice === "all") {
+            console.log("rs:",_products)
+            ls = defaultProductList
             setPrice("all");
         } else if (filterPrice === "1") {
             // 1000-50000
+            console.log("rs:",_products)
+
             const result = _products.filter(
                 (item) => item.giaSP >= 1000 && item.giaSP < 50000
             );
@@ -167,6 +191,8 @@ const Filter = ({ productList, defaultProductList }) => {
             setPrice("1");
         } else if (filterPrice === "2") {
             // 50000-100000
+            console.log("rs:",_products)
+
             const result = _products.filter(
                 (item) => item.giaSP >= 50000 && item.giaSP < 100000
             );
@@ -175,6 +201,8 @@ const Filter = ({ productList, defaultProductList }) => {
             console.log("ls",ls)
             setPrice("2");
         } else if (filterPrice === "3") {
+            console.log("rs:",_products)
+
             // 100000-200000
             const result = _products.filter(
                 (item) => item.giaSP >= 100000 && item.giaSP < 200000
@@ -184,17 +212,20 @@ const Filter = ({ productList, defaultProductList }) => {
             console.log("ls",ls)
             setPrice("3");
         } else if (filterPrice === "4") {
+            console.log("rs:",_products)
+
             // 200000-500000
             const result = _products.filter(
-                (item) => item.giaSP >= 200000 && item.giaSP < 500000
+                (item) => item.giaSP >= 200000 && item.giaSP < 400000
             );
 
             ls = result;
             console.log("ls",ls)
             setPrice("4");
         } else if (filterPrice === "5") {
+            console.log("rs:",_products)
             //  > 500000
-            const result = _products.filter((item) => item.giaSP >= 500000);
+            const result = _products.filter((item) => item.giaSP >= 400000);
 
             ls = result;
             console.log("ls",ls)
@@ -203,6 +234,8 @@ const Filter = ({ productList, defaultProductList }) => {
         }
 
         if (filterOrderBy === "default") {
+            ls = defaultProductList
+            setOrderBy("default");
         } else if (filterOrderBy === "vote") {
             ls.sort((a, b) => b.avgRating - a.avgRating);
             console.log("ls",ls)
@@ -220,9 +253,21 @@ const Filter = ({ productList, defaultProductList }) => {
             console.log("ls",ls)
             setOrderBy("hightolow");
         }
-
+        
+        if (ls.length === 0){
+            filterProductContext.updateCount(filterProductContext.listDef);
+            return
+        }
         filterProductContext.updateCount(ls);
     };
+
+    let handleShowHide = () => {
+        let option = document.getElementById("option-filter");
+        
+        option.style.maxHeight = "0";
+            // option.style.transitionTimingFunction = "cubic-bezier(0.46, 0.14, 0.93, 0.76)"
+        return setShowFilter(false);
+    }
 
     const [showFilter, setShowFilter] = useState(false);
     const [orderBy, setOrderBy] = useState("default");
@@ -233,7 +278,7 @@ const Filter = ({ productList, defaultProductList }) => {
                 <ProductFilterButton
                     onClick={() => {
                         let option = document.getElementById("option-filter");
-                        if (showFilter === false) {
+                        if (showFilter === true) {
                             option.style.maxHeight = "0";
                             // option.style.transitionTimingFunction = "cubic-bezier(0.46, 0.14, 0.93, 0.76)"
                         } else {
@@ -246,7 +291,7 @@ const Filter = ({ productList, defaultProductList }) => {
                     <FilterListIcon></FilterListIcon>
                     Bộ lọc
                 </ProductFilterButton>
-                <ProductSearchButton>
+                <ProductSearchButton onClick={()=> handleSearch()}>
                     <SearchIcon></SearchIcon>
                     Tìm kiếm
                 </ProductSearchButton>
@@ -258,6 +303,8 @@ const Filter = ({ productList, defaultProductList }) => {
                     name="search"
                     id="searchbar"
                     placeholder="Tìm kiếm..."
+                    value = {search}
+                    onChange={(e) => setSearch(e.target.value)}
                 />
             </SearchBar>
             <OptionFilter id="option-filter">
@@ -333,13 +380,13 @@ const Filter = ({ productList, defaultProductList }) => {
                             choosen={price === "4" ? true : false}
                             onClick={() => changeproductInFilter(null, "4",2)}
                         >
-                            200 000VND - 500 000VND
+                            200 000VND - 400 000VND
                         </FilterLink>
                         <FilterLink
                             choosen={price === "5" ? true : false}
                             onClick={() => changeproductInFilter(null, "5",2)}
                         >
-                            500 000VND+
+                            400 000VND+
                         </FilterLink>
                     </ul>
                 </Price>

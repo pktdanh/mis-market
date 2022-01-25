@@ -367,7 +367,10 @@ export const Products = (props) => {
         if (isMounted) setProducts(res.data)
         // check
         console.log("call api")
-        if (isMounted) setproducts(res.data)
+        if (isMounted){ 
+          setproducts(res.data)
+          filterProductContext.updateListProductDefault(res.data)
+        }
       });
     }
     return () => { isMounted = false };
