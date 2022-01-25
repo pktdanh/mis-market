@@ -12,15 +12,47 @@ const Heading = styled.h3`
 `;
 
 const Wrapper = styled.div`
-
+    margin-left: 20px;
+    margin-bottom: 20px;
 `
 const WrapperGrid = styled.div`
-
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 `
 const FormGroup = styled.div`
-
+    padding-left:10px;
+    padding: 10px 0;
+    & > label,span {
+        font-size: 18px;
+    }
+    & > label {
+        font-weight: bold;
+    }
+    & > span {
+        padding-left: 12px;
+    }
 `
-
+const Line = styled.div`
+    border-bottom: 1px solid black;
+    margin-bottom: 40px;
+`
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    padding: 0;
+    & > label {
+        font-weight: bold;
+    }
+    & > span {
+        padding-left: 12px;
+    }
+    &:hover{
+      /* border: 2px solid rgb(99,113,198); */
+    }
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: #000;
+    }
+`;
 const Order = ({userID}) => {
     const [invoiceID, setInvoiceID] = useState('')
     const [invoice, setInvoice] = useState({})
@@ -69,7 +101,7 @@ const Order = ({userID}) => {
   
     //set invoice when invoiceID change
     useEffect(() => {
-      let API_URL = 'https://localhost:44352/api/invoice/one';
+        let API_URL = 'https://localhost:44352/api/invoice/one';
         // props.actFetchProductsRequest();  
         let method = 'POST'
         let d = axios({
@@ -84,7 +116,7 @@ const Order = ({userID}) => {
           if (res.data.length > 0){
             setInvoice(res.data[0])
             setStoreAddress(res.data[0].diaChiCuaHang.diaChiChiTiet)
-            console.log('hehehehe:',res.data[0].diaChiCuaHang.diaChiChiTiet)
+            setCustomerAddress(res.data[0].diaChiKhachHang.diaChiChiTiet)
           }
             
         });
@@ -96,7 +128,6 @@ const Order = ({userID}) => {
         <thead>
             <tr style={{height:"36px",borderBottom:"solid 1px #ccc"}}>
             <th scope="col">Mã Đơn hàng</th>
-            <th scope="col">Địa chỉ</th>
             <th scope="col">Tổng tiền</th>
             <th scope="col">Thời gian</th>
             </tr>
@@ -106,7 +137,6 @@ const Order = ({userID}) => {
                 if (item.maHD === invoiceID) {
                     return <tr onClick={()=>{setInvoiceID(item.maHD)}} style={{height:"60px",borderBottom:"solid 1px #d7d7d7",cursor:"pointer",backgroundColor:"#277ce5",color:"white",transition:"all .2s linear"}} key={index}>
                     <th style={{transform:"translateX(10px)",transition:"all .2s linear"}} scope="row">{item.maHD}</th>
-                    <td>{item.diaChiKhachHang.diaChiChiTiet}</td>
                     <td>{item.tongTien}</td>
                     <td>{item.ngayLap}</td>
                 </tr>
@@ -114,7 +144,6 @@ const Order = ({userID}) => {
                 else {
                     return <tr onClick={()=>{setInvoiceID(item.maHD)}} style={{height:"60px",borderBottom:"solid 1px #d7d7d7",cursor:"pointer"}} key={index}>
                     <th scope="row">{item.maHD}</th>
-                    <td>{item.diaChiKhachHang.diaChiChiTiet}</td>
                     <td>{item.tongTien}</td>
                     <td>{item.ngayLap}</td>
                 </tr>
@@ -124,20 +153,51 @@ const Order = ({userID}) => {
             
         </tbody>
     </table>
-
+    <Line></Line>
     { (typeof invoice === 'undefined') ?<></> : <><Heading style={{marginLeft: "10px"}}>Chi tiết đơn hàng: <strong>{invoiceID}</strong></Heading>
       <Wrapper>
         <WrapperGrid>
             <FormGroup>
-
+                <StyledLink  to={"/store/" + invoice.account_CH}>
+                    <label>Tên cửa hàng:</label>
+                    <span>{invoice.tenCH}</span>
+                </StyledLink>
+            </FormGroup>
+            <FormGroup>
+                <label>Tên shipper:</label>
+                <span>{invoice.hoTenS}</span>
+            </FormGroup>
+            <FormGroup>
+                <label>Tổng đơn hàng:</label>
+                <span>{invoice.tongTien} vnđ</span>
+            </FormGroup>
+            <FormGroup>
+                <label>Phí ship:</label>
+                <span>{invoice.phiShip} vnđ</span>
+            </FormGroup>
+            <FormGroup>
+                <label>Hình thức thanh toán:</label>
+                <span>{invoice.tenTT}</span>
+            </FormGroup>
+            <FormGroup>
+                <label>Trạng thái giao hàng:</label>
+                <span>{invoice.trangThai}</span>
             </FormGroup>
         </WrapperGrid>
         <FormGroup>
           <label>Giao từ:</label>
           <span>{storeAddress}</span>
-          <span>{invoice.maHD}</span>
+        </FormGroup>
+        <FormGroup>
+          <label>Giao đến:</label>
+          <span>{customerAddress}</span>
         </FormGroup>
       </Wrapper>
+    
+    
+    
+    <Line></Line>
+    
     <Heading style={{marginLeft: "10px"}}>Danh sách sản phẩm </Heading></>}
     <table style={{marginLeft: "20px",borderBottom:"solid 2px #ccc"}}>
         <thead>
@@ -145,7 +205,7 @@ const Order = ({userID}) => {
             <th scope="col">Mã sản phẩm</th>
             <th scope="col">Tên sản phẩm</th>
             <th scope="col">Số lượng</th>
-            <th scope="col">Đơn giá</th>
+            <th scope="col">Đơn giá (VNĐ)</th>
             </tr>
         </thead>
         <tbody>

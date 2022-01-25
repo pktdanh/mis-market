@@ -21,6 +21,7 @@ import OrderDetail from './pages/OrderDetail';
 import Store from './pages/Store';
 import Login from './pages/Login';
 import Collection from './pages/Collection';
+import Checkout from './pages/Checkout';
 
 import './App.css'
 function App() {
@@ -40,6 +41,7 @@ function App() {
                <Route path="/myorder/:id" exact component={AboutMe} />
                <Route path="/store" exact component={Store} />
                <Route path="/store/:id" exact component={Store} />
+               <Route path="/checkout/:id" exact component={Checkout} />
                <Route path="/signin" exact component={Login} />
                <Route path="*">
             <NoMatch />

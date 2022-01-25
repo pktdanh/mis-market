@@ -1,9 +1,11 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { connect } from "react-redux";
-import {IncreaseQuantity,DecreaseQuantity,DeleteCart} from './actions';
+import {IncreaseQuantity,DecreaseQuantity,DeleteCart} from '../components/actions';
 import styled from "styled-components";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Link, useLocation } from 'react-router-dom'
+import axios from 'axios';
+
 
 
 const Container = styled.div`
@@ -11,7 +13,6 @@ const Container = styled.div`
     width: 100vw;
     padding:100px;
 `;
-
 
 const CartSide = styled.div`
     display: flex;
@@ -154,8 +155,40 @@ const StyledLink = styled(Link)`
     }
 `;
 
-function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
+const Wrapper = styled.div`
+    margin-left: 20px;
+    margin-bottom: 20px;
+`
+const WrapperGrid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+`
+const FormGroup = styled.div`
+    padding-left:10px;
+    padding: 10px 0;
+    & > label,span {
+        font-size: 18px;
+    }
+    & > label {
+        font-weight: bold;
+    }
+    & > span {
+        padding-left: 12px;
+    }
+`
+const Heading = styled.h3`
+    padding-left: 20px;
+    margin-bottom: 20px;
+`;
+
+function Checkout({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
   //  console.log(items)
+    const location = useLocation();
+    let userID = location.pathname.split("/").pop();
+    const [address, setAddress] = useState('')
+    const [data, setData] = useState([])
+
+    const [wardID, setWardID] = useState('')
     let ListCart = [];
     let TotalCart=0;
 
@@ -171,6 +204,28 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
         })
 
     }, []);
+
+
+    // call API get Thông tin user
+    useEffect(() => {
+        let API_URL = 'https://localhost:44352/api/customer/one';
+        // props.actFetchProductsRequest();  
+        let method = 'POST'
+        let d = axios({
+        method,
+        url: API_URL,
+        data: {
+            "accountID": userID,
+        }
+        }).catch(err => {
+        console.log(err);
+        }).then(res => {
+            setAddress(res.data.diaChiHienTai.diaChiChiTiet.diaChiChiTiet)
+            setData(res.data)
+            console.log("hello",res.data)
+            setWardID(res.data.diaChiHienTai.diaChiChiTiet.maPhuongXa)
+        });
+    }, [])
 
     Object.keys(items.Carts).forEach(function(item){
         TotalCart+=items.Carts[item].quantity * items.Carts[item].price;
@@ -188,53 +243,33 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
         return(    
         <Container>
             <CartSide className="row">
-                <div className="col-md-12">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Tên sản phẩm</th>
-                            <th>Hình ảnh</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>Tổng giá</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        ListCart.map((item,key)=>{
-                            return(
-                                <tr key={key}>   
-                                <TableData><HighlightOffIcon onClick={()=>DeleteCart(key)} style={{cursor: "pointer",transform:"translateY(-4px)"}}></HighlightOffIcon></TableData>
-                                {/* <TableData><i className="badge badge-danger" onClick={()=>DeleteCart(key)}>X</i></TableData> */}
-                                <TableData><h5 style={{fontSize: "18px"}}>{item.name}</h5></TableData>
-                                <TableData><img src={item.image} style={{width:'100px',height:'auto'}} alt=""/></TableData>
-                                <TableData>{item.price} VNĐ</TableData>
-                                <TableData>
-                                        <ButtonInCart style={{margin:'2px'}} onClick={()=>DecreaseQuantity(key)}>-</ButtonInCart>
-                                        <ButtonInCart>{item.quantity}</ButtonInCart>
-                                        <ButtonInCart style={{margin:'2px'}} onClick={()=>IncreaseQuantity(key)}>+</ButtonInCart>
-                                </TableData>
-                                <TableData>{ TotalPrice(item.price,item.quantity)} VNĐ</TableData>
-                            </tr>
-                            )
-                        })
-                            
-                    }
-                    <tr>
-                        <td colSpan="5">Tổng giỏ hàng</td>
-                        <td style={{fontWeight: "bold"}}>{Number(TotalCart).toLocaleString('en-US')} VNĐ</td>
-                    </tr>
-                    </tbody>
-                
-                </table>
-                </div>
+                <Heading>Thông tin khách hàng</Heading>
+                <Wrapper>
+                    <WrapperGrid>
+                        <FormGroup>
+                            <label>Tên khách hàng:</label>
+                            <span>{data.hoTen}</span>
+                        </FormGroup>
+                        <FormGroup>
+                            <label>Số điện thoại:</label>
+                            <span>{data.sdt}</span>
+                        </FormGroup>
+                    </WrapperGrid>
+                    <FormGroup>
+                        <label>Địa chỉ:</label>
+                        <span>{address}</span>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Hình thức thanh toán:</label>
+                        <span>Thanh toán khi nhận hàng</span>
+                    </FormGroup>
+                </Wrapper>
             </CartSide>
             <CheckoutSide>
-                <CheckoutTitle>TỔNG GIỎ HÀNG</CheckoutTitle>
+                <CheckoutTitle>TỔNG ĐƠN HÀNG</CheckoutTitle>
                 <Subtotal>
                     <span style={{fontWeight: "bold"}}>Tạm tính:</span>
-                    <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
+                    <span>{Number(TotalCart).toLocaleString('en-US')} vnđ</span>
                 </Subtotal>
                 <Shipping>
                     <span style={{fontWeight: "bold"}}>Shipping:</span>
@@ -243,11 +278,12 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                 
                 <Total>
                     <span style={{fontWeight: "bold"}}>Tổng:</span>
-                    <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
+                    <span>{Number(TotalCart).toLocaleString('en-US')} vnđ</span>
                 </Total>
-                <StyledLink style={{}} to={"/checkout/" + JSON.parse(localStorage.getItem('MISuser')).username}>
+                <StyledLink style={{}} to={"/checkout/" + userID}>
                     <ButtonCheckout>Thanh toán</ButtonCheckout>
                 </StyledLink>
+
             </CheckoutSide>
         </Container>
         )
@@ -264,4 +300,4 @@ const mapStateToProps = state =>{
         items:state._todoProduct
     }
 }
-export default connect(mapStateToProps,{IncreaseQuantity,DecreaseQuantity,DeleteCart})(Cart)
+export default connect(mapStateToProps,{IncreaseQuantity,DecreaseQuantity,DeleteCart})(Checkout)
