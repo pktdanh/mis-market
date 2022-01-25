@@ -4,6 +4,7 @@ import {IncreaseQuantity,DecreaseQuantity,DeleteCart} from './actions';
 import styled from "styled-components";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Link, useLocation } from 'react-router-dom'
+import axios from "axios";
 
 
 const Container = styled.div`
@@ -158,6 +159,7 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
   //  console.log(items)
     let ListCart = [];
     let TotalCart=0;
+    
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -174,10 +176,15 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
 
     Object.keys(items.Carts).forEach(function(item){
         TotalCart+=items.Carts[item].quantity * items.Carts[item].price;
+        console.log("nanan:",ListCart);
         ListCart.push(items.Carts[item]);
-        console.log(ListCart);
+        console.log("item:",items)
     });
+
+    
+
     function TotalPrice(price,tonggia){
+        
         return Number(price * tonggia).toLocaleString('en-US');
     }
     
@@ -245,9 +252,10 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                     <span style={{fontWeight: "bold"}}>Tổng:</span>
                     <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
                 </Total>
-                <StyledLink style={{}} to={"/checkout/" + JSON.parse(localStorage.getItem('MISuser')).username}>
+                <StyledLink style={{}} to={"/checkout/"+ JSON.parse(localStorage.getItem('MISuser')).username}>
                     <ButtonCheckout>Thanh toán</ButtonCheckout>
                 </StyledLink>
+                
             </CheckoutSide>
         </Container>
         )

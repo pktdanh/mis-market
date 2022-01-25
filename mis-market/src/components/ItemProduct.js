@@ -383,7 +383,7 @@ export const ItemProduct = (props) => {
                             </UpQuantity>
                         </ProductChooseQuantity>
                     </ProductQuantity>
-                    <AddToCart onClick={() => {product['soLuong'] = quantity; return props.AddCart(product)}}>
+                    <AddToCart onClick={() => {console.log("product ne:",product);product['soLuong'] = quantity; return props.AddCart(product)}}>
                         THÊM VÀO GIỎ HÀNG
                     </AddToCart>
                 </ProductInfo>

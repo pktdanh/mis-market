@@ -20,14 +20,15 @@ function todoProduct(state = initProduct,action){
                     ...state
                 }
         case ADD_CART:
-            
+            console.log("so luong na:",action.payload.soLuong)
             if(state.numberCart==0){
                 let cart = {
                     id:action.payload.maSP,
                     quantity:action.payload.soLuong ,
                     name:action.payload.tenSP,
                     image: action.payload.anhSP,
-                    price:action.payload.giaSP
+                    price:action.payload.giaSP,
+                    storeID: action.payload.account_CH, 
                 }
                 state.Carts.push(cart);
             }
@@ -45,7 +46,8 @@ function todoProduct(state = initProduct,action){
                         quantity:action.payload.soLuong,
                         name:action.payload.tenSP,
                         image: action.payload.anhSP,
-                        price:action.payload.giaSP
+                        price:action.payload.giaSP,
+                        storeID: action.payload.account_CH,
                     }
                     state.Carts.push(_cart);
                 }

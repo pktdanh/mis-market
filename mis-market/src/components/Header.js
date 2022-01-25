@@ -149,6 +149,7 @@ const StyledMenuIcon = styled(MenuIcon)`
 export class Header extends Component {
   constructor(props) {
     super(props);
+    console.log("hehe:", this.props.numberCart);
     this.state = {
       linkToMyUser: localStorage.getItem('MISuser') ? `/aboutme/${JSON.parse(localStorage.getItem('MISuser')).username}` : ``,
       linkToMyOrder: localStorage.getItem('MISuser') ? `/myorder/${JSON.parse(localStorage.getItem('MISuser')).username}` : ``,

@@ -305,6 +305,7 @@ export const Products = (props) => {
   const filterProductContext = useContext(FilterProductContext)
 
   console.log("filterContext: ",filterProductContext)
+  const [quantity, setquantity] = useState(1);
   
 
   useEffect(() => {
@@ -362,13 +363,11 @@ export const Products = (props) => {
       }).catch(err => {
         console.log(err);
       }).then(res => {
-        console.log('data:',res.data)
         
         if (isMounted) setProducts(res.data)
         // check
         console.log("call api")
         if (isMounted) setproducts(res.data)
-        
       });
     }
     return () => { isMounted = false };
@@ -439,9 +438,9 @@ export const Products = (props) => {
                   </StyledLink>
 
 
-                  <ProducAddtocart onClick={() => props.AddCart(item)}>
+                  <ProducAddtocart onClick={() => {item['soLuong'] = quantity; return props.AddCart(item)}}>
                       Thêm vào giỏ hàng
-                    </ProducAddtocart>
+                  </ProducAddtocart>
                 </WrapItem>
               )})
             }
