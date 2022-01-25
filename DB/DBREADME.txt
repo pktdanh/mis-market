@@ -15,3 +15,6 @@ Add data lsgiaohang
 3.3
 add 400 SanPham
 add dichiKH
+---------
+3.4
+change LichSuGiaoHang key 
