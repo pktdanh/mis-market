@@ -12,6 +12,7 @@ function FilterProductProvider({children}){
             setListProduct(newListProduct)
         },
         updateCount: (newListProduct) => {
+            console.log("update count ne")
             setListProduct(newListProduct)
             setCount(count+1)
         }

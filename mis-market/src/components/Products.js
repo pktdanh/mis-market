@@ -374,7 +374,7 @@ export const Products = (props) => {
   }, [])
    
 
-  if (_products.length > 0) {
+  if (_products.length > 0 && products.length > 0) {
     if (props.typeQuery === 'store'){
       return (
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -417,7 +417,7 @@ export const Products = (props) => {
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
           <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
-          <Filter productList={_products} productListDefault={products}></Filter>
+          <Filter productList={_products} defaultProductList={products}></Filter>
           <Container>
             {
               _products.map((item) => {  
