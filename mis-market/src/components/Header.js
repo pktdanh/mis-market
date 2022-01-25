@@ -150,8 +150,8 @@ export class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      linkToMyUser: `/aboutme/${JSON.parse(localStorage.getItem('MISuser')).username}`,
-      linkToMyOrder: `/myorder/${JSON.parse(localStorage.getItem('MISuser')).username}`
+      linkToMyUser: localStorage.getItem('MISuser') ? `/aboutme/${JSON.parse(localStorage.getItem('MISuser')).username}` : ``,
+      linkToMyOrder: localStorage.getItem('MISuser') ? `/myorder/${JSON.parse(localStorage.getItem('MISuser')).username}` : ``,
     };
   }
   render() {

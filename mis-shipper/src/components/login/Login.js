@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, notification } from 'antd';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -14,6 +14,46 @@ const LoginTitle = styled.h2`
     text-align: center;
 `;
 
+
+const close = () => {
+    
+};
+
+const notiFalse = () => {
+  const key = `open${Date.now()}`;
+  const btn = (
+    <Button type="primary" size="small" onClick={() => notification.close(key)}>
+      Xác nhận
+    </Button>
+  );
+  notification.open({
+    message: 'Thông báo',
+    description:
+      'Sai tên đăng nhập hoặc mật khẩu.',
+    btn,
+    key,
+    onClose: close,
+  });
+};
+
+const notiTrue = () => {
+  const key = `open${Date.now()}`;
+  const btn = (
+    <Button type="primary" size="small" onClick={() => notification.close(key)}>
+      Xác nhận
+    </Button>
+  );
+  notification.open({
+    message: 'Thông báo',
+    description:
+      'Đăng nhập thành công.',
+    btn,
+    key,
+    onClose: close,
+  });
+};
+
+
 const Login = () => {
     let context = useContext(MyContext)
 
@@ -26,12 +66,15 @@ const Login = () => {
       data: values
     }).then(function (res) {
       // console.log(res.data == "") // login failed
-      if(res.data == ""){values
+      if(res.data.accountID === ""){
+        console.log("Error")
+        notiFalse()
         return;
       } else {
         console.log(res.data)
-        context.updateLogin(context.isLogin)
+        context.updateLogin()
         context.updateUser(JSON.stringify(res.data))
+        notiTrue()
       }
       
     });
@@ -49,7 +92,7 @@ const Login = () => {
     <Form
       name="basic"
       labelCol={{
-        span: 8,
+        span: 4,
       }}
       wrapperCol={{
         span: 16,

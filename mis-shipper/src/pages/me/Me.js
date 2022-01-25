@@ -6,7 +6,7 @@ import { MyContext } from '../../App';
 
 import HistoryInvoices from '../../components/HistoryInvoices/HistoryInvoices';
 import PersionalInformation from '../../components/PersionalInformation/PersionalInformation';
-
+import InvoiceNow from '../../components/InvoiceNow/InvoiceNow';
 const MeContainer = styled.div`
     padding: 20px;
     display: flex;
@@ -18,6 +18,7 @@ const Me = () => {
   
     return <MeContainer>
       <PersionalInformation></PersionalInformation>
+      <InvoiceNow></InvoiceNow>
       <HistoryInvoices></HistoryInvoices>
   </MeContainer>
        

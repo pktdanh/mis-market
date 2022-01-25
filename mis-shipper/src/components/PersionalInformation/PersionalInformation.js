@@ -60,7 +60,7 @@ const PersionalInformation = () => {
     }, [])
 
     return Object.keys(user).length == 0 ? <></> : <MeContainer>
-    <TitleTag>Thong tin ca nhan:</TitleTag>
+    <TitleTag>Thông tin cá nhân:</TitleTag>
     <List
       dataSource={[
         {
@@ -73,7 +73,7 @@ const PersionalInformation = () => {
           key={item.id}
           actions={[
             <a onClick={showDrawer} key={`a-${item.id}`}>
-              Xem thong tin
+              Xem thông tin
             </a>,
           ]}
         >
@@ -81,7 +81,7 @@ const PersionalInformation = () => {
             avatar={
               <Avatar src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" />
             }
-            title={<a href="https://ant.design/index-cn">{item.name}</a>}
+            title={<a href="/me">{item.name}</a>}
             description="MIS Shipper"
           />
         </List.Item>
@@ -94,15 +94,15 @@ const PersionalInformation = () => {
       onClose={onClose}
       visible={visible}
     >
-      <Button onClick={onClose}>Back</Button>
+      <Button onClick={onClose}>Quay Lại</Button>
       <Divider />
       <p className="site-description-item-profile-p" style={{ marginBottom: 24 }}>
-        Thong tin:
+        Thông tin:
       </p>
-      <p className="site-description-item-profile-p">Ca nhan</p>
+      <p className="site-description-item-profile-p">Cá nhân</p>
       <Row>
         <Col span={24}>
-          <DescriptionItem title="Ten" content={user.hoTen} />
+          <DescriptionItem title="Họ tên" content={user.hoTen} />
         </Col>
       </Row>
       <Row>
@@ -112,45 +112,45 @@ const PersionalInformation = () => {
       </Row>
       <Row>
         <Col span={24}>
-          <DescriptionItem title="Ma bang lai" content={user.maBangLai} />
+          <DescriptionItem title="Mã bằng lái" content={user.maBangLai} />
         </Col>
       </Row>
       <Row>
         <Col span={24}>
-          <DescriptionItem title="Bien so" content={user.bienSo.slice(0, 4) + "-" + user.bienSo.slice(3, 7)} />
+          <DescriptionItem title="Biển số" content={user.bienSo.slice(0, 4) + "-" + user.bienSo.slice(3, 7)} />
         </Col>
       </Row>
       <Row>
         <Col span={24}>
-          <DescriptionItem title="Thanh pho" content="Thanh pho Ho Chi Minh" />
+          <DescriptionItem title="Thành phố" content="Thành phố Hồ Chí Minh" />
         </Col>
         </Row>
         <Row>
         <Col span={24}>
-          <DescriptionItem title="Quoc gia" content="Viet Nam" />
+          <DescriptionItem title="Quốc gia" content="Việt Nam" />
         </Col>
       </Row>
       <Row>
         <Col span={24}>
-          <DescriptionItem title="Ngay sinh" content={user.ngaySinh.slice(0,9)} />
+          <DescriptionItem title="Ngày sinh" content={user.ngaySinh.slice(0,9)} />
         </Col>
         </Row>
         <Row>
         <Col span={24}>
-          <DescriptionItem title="Website" content="mis.store.com.vn" />
+          <DescriptionItem title="Website" content="mis.store.com" />
         </Col>
       </Row>
       <Row>
         <Col span={24}>
           <DescriptionItem
-            title="Dia chi"
+            title="Địa chỉ"
             content={user.diaChiChiTiet.diaChiChiTiet}
           />
         </Col>
       </Row>
       
       <Divider />
-      <p className="site-description-item-profile-p">Lien He</p>
+      <p className="site-description-item-profile-p">Liên hệ</p>
       <Row>
         <Col span={24}>
           <DescriptionItem title="Email" content={user.email} />
@@ -158,7 +158,7 @@ const PersionalInformation = () => {
         </Row>
         <Row>
         <Col span={24}>
-          <DescriptionItem title="So dien thoai" content={user.sdt} />
+          <DescriptionItem title="Số điện thoại" content={user.sdt} />
         </Col>
       </Row>
       <Row>
@@ -166,8 +166,8 @@ const PersionalInformation = () => {
           <DescriptionItem
             title="Github"
             content={
-              <a href="http://github.com/ant-design/ant-design/">
-                github.com/ant-design/ant-design/
+              <a href="/">
+                github.com/pktdanh/mis-market
               </a>
             }
           />

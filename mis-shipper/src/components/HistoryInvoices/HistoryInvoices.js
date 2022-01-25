@@ -36,7 +36,7 @@ function HistoryInvoices() {
         method,
         url: `${API_URL}/${endpoint}`,
         data: {
-        "accountID": userContext.accountID
+            "accountID": userContext.accountID
         }
         }).catch(err => {
         console.log(err);
@@ -57,16 +57,16 @@ function HistoryInvoices() {
     const menu = (shipingHistory) =>(
         <Menu onClick={handleOnClick}>
         {
-            shipingHistory.map((item) => <Menu.Item key={item.maHD}>Hoa don: {item.maHD}</Menu.Item>)
+            shipingHistory.map((item) => <Menu.Item key={item.maHD}>Đơn hàng: {item.maHD}</Menu.Item>)
         }
         </Menu>
     );
     return (
         <HIContainer>
-            <TitleTag>Cac don hang da giao</TitleTag>
+            <TitleTag>Các đơn hàng đã giao</TitleTag>
             {shipingHistory && <Dropdown overlay={menu(shipingHistory)}>
                 <Button type="dashed" block onClick={e => e.preventDefault()}>
-                    Chon don hang
+                    Chọn đơn hàng
                 </Button>
             </Dropdown>}
         </HIContainer>

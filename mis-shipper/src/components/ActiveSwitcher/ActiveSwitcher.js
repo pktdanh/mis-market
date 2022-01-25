@@ -27,16 +27,16 @@ function ActiveSwitcher() {
 const openNotification = (status) => {
     if(status){
         notification.open({
-            message: 'Che do giao hang: dang TAT',
+            message: 'Chế độ nhận đơn: TẮT',
             description:
-              'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+              'Bạn sẽ được thông báo ngay khi có đơn hàng mới.',
             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
           });
     } else {
         notification.open({
-            message: 'Che do giao hang: dang BAT',
+            message: 'Chế độ nhận đơn: BẬT',
             description:
-              'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+              'Bạn sẽ không được thông báo khi có đơn hàng mới.',
             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
           });
     }

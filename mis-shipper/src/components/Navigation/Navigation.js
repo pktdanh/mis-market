@@ -58,19 +58,19 @@ function Navigation() {
             <StyledLink to="/shipping">
                 <NavItem status={ active === 1 ? "active" : "deactive" } onClick={()=>{setActive(1)}}>
                     <Icon fs="24px"><i className="fas fa-shipping-fast"></i></Icon>
-                    <NavTitle>Don Hang</NavTitle>
+                    <NavTitle>Đơn Hàng</NavTitle>
                 </NavItem>
             </StyledLink>
             <StyledLink to="/">
                 <NavItem status={ active === 2 ? "active" : "deactive" } onClick={()=>{setActive(2)}}>
                     <Icon fs="28px"><i className="fas fa-home"></i></Icon>
-                    <NavTitle>Trang Chu</NavTitle>
+                    <NavTitle>Trang Chủ</NavTitle>
                 </NavItem>
             </StyledLink>
             <StyledLink to="/me">
                 <NavItem status={ active === 3 ? "active" : "deactive" } onClick={()=>{setActive(3)}}>
                     <Icon fs="24px"><i className="far fa-meh-rolling-eyes"></i></Icon>
-                    <NavTitle>Toi</NavTitle>
+                    <NavTitle>Tôi</NavTitle>
                 </NavItem>
             </StyledLink>
         </Nav>

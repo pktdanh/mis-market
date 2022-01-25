@@ -8,6 +8,7 @@ const initProduct = {
 }
  
 function todoProduct(state = initProduct,action){
+    console.log("Payload: ", action.payload);
     switch(action.type){
         case GET_ALL_PRODUCT:
             return{
@@ -19,10 +20,11 @@ function todoProduct(state = initProduct,action){
                     ...state
                 }
         case ADD_CART:
+            
             if(state.numberCart==0){
                 let cart = {
                     id:action.payload.maSP,
-                    quantity:1,
+                    quantity:action.payload.soLuong ,
                     name:action.payload.tenSP,
                     image: action.payload.anhSP,
                     price:action.payload.giaSP
@@ -33,14 +35,14 @@ function todoProduct(state = initProduct,action){
                 let check = false;
                 state.Carts.map((item,key)=>{
                     if(item.id==action.payload.maSP){
-                        state.Carts[key].quantity++;
+                        state.Carts[key].quantity+=action.payload.soLuong;
                         check=true;
                     }
                 });
                 if(!check){
                     let _cart = {
                         id:action.payload.maSP,
-                        quantity:1,
+                        quantity:action.payload.soLuong,
                         name:action.payload.tenSP,
                         image: action.payload.anhSP,
                         price:action.payload.giaSP
@@ -50,7 +52,7 @@ function todoProduct(state = initProduct,action){
             }
             return{
                 ...state,
-                numberCart:state.numberCart+1
+                numberCart:state.numberCart+action.payload.soLuong
             }
             case INCREASE_QUANTITY:
                 state.numberCart++
@@ -70,6 +72,7 @@ function todoProduct(state = initProduct,action){
                     ...state
                 }
             case DELETE_CART:
+                
                 let quantity_ = state.Carts[action.payload].quantity;
                 return{
                     ...state,
