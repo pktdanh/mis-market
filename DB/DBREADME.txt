@@ -18,3 +18,8 @@ add dichiKH
 ---------
 3.4
 change LichSuGiaoHang key 
+-----------
+3.5
+replace column token to kichHoat to TaiKhoan
+add new account CuaHang and KhachHang for TaiKhoan
+add new table PhanHoi
