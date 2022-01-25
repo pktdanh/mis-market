@@ -170,12 +170,11 @@ export class Header extends Component {
           <Center id="center">
             <StyledLink to="/">Trang chủ</StyledLink>
             <StyledLink to="/collections/1">Sản phẩm</StyledLink>
-            {localStorage.getItem('MISisLogin') && <StyledLink to={this.state.linkToMyOrder}>Đơn hàng</StyledLink>}
-            {/* <StyledLink to="/">Blog</StyledLink> */}
-            {/* <StyledLink to="/about">About</StyledLink> */}
+            
+            
           </Center>
           <Right>
-            {localStorage.getItem('MISisLogin') &&<StyledLink to={this.state.linkToMyUser}><MenuItem className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
+            {localStorage.getItem('MISisLogin') &&<StyledLink to={this.state.linkToMyUser}><MenuItem style={{transform:"translateY(2px)"}} className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
             {/* <MenuIcon></MenuIcon> */}
             {!localStorage.getItem('MISisLogin') && <><StyledLink to="/signin"><MenuItem className="menu-item">Đăng nhập</MenuItem></StyledLink><StyledLink to="/signin"><MenuItem className="menu-item">Đăng ký</MenuItem></StyledLink></>}
             {localStorage.getItem('MISisLogin') && <LogoutItem className="menu-item" onClick={() => {localStorage.clear(); window.location.reload();}}>Đăng xuất</LogoutItem>}

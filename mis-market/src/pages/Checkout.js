@@ -1,17 +1,19 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {IncreaseQuantity,DecreaseQuantity,DeleteCart} from '../components/actions';
+import {
+    IncreaseQuantity,
+    DecreaseQuantity,
+    DeleteCart,
+} from "../components/actions";
 import styled from "styled-components";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { Link, useLocation } from 'react-router-dom'
-import axios from 'axios';
-
-
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div`
     display: flex;
     width: 100vw;
-    padding:100px;
+    padding: 100px;
 `;
 
 const CartSide = styled.div`
@@ -27,12 +29,12 @@ const ButtonInCart = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 4px;
-    border:1px solid #717fe0;
+    border: 1px solid #717fe0;
     text-align: center;
     line-height: 30px;
     transition: 0.3s ease-in-out;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background-color: #717fe0;
     }
 `;
@@ -41,7 +43,6 @@ const CheckoutSide = styled.div`
     display: flex;
     flex-direction: column;
     width: 30%;
-    border:1px solid #e6e6e6;
     margin-left: 50px;
     padding-right: 20px;
 `;
@@ -51,7 +52,6 @@ const CheckoutTitle = styled.h3`
     margin-top: 10px;
     font-size: 30px;
     line-height: 1.3;
-    text-transform: uppercase;
 `;
 
 const Subtotal = styled.div`
@@ -61,7 +61,7 @@ const Subtotal = styled.div`
     border-bottom: 1px solid #e6e6e6;
     padding-top: 10px;
     padding-bottom: 20px;
-    & > span{
+    & > span {
         width: 40%;
         margin-left: 20px;
     }
@@ -74,7 +74,7 @@ const Shipping = styled.div`
     border-bottom: 1px solid #e6e6e6;
     padding-top: 10px;
     padding-bottom: 20px;
-    & > span{
+    & > span {
         width: 40%;
         margin-left: 20px;
     }
@@ -91,7 +91,7 @@ const ButtonTotal = styled.div`
     cursor: pointer;
     margin-top: 20px;
     margin-bottom: 10px;
-    &:hover{
+    &:hover {
         background-color: #717fe0;
         color: #fff;
     }
@@ -101,7 +101,7 @@ const Total = styled.div`
     display: flex;
     padding-top: 10px;
     padding-bottom: 20px;
-    & > span{
+    & > span {
         width: 40%;
         margin-left: 20px;
     }
@@ -117,9 +117,10 @@ const ButtonCheckout = styled.div`
     border-radius: 2em;
     cursor: pointer;
     align-self: flex-end;
-    margin-right: 40px;
-    margin-bottom: 20px;
-    &:hover{
+    margin-bottom: 2px;
+    margin-left: 80px;
+    margin-top: 18px;
+    &:hover {
         background-color: #717fe0;
         color: #fff;
     }
@@ -146,10 +147,14 @@ const StyledLink = styled(Link)`
         margin-right: 40px;
         margin-bottom: 20px;
     }
-    &:hover{
-      /* border: 2px solid rgb(99,113,198); */
+    &:hover {
+        /* border: 2px solid rgb(99,113,198); */
     }
-    &:focus, &:hover, &:visited, &:link, &:active {
+    &:focus,
+    &:hover,
+    &:visited,
+    &:link,
+    &:active {
         text-decoration: none;
         color: #000;
     }
@@ -158,15 +163,20 @@ const StyledLink = styled(Link)`
 const Wrapper = styled.div`
     margin-left: 20px;
     margin-bottom: 20px;
-`
+    border: 1px solid #e6e6e6;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: #b2e5e5;
+`;
 const WrapperGrid = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-`
+`;
 const FormGroup = styled.div`
-    padding-left:10px;
+    padding-left: 20px !important;
     padding: 10px 0;
-    & > label,span {
+    & > label,
+    span {
         font-size: 18px;
     }
     & > label {
@@ -175,192 +185,255 @@ const FormGroup = styled.div`
     & > span {
         padding-left: 12px;
     }
-`
+`;
 const Heading = styled.h3`
     padding-left: 20px;
     margin-bottom: 20px;
 `;
 
-function Checkout({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
-  //  console.log(items)
+function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
+    //  console.log(items)
     const location = useLocation();
     let userID = location.pathname.split("/").pop();
-    const [address, setAddress] = useState('')
-    const [data, setData] = useState([])
+    const [address, setAddress] = useState("");
+    const [data, setData] = useState([]);
 
-    const [wardID, setWardID] = useState('')
+    const [wardID, setWardID] = useState("");
     let ListCart = [];
-    let TotalCart=0;
+    let TotalCart = 0;
     let orderArray = [];
-    let numbOfStore =  new Set()
+    let totalCount = 0;
+    let numbOfStore = new Set();
 
     useEffect(() => {
         window.scrollTo(0, 0);
         document.getElementById("header").classList.add("changeHeaderColor");
         document.getElementById("center").classList.add("changeColor");
-        document.getElementById("brandNameRight").classList.add("changeColorToBlack");
-        document.getElementById("shopping-icon").classList.add("changeColorToBlack");
-        let menuItem = document.querySelectorAll('.menu-item')
-        menuItem.forEach(function(item) {
-          item.classList.add('changeColorToBlack')
-        })
-
+        document
+            .getElementById("brandNameRight")
+            .classList.add("changeColorToBlack");
+        document
+            .getElementById("shopping-icon")
+            .classList.add("changeColorToBlack");
+        let menuItem = document.querySelectorAll(".menu-item");
+        menuItem.forEach(function (item) {
+            item.classList.add("changeColorToBlack");
+        });
     }, []);
-
 
     // call API get Thông tin user
     useEffect(() => {
-        let API_URL = 'https://localhost:44352/api/customer/one';
-        // props.actFetchProductsRequest();  
-        let method = 'POST'
+        let API_URL = "https://localhost:44352/api/customer/one";
+        // props.actFetchProductsRequest();
+        let method = "POST";
         let d = axios({
-        method,
-        url: API_URL,
-        data: {
-            "accountID": userID,
-        }
-        }).catch(err => {
-        console.log(err);
-        }).then(res => {
-            setAddress(res.data.diaChiHienTai.diaChiChiTiet.diaChiChiTiet)
-            setData(res.data)
-            console.log("hello",res.data)
-            setWardID(res.data.diaChiHienTai.diaChiChiTiet.maPhuongXa)
-        });
-    }, [])
+            method,
+            url: API_URL,
+            data: {
+                accountID: userID,
+            },
+        })
+            .catch((err) => {
+                console.log(err);
+            })
+            .then((res) => {
+                setAddress(res.data.diaChiHienTai.diaChiChiTiet.diaChiChiTiet);
+                setData(res.data);
+                console.log("hello", res.data);
+                setWardID(res.data.diaChiHienTai.diaChiChiTiet.maPhuongXa);
+            });
+    }, []);
 
-    Object.keys(items.Carts).forEach(function(item){
-        TotalCart+=items.Carts[item].quantity * items.Carts[item].price;
+    Object.keys(items.Carts).forEach(function (item) {
+        TotalCart += items.Carts[item].quantity * items.Carts[item].price;
         ListCart.push(items.Carts[item]);
         // console.log("listcart ne:",ListCart);
-        numbOfStore.add(items.Carts[item].storeID)
+        numbOfStore.add(items.Carts[item].storeID);
     });
 
-    (function(){
-        if (numbOfStore.size > 1){
-            numbOfStore.forEach((item,index) => {
+    (function () {
+        if (numbOfStore.size > 1) {
+            numbOfStore.forEach((item, index) => {
                 orderArray.push({
                     storeID: item,
                     listProduct: [],
                     totalOrder: 0,
-                })
-            })
-              
-            if (orderArray.length > 0){
-                orderArray.forEach((item,index) => {
-                    ListCart.forEach((item2,index2)=>{
-                        if (item2.storeID === item.storeID){
-                            item.listProduct = [...item.listProduct,item2] 
-                            item.totalOrder += (item2.price - 0)*(item2.quantity - 0)
+                });
+            });
+
+            if (orderArray.length > 0) {
+                orderArray.forEach((item, index) => {
+                    ListCart.forEach((item2, index2) => {
+                        if (item2.storeID === item.storeID) {
+                            item.listProduct = [...item.listProduct, item2];
+                            item.totalOrder +=
+                                (item2.price - 0) * (item2.quantity - 0);
                         }
-                    })
-                })
+                    });
+                    
+                });
             }
-                
-            
+          totalCount = (numbOfStore.size-0) * 20000
         }
-        // console.log("hehe:",orderArray)
+        console.log("hehe:", orderArray);
     })();
 
-    function handleOrder(values){
-        orderArray.forEach((item,index)=>{
-            let value = {
-                "phiShip": "20000",
-                "tongTien": `${item.TotalPrice}`,
-                "account_CH": `${item.storeID}`,
-                "account_KH": `${userID}`,
-                "danhSachSanPham": [
-                    
-                ]
-
-            }
-            item.listProduct.forEach((item2,index2)=>{
-                value.danhSachSanPham.push({
-                    "maSP": item2.id,
-                    "soLuong": item2.quantity,
-                })
-            })
-            axios({
-                method: 'post',
-                url: 'https://localhost:44352/api/invoice/buy',
-                data: values
-              }).then(function (res) {
-                console.log("res.data: ",res.data)                
-                
-              })
-              .catch(function (err) {
-                  console.log(err)
-              }
-              )
+    function callAPI(value) {
+        console.log(JSON.stringify(value));
+        axios({
+            method: "post",
+            url: "https://localhost:44352/api/invoice/buy",
+            data: value,
         })
+            .then(function (res) {
+                console.log("res.data: ", res.data);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }
 
-    function TotalPrice(price,tonggia){
-        return Number(price * tonggia).toLocaleString('en-US');
+    async function handleOrder(values) {
+        for (let i = 0; i < orderArray.length; i++) {
+            let item = orderArray[i];
+            console.log("item: ", item);
+            let value = {
+                phiShip: "20000",
+                tongTien: `${item.totalOrder}`,
+                account_CH: `${item.storeID}`,
+                account_KH: `${userID}`,
+                danhSachSanPham: [],
+            };
+            for (let i2 = 0; i2 < item.listProduct.length; i2++) {
+                let item2 = item.listProduct[i2];
+                value.danhSachSanPham.push({
+                    maSP: item2.id,
+                    soLuong: `${item2.quantity}`,
+                });
+            }
+            console.log("value ne : ", value);
+
+            let x = await callAPI(value);
+        }
+        // orderArray.forEach(async (item,index)=>{
+
+        // })
     }
-    
+
+    function TotalPrice(price, tonggia) {
+        return Number(price * tonggia).toLocaleString("en-US");
+    }
+
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [ListCart])
-    if(ListCart.length !== 0)
-        return(    
-        <Container>
-            <CartSide className="row">
-                <Heading>Thông tin khách hàng</Heading>
-                <Wrapper>
-                    <WrapperGrid>
+        window.scrollTo(0, 0);
+    }, [ListCart]);
+    if (ListCart.length !== 0)
+        return (
+            <Container>
+                <CartSide className="row">
+                    <Heading>Thông tin khách hàng</Heading>
+                    <Wrapper>
+                        <WrapperGrid>
+                            <FormGroup>
+                                <label>Tên khách hàng:</label>
+                                <span>{data.hoTen}</span>
+                            </FormGroup>
+                            <FormGroup>
+                                <label>Số điện thoại:</label>
+                                <span>{data.sdt}</span>
+                            </FormGroup>
+                        </WrapperGrid>
                         <FormGroup>
-                            <label>Tên khách hàng:</label>
-                            <span>{data.hoTen}</span>
+                            <label>Địa chỉ:</label>
+                            <span>{address}</span>
                         </FormGroup>
                         <FormGroup>
-                            <label>Số điện thoại:</label>
-                            <span>{data.sdt}</span>
+                            <label>Hình thức thanh toán:</label>
+                            <span>Thanh toán khi nhận hàng</span>
                         </FormGroup>
-                    </WrapperGrid>
-                    <FormGroup>
-                        <label>Địa chỉ:</label>
-                        <span>{address}</span>
-                    </FormGroup>
-                    <FormGroup>
-                        <label>Hình thức thanh toán:</label>
-                        <span>Thanh toán khi nhận hàng</span>
-                    </FormGroup>
-                </Wrapper>
-            </CartSide>
-            <CheckoutSide>
-                <CheckoutTitle>TỔNG ĐƠN HÀNG</CheckoutTitle>
-                <Subtotal>
-                    <span style={{fontWeight: "bold"}}>Tạm tính:</span>
-                    <span>{Number(TotalCart).toLocaleString('en-US')} vnđ</span>
-                </Subtotal>
-                <Shipping>
-                    <span style={{fontWeight: "bold"}}>Shipping:</span>
-                    <span>There are no shipping methods available. Please double check your address, or contact us if you need any help.<ButtonTotal>update totals</ButtonTotal></span>
-                </Shipping>
-                
-                <Total>
-                    <span style={{fontWeight: "bold"}}>Tổng:</span>
-                    <span>{Number(TotalCart).toLocaleString('en-US')} vnđ</span>
-                </Total>
-                
-                <ButtonCheckout onClick={handleOrder}>Thanh toán</ButtonCheckout>
-                
+                    </Wrapper>
+                    <Heading>Danh sách đơn hàng</Heading>
+                    <Wrapper>
+                      {
+                        orderArray.length > 0 && 
+                        <table style={{width:"95%",marginLeft: "20px",borderBottom:"solid 2px #ccc"}}>
+                          <thead>
+                              <tr style={{height:"36px",borderBottom:"solid 1px #ccc"}}>
+                              <th scope="col">STT</th>
+                              <th scope="col">Mã cửa hàng</th>
+                              <th style={{textAlign:"right"}} scope="col">Tổng giá</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {
+                                  orderArray.map((item,index)=>{
+                                    return <tr style={{height:"60px",borderBottom:"solid 1px #d7d7d7"}} key={index}>
+                                                <th style={{minWidth:"100px"}} scope="row">{index+1}</th>
+                                                <td>{item.storeID}</td>
+                                                <td style={{textAlign:"right"}}>{item.totalOrder} VNĐ</td>
+                                            </tr>
+                                      
+                                  })
+                              }
+                              
+                          </tbody>
+                      </table>
+                      }
+                    </Wrapper>
+                </CartSide>
+                <CheckoutSide>
+                    <Heading>Tổng Đơn Hàng</Heading>
+                    <Wrapper style={{padding:"30px 20px"}}>
+                      <Subtotal>
+                          <span style={{ fontWeight: "bold" }}>Tạm tính:</span>
+                          <span>
+                              {Number(TotalCart).toLocaleString("en-US")} VNĐ
+                          </span>
+                      </Subtotal>
+                      <Shipping>
+                          <span style={{ fontWeight: "bold" }}>Shipping: </span>
+                          <span>
+                              {Number(totalCount).toLocaleString("en-US")} VNĐ
+                          </span>
+                      </Shipping>
 
-            </CheckoutSide>
-        </Container>
-        )
-    else 
-    return (
-        <div style={{width: "100%", height: "490px", display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <i>Giỏ hàng trống</i>
-        </div>
-    )
+                      <Total>
+                          <span style={{ fontWeight: "bold" }}>Tổng:</span>
+                          <span>
+                              {Number(TotalCart).toLocaleString("en-US")} VNĐ
+                          </span>
+                      </Total>
+
+                      <ButtonCheckout onClick={handleOrder}>
+                          Thanh toán
+                      </ButtonCheckout>
+                    </Wrapper>
+                </CheckoutSide>
+            </Container>
+        );
+    else
+        return (
+            <div
+                style={{
+                    width: "100%",
+                    height: "490px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <i>Giỏ hàng trống</i>
+            </div>
+        );
 }
-const mapStateToProps = state =>{
-  //  console.log(state)
-    return{
-        items:state._todoProduct
-    }
-}
-export default connect(mapStateToProps,{IncreaseQuantity,DecreaseQuantity,DeleteCart})(Checkout)
+const mapStateToProps = (state) => {
+    //  console.log(state)
+    return {
+        items: state._todoProduct,
+    };
+};
+export default connect(mapStateToProps, {
+    IncreaseQuantity,
+    DecreaseQuantity,
+    DeleteCart,
+})(Checkout);

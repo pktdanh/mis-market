@@ -216,13 +216,13 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                                 {/* <TableData><i className="badge badge-danger" onClick={()=>DeleteCart(key)}>X</i></TableData> */}
                                 <TableData><h5 style={{fontSize: "18px"}}>{item.name}</h5></TableData>
                                 <TableData><img src={item.image} style={{width:'100px',height:'auto'}} alt=""/></TableData>
-                                <TableData>{item.price} VNĐ</TableData>
-                                <TableData>
+                                <TableData style={{minWidth:'150px'}}>{item.price} VNĐ</TableData>
+                                <TableData style={{minWidth:'150px'}}>
                                         <ButtonInCart style={{margin:'2px'}} onClick={()=>DecreaseQuantity(key)}>-</ButtonInCart>
                                         <ButtonInCart>{item.quantity}</ButtonInCart>
                                         <ButtonInCart style={{margin:'2px'}} onClick={()=>IncreaseQuantity(key)}>+</ButtonInCart>
                                 </TableData>
-                                <TableData>{ TotalPrice(item.price,item.quantity)} VNĐ</TableData>
+                                <TableData style={{minWidth:'150px'}}>{ TotalPrice(item.price,item.quantity)} VNĐ</TableData>
                             </tr>
                             )
                         })
@@ -241,16 +241,16 @@ function Cart({items,IncreaseQuantity,DecreaseQuantity,DeleteCart}){
                 <CheckoutTitle>TỔNG GIỎ HÀNG</CheckoutTitle>
                 <Subtotal>
                     <span style={{fontWeight: "bold"}}>Tạm tính:</span>
-                    <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
+                    <span>{Number(TotalCart).toLocaleString('en-US')} VNĐ</span>
                 </Subtotal>
                 <Shipping>
                     <span style={{fontWeight: "bold"}}>Shipping:</span>
-                    <span>There are no shipping methods available. Please double check your address, or contact us if you need any help.<ButtonTotal>update totals</ButtonTotal></span>
+                    <span>Phí ship sẽ được tính khi bạn thanh toán. Tùy thuộc vào số lượng cửa hàng mà bạn mua</span>
                 </Shipping>
                 
                 <Total>
                     <span style={{fontWeight: "bold"}}>Tổng:</span>
-                    <span>{Number(TotalCart).toLocaleString('en-US')} $</span>
+                    <span>{Number(TotalCart).toLocaleString('en-US')} VNĐ</span>
                 </Total>
                 <StyledLink style={{}} to={"/checkout/"+ JSON.parse(localStorage.getItem('MISuser')).username}>
                     <ButtonCheckout>Thanh toán</ButtonCheckout>

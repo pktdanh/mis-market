@@ -135,7 +135,7 @@ const Order = ({userID}) => {
         <tbody>
             {listInvoice.map((item, index)=> {
                 if (item.maHD === invoiceID) {
-                    return <tr onClick={()=>{setInvoiceID(item.maHD)}} style={{height:"60px",borderBottom:"solid 1px #d7d7d7",cursor:"pointer",backgroundColor:"#277ce5",color:"white",transition:"all .2s linear"}} key={index}>
+                    return <tr onClick={()=>{setInvoiceID(item.maHD)}} style={{height:"60px",borderBottom:"solid 1px #d7d7d7",cursor:"pointer",backgroundColor:"#4c4c4b",color:"white",transition:"all .2s linear"}} key={index}>
                     <th style={{transform:"translateX(10px)",transition:"all .2s linear"}} scope="row">{item.maHD}</th>
                     <td>{item.tongTien}</td>
                     <td>{item.ngayLap}</td>
@@ -148,7 +148,6 @@ const Order = ({userID}) => {
                     <td>{item.ngayLap}</td>
                 </tr>
                 }
-                
             })}
             
         </tbody>

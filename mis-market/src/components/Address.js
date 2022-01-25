@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import styled, { css} from "styled-components";
 import { Link } from 'react-router-dom'
 import axios from 'axios';
-const Container = styled.div`
-  
+const Wrap = styled.div`
   width: 100%;
 `;
 const Heading = styled.h3`
@@ -33,7 +32,7 @@ const Submit = styled.div`
     margin-left: 260px;
     margin-top: 20px;
     &:hover{
-        background-color: #4c4c4b;
+        background-color: #277ce5;
         color: white;
     }
 `;
@@ -60,6 +59,10 @@ const Input = styled.input`
         outline: solid 1px #277ce5;
     }
 `;
+const Text = styled.span`
+    padding: 4px 0;
+    padding-left: 10px;
+`;
 
 const SelectTag = styled.select`
     
@@ -77,10 +80,27 @@ const SelectTag = styled.select`
         outline: solid 1px #277ce5;
     }
 `
+const DefaultBtn = styled.button`
+    min-width: 40px;
+    width: 140px;
+    text-align: left;
+    padding: 0 10px;
+    border-radius: 4px;
+    height: 42px;
+    cursor: pointer;
+    &:hover{
+        border: solid 1px #277ce5;
+        
+    }
+    &:focus{
+        outline: solid 1px #277ce5;
+    }
+`
 
-const Information = ({userID}) => {
+const Address = ({userID}) => {
+    const [listAddress, setListAddress] = useState([])
     const [address, setAddress] = useState('')
-    const [birthday, setBirthday] = useState('')
+    const [check, setCheck] = useState(false)
     const [data, setData] = useState([])
 
     const [wardID, setWardID] = useState('')
@@ -116,14 +136,30 @@ const Information = ({userID}) => {
         }).catch(err => {
         console.log(err);
         }).then(res => {
-            setAddress(res.data.diaChiHienTai.diaChiChiTiet.diaChiChiTiet)
-            setBirthday(res.data.ngaySinh.split(' ')[0])
+            setAddress(res.data.diaChiHienTai.diaChi)
             setData(res.data)
-            console.log(res.data)
             setWardID(res.data.diaChiHienTai.diaChiChiTiet.maPhuongXa)
         });
     }, [])
 
+
+    // call API get list address of a customer
+    useEffect(() => {
+        let API_URL = 'https://localhost:44352/api/customeraddress/customer';
+        // props.actFetchProductsRequest();  
+        let method = 'POST'
+        let d = axios({
+        method,
+        url: API_URL,
+        data: {
+            "accountID": userID,
+        }
+        }).catch(err => {
+        console.log(err);
+        }).then(res => {
+            setListAddress(res.data)
+        });
+    }, [check])
     
     // call API get all mã tỉnh
     useEffect(() => {
@@ -176,6 +212,7 @@ const Information = ({userID}) => {
             // console.log("list Ward:", listWard)
             let wardObj = listWard.filter((item, index) => item.maPhuongXa == wardID)
             setWard(wardObj[0])
+            
             // console.log(wardID)
             // console.log(wardObj)
         }
@@ -225,44 +262,141 @@ const Information = ({userID}) => {
     useEffect(()=>{
         let lsDistrict = listDistrict.filter((item, index)=> item.maTinhTP == cityID)
         setListDistrictCurrent(lsDistrict)
+        // if (lsDistrict.length > 0){
+        //     setDistrictID(lsDistrict[0].maQuanHuyen)
+        // }
     },[cityID])
 
     // useEffect to get listDistrictCurrent when cityID has changed
     useEffect(()=>{
         let lsWard = listWard.filter((item, index)=> item.maQuanHuyen == districtID)
         setListWardCurrent(lsWard)
+        if (lsWard.length > 0){
+            setWardID(lsWard[0].maPhuongXa)
+        }
     },[districtID])
 
     let submitFunc = () => {
-        console.log("Submiting")
+        let value = {
+            "accountID": userID,
+            "diaChi": address,
+            "maPhuongXa": wardID,
+        }
+        console.log(value)
+        axios({
+            method: 'post',
+            url: 'https://localhost:44352/api/customeraddress/add',
+            data: value
+          }).then(function (res) {
+            setCheck(!check)
+          })
+          .catch(function (err) {
+              console.log(err)
+          }
+          )
+    }
+    console.log("Ma phuong xa: ", wardID)
+    let handleSetDefault = (maDC,userid) => {
+        
+        let value = {
+            "maDC":maDC,
+            "accountID":userid
+        }
+        axios({
+            method: 'post',
+            url: 'https://localhost:44352/api/customeraddress/updatedefault',
+            data: value
+          }).then(function (res) {
+            setCheck(!check)
+          })
+          .catch(function (err) {
+              console.log(err)
+          }
+          )
     }
 
   return <>
-      <Heading style={{marginLeft:"76px"}}>Thông tin của bạn</Heading>
-    <FormGroup>
-        <Label htmlFor="name">Họ và tên:</Label>
-        <Input type="text" value={data.hoTen} name="name" onChange={(e) => {setData({...data,hoTen: e.target.value})}}></Input>
-    </FormGroup>
-    <FormGroup>
-        <Label htmlFor="sex">Giới tính:</Label>
-        <Input type="text" value={data.gioiTinh} name="sex" onChange={(e) => {setData({...data,gioiTinh: e.target.value})}}></Input>
-    </FormGroup>
-    <FormGroup>
-        <Label htmlFor="phone">Số điện thoại:</Label>
-        <Input type="number" value={data.sdt} name="phone" onChange={(e) => {setData({...data,sdt: e.target.value})}}></Input>
-    </FormGroup>
-    <FormGroup>
-        <Label htmlFor="birthday">Ngày sinh:</Label>
-        <Input type="text" value={birthday} name="birthday" onChange={(e) => {setBirthday(e.target.value)}}></Input>
-    </FormGroup>
-    <FormGroup>
-        <Label htmlFor="address">Địa chỉ:</Label>
-        <Input type="text" value={address} name="address" disabled></Input>
-    </FormGroup>
-    
-    <Submit onClick={()=> submitFunc()}>Submit</Submit>
+    <Wrap>
+        <Heading style={{marginLeft:"76px"}}>Danh sách địa chỉ</Heading>
+        {
+            listAddress.length > 0 && 
+            <table style={{width:"95%",marginLeft: "20px",borderBottom:"solid 2px #ccc"}}>
+            <thead>
+                <tr style={{height:"36px",borderBottom:"solid 1px #ccc"}}>
+                <th scope="col">STT</th>
+                <th scope="col">Địa chỉ</th>
+                <th style={{textAlign:"right"}} scope="col">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    listAddress.map((item,index)=>{
+                        if (item.isDefault === "True") 
+                            return <tr style={{height:"60px",borderBottom:"solid 1px #d7d7d7",cursor:"pointer"}} key={index}>
+                                        <th style={{minWidth:"100px"}} scope="row">Mặc định</th>
+                                        <td>{item.diaChiChiTiet.diaChiChiTiet}</td>
+                                    </tr>
+                        else {
+                            return <tr style={{height:"60px",borderBottom:"solid 1px #d7d7d7",cursor:"pointer"}} key={index}>
+                                        <th style={{minWidth:"100px"}} scope="row">{index+1}</th>
+                                        <td>{item.diaChiChiTiet.diaChiChiTiet}</td>
+                                        <td style={{textAlign:"right"}}><DefaultBtn onClick={()=>handleSetDefault(item.maDC,userID)}>Đặt mặc định</DefaultBtn></td>
+                                    </tr>
+                        }
+                    })
+                }
+                
+            </tbody>
+        </table>
+        }
+        
+    </Wrap>
+    <Wrap>
+        <Heading style={{marginLeft:"76px"}}>Thêm địa chỉ mới</Heading>
+        <FormGroup>
+            <Label htmlFor="address">Địa chỉ:</Label>
+            <Input type="text" value={address} name="address" onChange={(e) => {setAddress(e.target.value)}}></Input>
+        </FormGroup>
+        <FormGroup>
+            <Label htmlFor="city">Tỉnh:</Label>
+            <SelectTag onChange={(e) => setCityID(e.target.value)}>
+                {
+                    listCity.map((item, index) => {
+                        return <option value={item.maTinhTP}>{item.tenTinhTP}</option>
+                    })
+                }
+            </SelectTag>
+        </FormGroup>
+        <FormGroup>
+            <Label htmlFor="district">Quận/Huyện:</Label>
+            <SelectTag onChange={(e) => {console.log(e.target.value);setDistrictID(e.target.value)}}>
+                {
+                    listDistrictCurrent.map((item, index) => {
+                        if (item.maQuanHuyen === districtID)
+                            return <option value={item.maQuanHuyen} selected>{item.tenQuanHuyen}</option>
+                        else
+                            return <option value={item.maQuanHuyen}>{item.tenQuanHuyen}</option>
+                    })
+                }
+            </SelectTag>
+        </FormGroup>
+        <FormGroup>
+            <Label htmlFor="ward">Phường/Xã:</Label>
+            <SelectTag onChange={(e) =>{ console.log(e.target.value);setWardID(e.target.value)}}>
+                {
+                    listWardCurrent.map((item, index) => {
+                        if (item.maPhuongXa === wardID)
+                            return <option value={item.maPhuongXa} selected>{item.tenPhuongXa}</option>
+                        else
+                            return <option value={item.maPhuongXa}>{item.tenPhuongXa}</option>
+                    })
+                }
+            </SelectTag>
+        </FormGroup>
+        <Submit onClick={()=> submitFunc()}>Submit</Submit>
+    </Wrap>
   </>
 };
 
 
-export default Information;
+export default Address;

@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import Order from '../components/Order'
 import Information from '../components/Information';
+import Address from '../components/Address';
 
 const Container = styled.div`
     display: flex;
@@ -12,7 +13,7 @@ const Container = styled.div`
 `;
 const WrapLeft = styled.div`
     width: 300px;
-    background-color: #f1f1f1;
+    background-color: #b2e5e5;
     border-radius: 4px;
 `
 const WrapRight = styled.div`
@@ -21,7 +22,7 @@ const WrapRight = styled.div`
 `
 const WrapRightChild = styled.div`
     width: 90%;
-    background-color: #f1f1f1;
+    background-color: #b2e5e5;
     border-radius: 4px;
 `
 
@@ -56,16 +57,12 @@ const AboutMe = () => {
     let userID = location.pathname.split("/").pop();
     let typeToShow = location.pathname.split("/")[1];
    
-    let valueOfTypeInfo
-    if (typeToShow === 'aboutme'){
-        valueOfTypeInfo = true
-    }
-    else if (typeToShow === 'myorder'){
-        valueOfTypeInfo = false
-    }
-
-    const [typeInfo, setTypeInfo] = useState(valueOfTypeInfo)
     
+
+    const [typeInfo, setTypeInfo] = useState(1)
+    
+
+
     useEffect(() => {
         if (typeToShow === 'aboutme'){
             setTypeInfo(true)
@@ -98,19 +95,38 @@ const AboutMe = () => {
                 <Heading style={{textTransform: 'uppercase',textAlign: 'center'}}>{userID}</Heading>
                 <UlTag>
                     {
-                        typeInfo ? <><LiTag style={{backgroundColor:"#277ce5",color:"white"}}>Thông tin của tôi</LiTag>
-                        <LiTag onClick={()=>{setTypeInfo(false)}}  >Đơn hàng của tôi</LiTag></> 
-                        : <><LiTag onClick={()=>{setTypeInfo(true)}}>Thông tin của tôi</LiTag>
-                        <LiTag style={{backgroundColor:"#277ce5",color:"white"}}>Đơn hàng của tôi</LiTag></>
+                        
+                        typeInfo == 1 ? 
+                        <>
+                        <LiTag style={{backgroundColor:"#4c4c4b",color:"white"}}>Thông tin của tôi</LiTag>
+                        <LiTag onClick={()=>{console.log(2);setTypeInfo(2)}}  >Đơn hàng của tôi</LiTag>
+                        <LiTag onClick={()=>{console.log(3);setTypeInfo(3)}}  >Địa chỉ của tôi</LiTag>
+                        </> 
+                        : typeInfo == 2 ?
+                        <>
+                        <LiTag onClick={()=>{console.log(1);setTypeInfo(1)}}>Thông tin của tôi</LiTag>
+                        <LiTag style={{backgroundColor:"#4c4c4b",color:"white"}}   >Đơn hàng của tôi</LiTag>
+                        <LiTag onClick={()=>{console.log(3);setTypeInfo(3)}}  >Địa chỉ của tôi</LiTag>
+                        </>
+                        : typeInfo == 3 ?
+                        <>
+                        <LiTag onClick={()=>{console.log(1);setTypeInfo(1)}}>Thông tin của tôi</LiTag>
+                        <LiTag onClick={()=>{console.log(2);setTypeInfo(2)}}>Đơn hàng của tôi</LiTag>
+                        <LiTag style={{backgroundColor:"#4c4c4b",color:"white"}}>Địa chỉ của tôi</LiTag>
+                        </>
+                        : <></>
                     }
                 </UlTag>
             </WrapLeft>
 
             <WrapRight>
                 <WrapRightChild>
-                    {typeInfo && <WrapItem><Information userID={userID}></Information></WrapItem>}
+                    {typeInfo==1 && <WrapItem><Information userID={userID}></Information></WrapItem>}
                 </WrapRightChild>
-                    {!typeInfo && <WrapItem><Order userID={userID}></Order></WrapItem>}
+                    {typeInfo==2 && <WrapItem><Order userID={userID}></Order></WrapItem>}
+                <WrapRightChild>
+                    {typeInfo==3 && <WrapItem><Address userID={userID}></Address></WrapItem>}
+                </WrapRightChild>
             </WrapRight>
         </Container>
         
