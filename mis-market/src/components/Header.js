@@ -176,7 +176,7 @@ export class Header extends Component {
           <Right>
             {localStorage.getItem('MISisLogin') &&<StyledLink to={this.state.linkToMyUser}><MenuItem style={{transform:"translateY(2px)"}} className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
             {/* <MenuIcon></MenuIcon> */}
-            {!localStorage.getItem('MISisLogin') && <><StyledLink to="/signin"><MenuItem className="menu-item">Đăng nhập</MenuItem></StyledLink><StyledLink to="/signin"><MenuItem className="menu-item">Đăng ký</MenuItem></StyledLink></>}
+            {!localStorage.getItem('MISisLogin') && <><StyledLink to="/signin"><MenuItem className="menu-item">Đăng nhập</MenuItem></StyledLink><StyledLink to="/signup"><MenuItem className="menu-item">Đăng ký</MenuItem></StyledLink></>}
             {localStorage.getItem('MISisLogin') && <LogoutItem className="menu-item" onClick={() => {localStorage.clear(); window.location.reload();}}>Đăng xuất</LogoutItem>}
             
             <MenuItem>

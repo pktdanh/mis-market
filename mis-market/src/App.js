@@ -20,6 +20,7 @@ import MyOrder from './pages/MyOrder';
 import OrderDetail from './pages/OrderDetail';
 import Store from './pages/Store';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Collection from './pages/Collection';
 import Checkout from './pages/Checkout';
 
@@ -43,6 +44,7 @@ function App() {
                <Route path="/store/:id" exact component={Store} />
                <Route path="/checkout/:id" exact component={Checkout} />
                <Route path="/signin" exact component={Login} />
+               <Route path="/signup" exact component={Register} />
                <Route path="*">
             <NoMatch />
           </Route>

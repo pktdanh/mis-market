@@ -172,7 +172,7 @@ const Filter = ({ productList, defaultProductList }) => {
         let ls = productList;
         console.log("ls begin:",defaultProductList)
         
-        
+        console.log("OrderBy: ", filterOrderBy)
         
         if (filterPrice === "all") {
             console.log("rs:",_products)
@@ -354,56 +354,43 @@ const Filter = ({ productList, defaultProductList }) => {
                     <ul>
                         <FilterLink
                             choosen={price === "all" ? true : false}
-                            onClick={() => changeproductInFilter(null, "all",2)}
+                            onClick={() => changeproductInFilter(orderBy, "all",2)}
                         >
                             Tất cả
                         </FilterLink>
                         <FilterLink
                             choosen={price === "1" ? true : false}
-                            onClick={() => changeproductInFilter(null, "1",2)}
+                            onClick={() => changeproductInFilter(orderBy, "1",2)}
                         >
                             1 000VND - 50 000VND
                         </FilterLink>
                         <FilterLink
                             choosen={price === "2" ? true : false}
-                            onClick={() => changeproductInFilter(null, "2",2)}
+                            onClick={() => changeproductInFilter(orderBy, "2",2)}
                         >
                             50 000VND - 100 000VND
                         </FilterLink>
                         <FilterLink
                             choosen={price === "3" ? true : false}
-                            onClick={() => changeproductInFilter(null, "3",2)}
+                            onClick={() => changeproductInFilter(orderBy, "3",2)}
                         >
                             100 000VND - 200 000VND
                         </FilterLink>
                         <FilterLink
                             choosen={price === "4" ? true : false}
-                            onClick={() => changeproductInFilter(null, "4",2)}
+                            onClick={() => changeproductInFilter(orderBy, "4",2)}
                         >
                             200 000VND - 400 000VND
                         </FilterLink>
                         <FilterLink
                             choosen={price === "5" ? true : false}
-                            onClick={() => changeproductInFilter(null, "5",2)}
+                            onClick={() => changeproductInFilter(orderBy, "5",2)}
                         >
                             400 000VND+
                         </FilterLink>
                     </ul>
                 </Price>
-                {/* <Color>
-              <div>Color</div>
-              <ul>
-                <FilterLink><span><i className="fas fa-circle" style={{ color: "black", marginRight: "10px" }}></i></span><a href="">Black</a></FilterLink>
-                <FilterLink><span><i className="fas fa-circle" style={{ color: "blue", marginRight: "10px" }}></i></span><a href="">Blue</a></FilterLink>
-                <FilterLink><span><i className="fas fa-circle" style={{ color: "grey", marginRight: "10px" }}></i></span><a href="">Grey</a></FilterLink>
-                <FilterLink><span><i className="fas fa-circle" style={{ color: "green", marginRight: "10px" }}></i></span><a href="">Green</a></FilterLink>
-                <FilterLink><span><i className="fas fa-circle" style={{ color: "bred", marginRight: "10px" }}></i></span><a href="">Red</a></FilterLink>
-                <FilterLink><span><i className="fas fa-circle" style={{ color: "white", marginRight: "10px" }}></i></span><a href="">White</a></FilterLink>
-              </ul>
-            </Color>
-            <Tags>
-              <div>Tags</div>
-            </Tags> */}
+                
             </OptionFilter>
             <OptionSearch></OptionSearch>
         </React.Fragment>

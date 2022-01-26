@@ -9,15 +9,30 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     margin: 100px 0;
-    padding: 50px 80px;
+    padding: 80px 100px;
     border: 1px solid #ccc;
     border-radius: 20px;
+    background-color: #b2e5e5;
+    -webkit-box-shadow: -7px 8px 15px 2px rgba(0,0,0,0.68); 
+    box-shadow: -7px 8px 15px 2px rgba(0,0,0,0.68);
 
     & > h2 {
         margin-bottom: 30px;
     }
     /* width: 100%; */
+
+    
 `;
+
+const Button = styled.button`
+    margin-bottom: 20px;
+    margin-left: 42px;
+    padding: 4px 10px;
+    &:hover {
+        background-color: #4c4c4b;
+        color: white;
+    }
+`
 
 const Row = styled.div`
     
@@ -29,12 +44,25 @@ const Row = styled.div`
         margin-bottom: 16px;
         padding: 6px 0;
         padding-left: 12px;
-        border-radius: 10px;
+        border-radius: 6px;
     }
 `;
 
 
 const Login = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.getElementById("header").classList.add("changeHeaderColor");
+        document.getElementById("center").classList.add("changeColor");
+        document.getElementById("brandNameRight").classList.add("changeColorToBlack");
+        document.getElementById("shopping-icon").classList.add("changeColorToBlack");
+        let menuItem = document.querySelectorAll('.menu-item')
+        menuItem.forEach(function(item) {
+          item.classList.add('changeColorToBlack')
+        })
+
+    }, []);
+
 
     const [data, setData] = useState({
         username: "",
@@ -81,27 +109,27 @@ const Login = () => {
       };
 
     return (<Container>
-        <h2>Login</h2>
+        <h2>Đăng nhập</h2>
         <h1>{message}</h1>
         <div>
             <Row>
                 <div>
                     <label for="username">
-                        Username:
+                        Tên đăng nhập:
                     </label>
-                    <input onChange={e => setData({username: e.target.value, password: data.password})} id="username" placeholder="username..."></input>
+                    <input onChange={e => setData({username: e.target.value, password: data.password})} id="username" placeholder="tên đăng nhập..."></input>
                 </div>
             </Row>
            
             <Row>
                 <div>
                     <label for="password">
-                        Password:
+                        Mật khẩu:
                     </label>
-                    <input onChange={e => setData({username: data.username, password: e.target.value})} type="password" id="password" placeholder="username..."></input>
+                    <input onChange={e => setData({username: data.username, password: e.target.value})} type="password" id="password" placeholder="mật khẩu..."></input>
                 </div>
            </Row>
-           <button onClick={handleSubmit} style={{marginTop: "12px", padding: "6px 20px", borderRadius:"6px", cursor:"pointer"}}>Sign in</button>
+           <Button onClick={handleSubmit} style={{marginTop: "12px", padding: "6px 20px", borderRadius:"6px", cursor:"pointer"}}>Đăng nhập</Button>
         </div>
     </Container>)
 }
