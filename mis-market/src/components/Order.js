@@ -124,6 +124,18 @@ const InputRating = styled.input`
         box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
     }
 `
+const SelectTag = styled.select`
+    width: 80px;
+    text-align: center;
+    margin-top: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    outline: none;
+    &:focus{
+        border-color: #40a9ff;
+        box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
+    }
+`
 
 const Order = ({userID}) => {
     const [invoiceID, setInvoiceID] = useState('')
@@ -190,6 +202,7 @@ const Order = ({userID}) => {
         console.log(err);
         }).then(res => {
           if (res.data.length > 0){
+            console.log("order info:", res.data[0])
             setInvoice(res.data[0])
             setStoreAddress(res.data[0].diaChiCuaHang.diaChiChiTiet)
             setCustomerAddress(res.data[0].diaChiKhachHang.diaChiChiTiet)
@@ -204,6 +217,9 @@ const Order = ({userID}) => {
             "maHD": invoice.maHD,
             "thoiGian": time,
         }
+        let value2 = {
+            "maHD": invoice.maHD,
+        }
         console.log("value",value)
         axios({
             method: "post",
@@ -213,6 +229,18 @@ const Order = ({userID}) => {
             .then(function (res) {
                 console.log("res.data: ", res.data);
                 setCancelOrder(!cancelOrder)
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+
+        axios({
+            method: "post",
+            url: "https://localhost:44352/api/invoice/cancel",
+            data: value2,
+        })
+            .then(function (res) {
+                console.log("res.data: ", res.data);
             })
             .catch(function (err) {
                 console.log(err);
@@ -260,8 +288,10 @@ const Order = ({userID}) => {
                 </StyledLink>
             </FormGroup>
             <FormGroup>
-                <label>Tên shipper:</label>
-                <span>{invoice.hoTenS}</span>
+                <StyledLink  to={"/shipper/" + invoice.account_S}>
+                    <label>Tên shipper:</label>
+                    <span>{invoice.hoTenS}</span>
+                </StyledLink>
             </FormGroup>
             <FormGroup>
                 <label>Tổng đơn hàng:</label>
@@ -347,7 +377,20 @@ const Order = ({userID}) => {
                         <th></th>
                         <td><UserComment productID={item.maSP} rating={rating}></UserComment></td>
                         <td ></td>
-                        <td style={{display: "flex", flexDirection: "column",justifyContent: "center",height: "120px"}}><span>Chọn số sao rating </span><span><InputRating onChange={(e) => setRating(e.target.value)} type="number" value = {rating} step="1" min="1" max="5"/><StarIcon style={{color: "#dfbb6b",marginLeft:"4px"}}></StarIcon></span></td>
+                        <td style={{display: "flex", flexDirection: "column",justifyContent: "center",height: "120px"}}>
+                            <span>Chọn số sao rating </span>
+                            <span>
+                                {/* <InputRating onChange={(e) => setRating(e.target.value)} type="number" value = {rating} step="1" min="1" max="5"/> */}
+                                <SelectTag onChange={(e) => setRating(e.target.value)}>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </SelectTag>
+                                <StarIcon style={{color: "#dfbb6b",marginLeft:"4px"}}></StarIcon>
+                            </span>
+                        </td>
                     </tr>: <></>
                 }
                 </>

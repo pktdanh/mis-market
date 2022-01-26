@@ -20,6 +20,7 @@ import AboutMe from './pages/AboutMe';
 import MyOrder from './pages/MyOrder';
 import OrderDetail from './pages/OrderDetail';
 import Store from './pages/Store';
+import Shipper from './pages/Shipper';
 import NearestStore from './pages/NearestStore';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -44,6 +45,7 @@ function App() {
                <Route path="/myorder/:id" exact component={AboutMe} />
                <Route path="/store" exact component={Store} />
                <Route path="/store/:id" exact component={Store} />
+               <Route path="/shipper/:id" exact component={Shipper} />
                <Route path="/nearest/:id" exact component={NearestStore} />
                <Route path="/checkout/:id" exact component={Checkout} />
                <Route path="/signin" exact component={Login} />

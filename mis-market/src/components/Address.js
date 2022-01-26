@@ -393,7 +393,7 @@ const Address = ({userID}) => {
                 }
             </SelectTag>
         </FormGroup>
-        <Submit onClick={()=> submitFunc()}>Submit</Submit>
+        <Submit onClick={()=> submitFunc()}>Cập nhật</Submit>
     </Wrap>
   </>
 };
