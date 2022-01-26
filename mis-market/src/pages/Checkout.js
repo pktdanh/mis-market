@@ -336,6 +336,7 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
 
             let x = await callAPI(value);
         }
+        localStorage.removeItem('UserCart')
         window.location.href = '/'
         window.location.reload()
         // orderArray.forEach(async (item,index)=>{

@@ -84,6 +84,7 @@ const Store = () => {
     console.log(location.pathname)
     const [data, setData] = useState([])
     const [listProduct, setListProduct] = useState([])
+    const [address, setAddress] = useState('')
     let API_URL = 'http://localhost:8080/api/store/one';
     useEffect(() => {
         // props.actFetchProductsRequest();  
@@ -93,14 +94,15 @@ const Store = () => {
         method,
         url: `${API_URL}/${endpoint}`,
         data: {
-            "AccountID": storeID,
+            "accountID": storeID,
         }
         }).catch(err => {
         console.log(err);
         }).then(res => {
-            console.log(res.data.DanhSachSanPham)
+            console.log("data:",res.data)
             setData(res.data)
-            setListProduct(res.data.DanhSachSanPham)
+            setListProduct(res.data.danhSachSanPham)
+            setAddress(res.data.diaChiCuaHang.diaChiChiTiet)
         });
     }, [])
 
@@ -109,27 +111,27 @@ const Store = () => {
         <StoreInfor>
             <StoreInforItem>
                 <label>Mã cửa hàng:</label>
-                <span>{data.AccountID}</span>
+                <span>{data.accountID}</span>
             </StoreInforItem>
             <StoreInforItem>
                 <label>Số điện thoại:</label>
-                <span>{data.SDT}</span>
+                <span>{data.sdt}</span>
             </StoreInforItem>
             <StoreInforItem>
                 <label>Tên cửa hàng:</label>
-                <span>{data.TenCH}</span>
+                <span>{data.tenCH}</span>
             </StoreInforItem>
             <StoreInforItem>
                 <label>E-mail:</label>
-                <span>{data.Email}</span>
+                <span>{data.email}</span>
             </StoreInforItem>
             <StoreInforItem>
                 <label>Địa chỉ:</label>
-                <span>{data.DiaChi}</span>
+                <span>{address}</span>
             </StoreInforItem>
             <StoreInforItem>
                 <label>Ngày tham gia:</label>
-                <span>{data.NgayThamGia}</span>
+                <span>{data.ngayThamGia}</span>
             </StoreInforItem>
         </StoreInfor>
         
