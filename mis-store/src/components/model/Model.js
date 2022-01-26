@@ -183,7 +183,7 @@ const Model =  () => {
             }
             console.log(data);
             console.log(JSON.stringify(data));
-            const result = axios.post('http://localhost:8080/api/store/one', 
+            const result = axios.post('http://localhost:8080/api/store/upproduct', 
                 data
             ).then(function (res) {
               console.log("RES add product: ", res);

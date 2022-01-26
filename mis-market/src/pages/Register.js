@@ -65,7 +65,7 @@ const Register = () => {
 
   
   const close = () => {
-    window.location.reload();
+    
   };
 
   const openNotification = () => {
@@ -100,7 +100,7 @@ const Register = () => {
       "gioiTinh": values.gender,
       "sdt": `${values.phone}`,
       "email": values.email,
-      "diaChiHienTai": {
+      "diaChi": {
         "diaChi": values.street,
         "maPhuongXa": values.address[1]
       },
@@ -114,9 +114,10 @@ const Register = () => {
       data
     ).then(res => {
       console.log("Result from register API: ", res);
-      context.updateUser(JSON.stringify(res.data))
-      context.updateLogin(context.isLogin);
+      // context.updateUser(JSON.stringify(res.data))
+      // context.updateLogin(context.isLogin);
       openNotification()
+      window.location.href = '/'
     })
   };
 

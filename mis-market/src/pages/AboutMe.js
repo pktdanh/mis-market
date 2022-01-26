@@ -54,7 +54,8 @@ const LiTag = styled.li`
 
 const AboutMe = () => {
     const location = useLocation();
-    let userID = location.pathname.split("/").pop();
+    // let userID = location.pathname.split("/").pop();
+    let userID = JSON.parse(localStorage.getItem("MISuser")).accountID
     let typeToShow = location.pathname.split("/")[1];
    
     

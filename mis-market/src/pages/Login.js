@@ -86,7 +86,7 @@ const Login = () => {
     
         axios({
           method: 'post',
-          url: 'https://localhost:44352/api/account/login',
+          url: 'http://localhost:8080/api/account/login/customer',
           data: values
         }).then(function (res) {
           console.log("res.data: ",res.data)
