@@ -116,7 +116,7 @@ const Information = ({userID}) => {
         }).catch(err => {
         console.log(err);
         }).then(res => {
-            console.log("res diachichitiet", res);
+            console.log("res.data ne: ", res.data);
             setAddress(res.data.diaChi.diaChiChiTiet.diaChiChiTiet)
             setBirthday(res.data.ngaySinh.split(' ')[0])
             setData(res.data)
@@ -235,7 +235,23 @@ const Information = ({userID}) => {
     },[districtID])
 
     let submitFunc = () => {
-        console.log("Submiting")
+        let value = {
+            "accountID": userID,
+            "hoTen": data.hoTen,
+            "sdt": data.sdt,
+            "email": data.email,
+        }
+        console.log("value:",value)
+        axios({
+            method: "post",
+            url: "http://localhost:8080/api/customer/edit",
+            data: value,
+        }).then(function (res) {
+                console.log("res.data: ", res.data);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }
 
   return <>
@@ -245,21 +261,31 @@ const Information = ({userID}) => {
         <Input type="text" value={data.hoTen} name="name" onChange={(e) => {setData({...data,hoTen: e.target.value})}}></Input>
     </FormGroup>
     <FormGroup>
-        <Label htmlFor="sex">Giới tính:</Label>
-        <Input type="text" value={data.gioiTinh} name="sex" onChange={(e) => {setData({...data,gioiTinh: e.target.value})}}></Input>
-    </FormGroup>
-    <FormGroup>
         <Label htmlFor="phone">Số điện thoại:</Label>
         <Input type="number" value={data.sdt} name="phone" onChange={(e) => {setData({...data,sdt: e.target.value})}}></Input>
     </FormGroup>
     <FormGroup>
+        <Label htmlFor="email">E-mail:</Label>
+        <Input type="text" value={data.email} name="email" onChange={(e) => {setData({...data,email: e.target.value})}}></Input>
+    </FormGroup>
+    <FormGroup>
+        <Label htmlFor="sex">Giới tính:</Label>
+        <Input type="text" value={data.gioiTinh} name="sex" onChange={(e) => {setData({...data,gioiTinh: e.target.value})}} disabled></Input>
+    </FormGroup>
+    <FormGroup>
         <Label htmlFor="birthday">Ngày sinh:</Label>
-        <Input type="text" value={birthday} name="birthday" onChange={(e) => {setBirthday(e.target.value)}}></Input>
+        <Input type="text" value={birthday} name="birthday" onChange={(e) => {setBirthday(e.target.value)}} disabled></Input>
+    </FormGroup>
+    <FormGroup>
+        <Label htmlFor="personID">CMND/CCCD:</Label>
+        <Input type="text" value={data.cmnd} name="personID" onChange={(e) => {setData({...data,cmnd: e.target.value})}} disabled></Input>
     </FormGroup>
     <FormGroup>
         <Label htmlFor="address">Địa chỉ:</Label>
         <Input type="text" value={address} name="address" disabled></Input>
     </FormGroup>
+    
+    
     
     <Submit onClick={()=> submitFunc()}>Submit</Submit>
   </>
