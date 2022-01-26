@@ -84,6 +84,7 @@ const Store = () => {
     console.log(location.pathname)
     const [data, setData] = useState([])
     const [listProduct, setListProduct] = useState([])
+    const [address, setAddress] = useState('')
     let API_URL = 'http://localhost:8080/api/store/one';
     useEffect(() => {
         // props.actFetchProductsRequest();  
@@ -101,6 +102,7 @@ const Store = () => {
             console.log("data:",res.data)
             setData(res.data)
             setListProduct(res.data.danhSachSanPham)
+            setAddress(res.data.diaChiCuaHang.diaChiChiTiet)
         });
     }, [])
 
@@ -125,7 +127,7 @@ const Store = () => {
             </StoreInforItem>
             <StoreInforItem>
                 <label>Địa chỉ:</label>
-                <span>{data.diaChi}</span>
+                <span>{address}</span>
             </StoreInforItem>
             <StoreInforItem>
                 <label>Ngày tham gia:</label>
