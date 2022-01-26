@@ -394,11 +394,11 @@ function Statistic() {
     let fetchData = async () =>{
         const result = axios.post('http://localhost:8080/api/store/one', 
             {
-                "AccountID": "ch001"
+                "accountID": "ch001"
             }
         ).then(function (res) {
-            console.log(res.data.DanhSachSanPham);
-            setData(res.data.DanhSachSanPham)
+            console.log(res.data.danhSachSanPham);
+            setData(res.data.danhSachSanPham)
             
         }).catch(function (error) {
             console.log(error);

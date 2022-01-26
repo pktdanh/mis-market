@@ -69,6 +69,7 @@ const Table = () => {
             dataIndex: 'productId',
             copyable: true,
             render: (_) => <a>{_}</a>,
+            sorter: () => {setListProduct(listProduct.sort((a, b) => a.key - b.key)); console.log(listProduct);}
         },    
         {
             title: 'Tên sản phẩm',
@@ -90,11 +91,8 @@ const Table = () => {
             dataIndex: 'status',
             initialValue: 'all',
             valueEnum: {
-                all: { text: 'ALl', status: 'Default' },
-                close: { text: 'Close', status: 'Default' },
-                running: { text: 'Runing', status: 'Processing' },
-                online: { text: 'Online', status: 'Success' },
-                error: { text: 'Error', status: 'Error' },
+                running: { text: 'Hết hàng', status: 'Processing' },
+                online: { text: 'Còn hàng', status: 'Success' },
             },
         },
         {
@@ -108,7 +106,7 @@ const Table = () => {
             key: 'since',
             dataIndex: 'createdAt',
             valueType: 'date',
-            sorter: (a, b) => a.createdAt - b.createdAt,
+            sorter: (a, b) => {return new Date(a.createdAt) - new Date(b.createdAt)},
         },
         {
             title: 'Nhóm sản phẩm',
@@ -130,7 +128,7 @@ const Table = () => {
             title: 'Giá',
             dataIndex: 'price',
             copyable: true,
-            sorter: (a, b) => parseInt(a.price) - parseInt(b.price)
+            sorter: (a, b) => {console.log(a, b); return parseInt(a.price) - parseInt(b.price)}
         },
         {
             title: 'Số lượng còn lại',
@@ -163,8 +161,8 @@ const Table = () => {
             valueType: 'option',
             render: () => [
                 <TableDropdown key="actionGroup" menus={[
-                        { key: 'copy', name: 'Copy' },
-                        { key: 'delete', name: 'Delete' },
+                        { key: 'copy', name: 'Ẩn' },
+                        { key: 'delete', name: 'Xoá' },
                     ]}/>,
             ],
         },
@@ -174,10 +172,12 @@ const Table = () => {
 
     return (
     <ProTable columns={columns} request={(params, sorter, filter) => {
-            // 表单搜索项会从 params 传入，传递给后端接口。
+            
             console.log(params, sorter, filter);
-            if ('containers' in params){
-                console.log("");
+            if ('productId' in params){
+                console.log(params.productId);
+                let result = listProduct.find(item => item.productId.includes(params.productId))
+                console.log("result", result);
             }
             return Promise.resolve({
                 data: tableListDataSource,

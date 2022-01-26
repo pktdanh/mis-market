@@ -39,17 +39,17 @@ function Home() {
     // Call API every 5s
     const [data, setData] = useState({})
     const url = `https://localhost:44352/api/invoice/store/handling`;
-    console.log("context.store.accountID", JSON.parse(context.store).accountID);
+    // console.log("context.store.accountID", JSON.parse(context.store).accountID);
     useEffect(() => {      
       const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
-        console.log(" - API KIỂM TRA XEM CÓ BAO NHIÊU ĐƠN HÀNG VỪA ĐƯỢC MUA TỪ USER MÀ CHƯA CÓ SHIPPER NHẬN Ở TRONG DATABASE => LẤY RA CON SỐ ĐỂ ĐƯA LÊN BADGE HOẶC LÀM 1 CÁI NOTIFICATION")
+        // console.log(" - API KIỂM TRA XEM CÓ BAO NHIÊU ĐƠN HÀNG VỪA ĐƯỢC MUA TỪ USER MÀ CHƯA TỚI STORE Ở TRONG DATABASE => LẤY RA CON SỐ ĐỂ ĐƯA LÊN BADGE HOẶC LÀM 1 CÁI NOTIFICATION")
         let fetchData = async () =>{
           const result = axios.post(url, 
             {
               "account_CH": JSON.parse(context.store).accountID
             }
           ).then(function (res) {
-              console.log("Co don", res.data);
+              // console.log("Co don", res.data);
               setData(res.data)   
               context.updateNewInvoice(res.data.length)           
           }).catch(function (error) {
