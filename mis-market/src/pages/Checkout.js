@@ -312,7 +312,7 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
             console.log("item: ", item);
             let value = {
                 phiShip: "20000",
-                tongTien: `${item.totalOrder}`,
+                tongTien: `${item.totalOrder + 20000}`,
                 account_CH: `${item.storeID}`,
                 account_KH: `${userID}`,
                 danhSachSanPham: [],
@@ -381,6 +381,8 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
                               <tr style={{height:"36px",borderBottom:"solid 1px #ccc"}}>
                               <th scope="col">STT</th>
                               <th scope="col">Mã cửa hàng</th>
+                              <th scope="col">Số tiền</th>
+                              <th scope="col">Phí ship</th>
                               <th style={{textAlign:"right"}} scope="col">Tổng giá</th>
                               </tr>
                           </thead>
@@ -390,7 +392,9 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
                                     return <tr style={{height:"60px",borderBottom:"solid 1px #d7d7d7"}} key={index}>
                                                 <th style={{minWidth:"100px"}} scope="row">{index+1}</th>
                                                 <td>{item.storeID}</td>
-                                                <td style={{textAlign:"right"}}>{item.totalOrder} VNĐ</td>
+                                                <td>{item.totalOrder} VNĐ</td>
+                                                <td>20000 VNĐ</td>
+                                                <td style={{textAlign:"right"}}>{item.totalOrder + 20000} VNĐ</td>
                                             </tr>
                                       
                                   })

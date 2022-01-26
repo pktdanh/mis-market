@@ -65,7 +65,7 @@ const ListProduct = styled.div`
 
 
 
-const Store = () => {
+const NearestStore = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         document.getElementById("header").classList.add("changeHeaderColor");
@@ -80,14 +80,40 @@ const Store = () => {
     }, []);
 
     const location = useLocation();
-    let storeID = location.pathname.split("/").pop();
+    let userID = location.pathname.split("/").pop();
     console.log(location.pathname)
-    const [data, setData] = useState([])
+    
+    const [data, setData] = useState({})
     const [listProduct, setListProduct] = useState([])
     const [address, setAddress] = useState('')
-    let API_URL = 'http://localhost:8080/api/store/one';
+    const [storeID, setStoreID] = useState('')
+
+    // call api get nerest store
     useEffect(() => {
         // props.actFetchProductsRequest();  
+        let API_URL = 'https://localhost:44352/api/customer/store/near';
+
+        let endpoint = ''
+        let method = 'POST'
+        let d = axios({
+        method,
+        url: `${API_URL}/${endpoint}`,
+        data: {
+            "accountID": userID,
+        }
+        }).catch(err => {
+        console.log(err);
+        }).then(res => {
+            console.log("data:",res.data)
+            setStoreID(res.data.accountID)
+        });
+    }, [])
+
+    // call api get info of store
+    useEffect(() => {
+        // props.actFetchProductsRequest();  
+        let API_URL = 'http://localhost:8080/api/store/one';
+
         let endpoint = ''
         let method = 'POST'
         let d = axios({
@@ -99,15 +125,17 @@ const Store = () => {
         }).catch(err => {
         console.log(err);
         }).then(res => {
-            console.log("data:",res.data)
-            setData(res.data)
-            setListProduct(res.data.danhSachSanPham)
-            setAddress(res.data.diaChiCuaHang.diaChiChiTiet)
+            if (res)
+            {
+                setData(res.data)
+                setListProduct(res.data.danhSachSanPham)
+                setAddress(res.data.diaChiCuaHang.diaChiChiTiet)
+            }
         });
-    }, [])
+    }, [storeID])
 
     return <Container>
-        <h2 style={{marginBottom: "30px",marginTop:"20px"}}>Thông tin cửa hàng <strong>{data.TenCH}</strong></h2>
+        <h2 style={{marginBottom: "30px",marginTop:"20px"}}>Thông tin cửa hàng gần nhất <strong>{data.TenCH}</strong></h2>
         <StoreInfor>
             <StoreInforItem>
                 <label>Mã cửa hàng:</label>
@@ -149,4 +177,4 @@ const Store = () => {
         </ListProduct>
     </Container>
 }
-export default Store;
+export default NearestStore;

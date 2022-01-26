@@ -2,6 +2,10 @@ import React, { useEffect, useState, useRef } from 'react'
 import styled, { css} from "styled-components";
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import UserComment from './UserComment'
+import StarIcon from '@mui/icons-material/Star';
+
+
 const Container = styled.div`
   
   width: 100%;
@@ -40,10 +44,15 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     padding: 0;
     & > label {
+        font-size: 18px;
         font-weight: bold;
     }
     & > span {
+        font-size: 18px;
         padding-left: 12px;
+    }
+    & > span:hover {
+        color: #b2e5e5;
     }
     &:hover{
       /* border: 2px solid rgb(99,113,198); */
@@ -53,6 +62,69 @@ const StyledLink = styled(Link)`
         color: #000;
     }
 `;
+
+const BtnCancel = styled.button`
+    text-decoration: none;
+    color: black;
+    background-color: #b2e5e5;
+    margin-left: 20px;
+    padding: 8px 14px;
+    border-radius: 4px;
+    border-bottom: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    &:hover {
+        background-color: #f7482c;
+        color: white;
+        opacity: .6;
+    }
+    &:focus,
+    &:hover,
+    &:visited,
+    &:link,
+    &:active {
+        text-decoration: none;
+}
+`
+const BtnRating = styled.button`
+    text-decoration: none;
+    color: black;
+    background-color: #b2e5e5;
+    padding: 8px 14px;
+    border-radius: 4px;
+    border-bottom: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    min-width: 95px;
+    outline:none;
+    &:hover {
+        color: white;
+        opacity: .6;
+        outline:none;
+    }
+    &:focus,
+    &:hover,
+    &:visited,
+    &:link,
+    &:active {
+        text-decoration: none;
+        outline:none;
+
+}
+`
+const InputRating = styled.input`
+    width: 80px;
+    text-align: center;
+    margin-top: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    outline: none;
+    &:focus{
+        border-color: #40a9ff;
+        box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
+    }
+`
+
 const Order = ({userID}) => {
     const [invoiceID, setInvoiceID] = useState('')
     const [invoice, setInvoice] = useState({})
@@ -60,7 +132,9 @@ const Order = ({userID}) => {
     const [listDetailInvoice, setListDetailInvoice] = useState([])
     const [storeAddress, setStoreAddress] = useState('')
     const [customerAddress, setCustomerAddress] = useState('')
-
+    const [cancelOrder, setCancelOrder] = useState(false)
+    const [rating, setRating] = useState(5)
+    const [showComment, setShowComment] = useState('')
 
     // call API get Hóa đơn
     useEffect(() => {
@@ -96,6 +170,7 @@ const Order = ({userID}) => {
         }).catch(err => {
         console.log(err);
         }).then(res => {
+            console.log("ListDetailInvoice",res.data)
             setListDetailInvoice(res.data)
         });
     }, [invoiceID])
@@ -121,7 +196,28 @@ const Order = ({userID}) => {
           }
             
         });
-    },[invoiceID])
+    },[invoiceID, cancelOrder])
+
+    const handleCancel = () => {
+        let time = new Date().getFullYear()+"-"+(parseInt(new Date().getMonth())+1)+"-"+new Date().getDate()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds()
+        let value = {
+            "maHD": invoice.maHD,
+            "thoiGian": time,
+        }
+        console.log("value",value)
+        axios({
+            method: "post",
+            url: "http://localhost:8080/api/history/cancel",
+            data: value,
+        })
+            .then(function (res) {
+                console.log("res.data: ", res.data);
+                setCancelOrder(!cancelOrder)
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
 
   return <>
       <Heading style={{marginLeft: "10px"}}>Đơn hàng của tôi</Heading>
@@ -169,11 +265,11 @@ const Order = ({userID}) => {
             </FormGroup>
             <FormGroup>
                 <label>Tổng đơn hàng:</label>
-                <span>{invoice.tongTien} vnđ</span>
+                <span>{invoice.tongTien} VNĐ</span>
             </FormGroup>
             <FormGroup>
                 <label>Phí ship:</label>
-                <span>{invoice.phiShip} vnđ</span>
+                <span>{invoice.phiShip} VNĐ</span>
             </FormGroup>
             <FormGroup>
                 <label>Hình thức thanh toán:</label>
@@ -181,7 +277,22 @@ const Order = ({userID}) => {
             </FormGroup>
             <FormGroup>
                 <label>Trạng thái giao hàng:</label>
-                <span>{invoice.trangThai}</span>
+                {
+                    invoice.trangThai == "Bị huỷ bỏ" ?
+                    <span style={{color: "red"}}>{invoice.trangThai}</span>:
+                    invoice.trangThai == "Chờ giao hàng" ? 
+                    <span style={{color: "#21c3c3"}}>{invoice.trangThai}</span>:
+                    invoice.trangThai == "Giao hàng thành công" ? 
+                    <span style={{color: "#02e102"}}>{invoice.trangThai}</span>:
+                    <span style={{color: "blue"}}>{invoice.trangThai}</span>
+
+                }
+                {
+                    invoice.trangThai == "Chờ giao hàng" ? 
+                    <BtnCancel onClick= {()=> handleCancel()}>Hủy đơn</BtnCancel> 
+                    : 
+                    <></>
+                }
             </FormGroup>
         </WrapperGrid>
         <FormGroup>
@@ -206,18 +317,41 @@ const Order = ({userID}) => {
             <th scope="col">Tên sản phẩm</th>
             <th scope="col">Số lượng</th>
             <th scope="col">Đơn giá (VNĐ)</th>
+            {
+                invoice.trangThai == "Giao hàng thành công" ?
+                <th scope="col">Đánh giá</th>:<></>
+            }
             </tr>
         </thead>
         <tbody>
-            {listDetailInvoice.map((item, index)=>
+            {listDetailInvoice.map((item, index)=><>
                 <tr style={{height:"60px",borderBottom:"solid 1px #d7d7d7",cursor:"pointer"}} key={index}>
                     <th scope="row">{item.maSP}</th>
                     <td>{item.tenSP}</td>
                     <td>{item.soLuong}</td>
                     <td>{item.giaSP}</td>
+                    {
+                        invoice.trangThai == "Giao hàng thành công" ?
+                        <td>
+                        {
+                            showComment == item.maSP?
+                            <BtnRating style={{backgroundColor:"#ff8d8d"}} onClick={()=>setShowComment('')}>Hủy bỏ</BtnRating>:
+                            <BtnRating onClick={()=>setShowComment(item.maSP)}>Đánh giá</BtnRating>
+                        }
+                        </td>:<></>
+                    }
                 </tr>
+                {
+                    showComment == item.maSP ?
+                    <tr>
+                        <th></th>
+                        <td><UserComment productID={item.maSP} rating={rating}></UserComment></td>
+                        <td ></td>
+                        <td style={{display: "flex", flexDirection: "column",justifyContent: "center",height: "120px"}}><span>Chọn số sao rating </span><span><InputRating onChange={(e) => setRating(e.target.value)} type="number" value = {rating} step="1" min="1" max="5"/><StarIcon style={{color: "#dfbb6b",marginLeft:"4px"}}></StarIcon></span></td>
+                    </tr>: <></>
+                }
+                </>
             )}
-            
         </tbody>
     </table>
   </>

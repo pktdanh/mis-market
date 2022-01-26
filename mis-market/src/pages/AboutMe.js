@@ -9,7 +9,7 @@ import Address from '../components/Address';
 const Container = styled.div`
     display: flex;
     width: 100%;
-    padding: 100px 100px 30px 100px;
+    padding: 90px 100px 60px 100px;
 `;
 const WrapLeft = styled.div`
     width: 300px;

@@ -338,7 +338,7 @@ export const ItemProduct = (props) => {
                 </ProductImage>
                 <ProductInfo>
                     <ProductTitle>{product.tenSP}</ProductTitle>
-                    <ProductPrice><Highlight>{product.giaSP}</Highlight> VND</ProductPrice>
+                    <ProductPrice><Highlight>{product.giaSP}</Highlight> VNĐ</ProductPrice>
                     <ProductWrapSpan>
                         <ProductSpan>
                             <Highlight>{product.avgRating}</Highlight>{" "}

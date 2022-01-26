@@ -153,6 +153,7 @@ export class Header extends Component {
     this.state = {
       linkToMyUser: localStorage.getItem('MISuser') ? `/aboutme/${JSON.parse(localStorage.getItem('MISuser')).username}` : ``,
       linkToMyOrder: localStorage.getItem('MISuser') ? `/myorder/${JSON.parse(localStorage.getItem('MISuser')).username}` : ``,
+      linkToNearest: localStorage.getItem('MISuser') ? `/nearest/${JSON.parse(localStorage.getItem('MISuser')).username}` : ``,
     };
   }
   render() {
@@ -164,17 +165,18 @@ export class Header extends Component {
           <StyledLink to="/">
             <Left>
               <BrandNameLeft>MIS</BrandNameLeft>
-              <BrandNameRight id="brandNameRight">STORE</BrandNameRight>
+              <BrandNameRight id="brandNameRight">MARKET</BrandNameRight>
             </Left>
           </StyledLink>
           <Center id="center">
             <StyledLink to="/">Trang chủ</StyledLink>
             <StyledLink to="/collections/1">Sản phẩm</StyledLink>
+            {localStorage.getItem('MISisLogin') &&<StyledLink to={this.state.linkToNearest}>Cửa hàng gần nhất</StyledLink>}
             
             
           </Center>
           <Right>
-            {localStorage.getItem('MISisLogin') &&<StyledLink to={this.state.linkToMyUser}><MenuItem style={{transform:"translateY(2px)"}} className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
+            {localStorage.getItem('MISisLogin') &&<StyledLink to={this.state.linkToMyUser}><MenuItem style={{transform:"translateY(0px)"}} className="menu-item">Xin chào, {JSON.parse(localStorage.getItem('MISuser')).username}</MenuItem></StyledLink>}
             {/* <MenuIcon></MenuIcon> */}
             {!localStorage.getItem('MISisLogin') && <><StyledLink to="/signin"><MenuItem className="menu-item">Đăng nhập</MenuItem></StyledLink><StyledLink to="/signup"><MenuItem className="menu-item">Đăng ký</MenuItem></StyledLink></>}
             {localStorage.getItem('MISisLogin') && <LogoutItem className="menu-item" onClick={() => {localStorage.clear(); window.location.href = '/';}}>Đăng xuất</LogoutItem>}
