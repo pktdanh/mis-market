@@ -132,23 +132,13 @@ const TableData = styled.td`
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: #000;
-    border-bottom: 2px solid transparent;
-    & > div {
-        margin-left: 190px;
-        width: 150px;
-        height: 40px;
-        border: 1px solid #717fe0;
-        text-align: center;
-        line-height: 40px;
-        text-transform: uppercase;
-        border-radius: 2em;
-        cursor: pointer;
-        align-self: flex-end;
-        margin-right: 40px;
-        margin-bottom: 20px;
-    }
+    background-color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border-bottom: none;
+    border: 1px solid #ccc;
     &:hover {
-        /* border: 2px solid rgb(99,113,198); */
+        opacity: .6;
     }
     &:focus,
     &:hover,
@@ -190,6 +180,8 @@ const Heading = styled.h3`
     padding-left: 20px;
     margin-bottom: 20px;
 `;
+
+
 
 function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
     //  console.log(items)
@@ -370,6 +362,10 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
                         <FormGroup>
                             <label>Địa chỉ:</label>
                             <span>{address}</span>
+                            <StyledLink style={{marginLeft: "30px"}} to={"/aboutme/" + userID}>
+                                Thay đổi
+                            </StyledLink>
+
                         </FormGroup>
                         <FormGroup>
                             <label>Hình thức thanh toán:</label>
