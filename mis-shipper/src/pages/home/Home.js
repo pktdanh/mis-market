@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import styled from 'styled-components'
-import { Modal, Button, Space, Card, Empty  } from 'antd';
+import { Modal, Button, Space, Card, Empty, notification  } from 'antd';
 import { MyContext } from '../../App';
 import axios from 'axios';
 import InvoiceNow from '../../components/InvoiceNow/InvoiceNow'; // don hang gan nhat
@@ -80,6 +80,27 @@ const FindInvoice = () => {
       let x =  fetchData()
     }, []);
 
+    const close = () => {
+    
+    };
+  
+    const openNotification = () => {
+      const key = `open${Date.now()}`;
+      const btn = (
+        <Button type="primary" size="small" onClick={() => notification.close(key)}>
+          Confirm
+        </Button>
+      );
+      notification.open({
+        message: 'Thông báo',
+        description:
+          'Nhận đơn thành công.',
+        btn,
+        key,
+        onClose: close,
+      });
+    };
+
     let nhanDon = (maHD) => {
       console.log("nhan don");
       let fetchData = async () =>{
@@ -93,7 +114,7 @@ const FindInvoice = () => {
         .then(function (res) {
           console.log("res",res.data);
           setListInvoiceNear(res.data)
-          
+          openNotification()
         }).catch(function (error) {
           console.log(error);
       });
@@ -107,7 +128,7 @@ const FindInvoice = () => {
           {context.status === true ? "TÌM ĐƠN HÀNG GẦN ĐÂY" : "BẬT TRẠNG THÁI SHIPPER ĐỂ NHẬN ĐƠN HÀNG"}
         </Button>
         
-        {model1 ? listInvoiceNear.map((item, index) =>         
+        {model1 && listInvoiceNear.length != 0 ? listInvoiceNear.map((item, index) =>         
           <Space direction="vertical" key={index} style={{ marginLeft: "30px"}}>
             <Card title="Đơn hàng gần bạn" style={{ width: 300 }}>
               <p>Cửa hàng: {item.tenCH}</p>
@@ -128,7 +149,7 @@ const FindInvoice = () => {
         <Button type="primary" onClick={showModal2} style={{"marginTop": "150px", "display": "block"}}>
           {context.status === true ? "TÌM TẤT CẢ ĐƠN HÀNG" : "BẬT TRẠNG THÁI SHIPPER ĐỂ NHẬN ĐƠN HÀNG"}
         </Button>
-        {model2 ? listInvoice.map((item, index) =>         
+        {model2 && listInvoice.length!=0 ? listInvoice.map((item, index) =>         
           <Space direction="vertical" key={index} style={{ marginLeft: "30px"}}>
             <Card title="Đơn hàng tất cả" style={{ width: 300 }}>
               <p>Cửa hàng: {item.tenCH}</p>

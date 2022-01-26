@@ -128,7 +128,7 @@ const Table = () => {
             title: 'Giá',
             dataIndex: 'price',
             copyable: true,
-            sorter: (a, b) => {console.log(a, b); return parseInt(a.price) - parseInt(b.price)}
+            sorter: (a, b) => parseInt(a.price) - parseInt(b.price)
         },
         {
             title: 'Số lượng còn lại',
@@ -161,7 +161,7 @@ const Table = () => {
             valueType: 'option',
             render: () => [
                 <TableDropdown key="actionGroup" menus={[
-                        { key: 'copy', name: 'Ẩn' },
+                        { key: 'edit', name: 'Sủa' },
                         { key: 'delete', name: 'Xoá' },
                     ]}/>,
             ],

@@ -199,8 +199,8 @@ const Model =  () => {
       </ProForm.Group>  
    
       <ProForm.Group>
-        <ProFormMoney width="md" name="price" 
-          label="Giá" placeholder="Giá" locale="en-US"
+        <ProFormMoney width="md" name="price" style={{minWidth: "200px"}}
+          label="Giá" placeholder="Giá" locale="vn-VN"
           initialValue={1}
           min={1}
           required rules={[{ required: true, message: '' }]}

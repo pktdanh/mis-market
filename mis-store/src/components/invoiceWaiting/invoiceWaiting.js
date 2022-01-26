@@ -34,7 +34,7 @@ function InvoiceWaiting() {
       let fetchData1 =  () => {
           const result = axios.post(url1, 
             {
-              "maHD": "hdch001252"
+              "maHD": invoice[i].maHD
             }
           ).then(function (res) {
               
@@ -71,7 +71,7 @@ function InvoiceWaiting() {
             <Descriptions.Item label="Danh sách sản phẩm">
                 {
                     listDetailtProduct.length > 0 ?  listDetailtProduct[index].map((item1, index1) => {
-                      console.log("Item 1:", item1)
+                      // console.log("Item 1:", item1)
                       return (<div style={{textAlign: "left", borderBottom: "1px solid black"}}>
                         <p>Mã sản phẩm: {item1.maSP}</p>
                         <p>Tên sản phẩm: {item1.tenSP}</p>
