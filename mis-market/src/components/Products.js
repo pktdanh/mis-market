@@ -377,45 +377,7 @@ export const Products = (props) => {
   }, [])
    
 
-  if (_products.length > 0 && products.length > 0) {
-    if (props.typeQuery === 'store'){
-      return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <ProductWrapper>
-            <ProductWrapperTitle>SẢN PHẨM</ProductWrapperTitle>
-            <Filter productList={_products} productListDefault={products}></Filter>
-            <Container>
-              {
-                _products.map((item) => {  
-                  return (
-                  <WrapItem key={item.maSP}>
-                    <StyledLink to={"/product/"+ item.maSP}>
-                    <ProductItem key={item.MaSP}>
-                      <ProductImage src={item.AnhSP} alt="TEE" />
-                      <ProductTitle>{item.TenSP}</ProductTitle>
-                      <ProductPrice>Giá: <Highlight>{item.GiaSP} VNĐ</Highlight></ProductPrice>
-                      <ProductPrice>Đã bán: <Highlight>{item.SoSPDaBan}</Highlight></ProductPrice>
-                      <ProductPrice>Đánh giá: <Highlight>{item.AvgRating}</Highlight><StarIcon style={{fontSize: "18px",transform:"translateY(-1px)",color:"#dd9d0d",marginLeft:"2px"}}></StarIcon></ProductPrice>
-                    </ProductItem>
-                    </StyledLink>
-  
-              
-  
-  
-                    <ProducAddtocart onClick={() => props.AddCart(item)}>
-                        Thêm vào giỏ hàng
-                      </ProducAddtocart>
-                  </WrapItem>
-                )})
-              }
-  
-            </Container>
-  
-          </ProductWrapper>
-        </div>
-      )
-    }
-    else {
+  if (_products.length > 0 && products.length > 0) { 
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ProductWrapper>
@@ -452,7 +414,7 @@ export const Products = (props) => {
 
         </ProductWrapper>
       </div>
-    )}
+    )
   }
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
