@@ -194,7 +194,7 @@ const Heading = styled.h3`
 function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
     //  console.log(items)
     const location = useLocation();
-    let userID = location.pathname.split("/").pop();
+    let userID = JSON.parse(localStorage.getItem("MISuser")).accountID
     const [address, setAddress] = useState("");
     const [data, setData] = useState([]);
 
@@ -237,10 +237,11 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
                 console.log(err);
             })
             .then((res) => {
-                setAddress(res.data.diaChiHienTai.diaChiChiTiet.diaChiChiTiet);
-                setData(res.data);
                 console.log("hello", res.data);
-                setWardID(res.data.diaChiHienTai.diaChiChiTiet.maPhuongXa);
+                setAddress(res.data.diaChi.diaChiChiTiet.diaChiChiTiet);
+                setData(res.data);
+                
+                setWardID(res.data.diaChi.diaChiChiTiet.maPhuongXa);
             });
     }, []);
 
@@ -252,6 +253,7 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
     });
 
     (function () {
+        console.log("numbOfStore", numbOfStore);
         if (numbOfStore.size > 1) {
             numbOfStore.forEach((item, index) => {
                 orderArray.push({
@@ -274,6 +276,25 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
                 });
             }
           totalCount = (numbOfStore.size-0) * 20000
+        } else {
+            orderArray.push({
+                storeID: [...numbOfStore][0],
+                listProduct: [],
+                totalOrder: 0,
+            });
+            if (orderArray.length > 0) {
+                orderArray.forEach((item, index) => {
+                    ListCart.forEach((item2, index2) => {
+                        if (item2.storeID === item.storeID) {
+                            item.listProduct = [...item.listProduct, item2];
+                            item.totalOrder +=
+                                (item2.price - 0) * (item2.quantity - 0);
+                        }
+                    });
+                    
+                });
+            }
+            totalCount = (numbOfStore.size-0) * 20000
         }
         console.log("hehe:", orderArray);
     })();
@@ -315,6 +336,8 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
 
             let x = await callAPI(value);
         }
+        window.location.href = '/'
+        window.location.reload()
         // orderArray.forEach(async (item,index)=>{
 
         // })
@@ -400,12 +423,12 @@ function Checkout({ items, IncreaseQuantity, DecreaseQuantity, DeleteCart }) {
                       <Total>
                           <span style={{ fontWeight: "bold" }}>Tổng:</span>
                           <span>
-                              {Number(TotalCart).toLocaleString("en-US")} VNĐ
+                              {Number(TotalCart + totalCount).toLocaleString("en-US")} VNĐ
                           </span>
                       </Total>
 
                       <ButtonCheckout onClick={handleOrder}>
-                          Thanh toán
+                          Đặt hàng
                       </ButtonCheckout>
                     </Wrapper>
                 </CheckoutSide>

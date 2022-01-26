@@ -94,10 +94,11 @@ const Register = () => {
       data
     ).then(res => {
       console.log(res);
-      context.updateUser(JSON.stringify(res.data))
-      context.updateStatus();
-      context.updateLogin();
+      // context.updateUser(JSON.stringify(res.data))
+      // context.updateStatus();
+      // context.updateLogin();
       openNotification()
+      window.location.href = '/'
     })
   };
 
@@ -297,13 +298,13 @@ const Register = () => {
         rules={[
           {
             validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
+              value ? Promise.resolve() : Promise.reject(new Error('Đồng ý để tiếp tục')),
           },
         ]}
         
       >
         <Checkbox>
-          I have read the <a href="/">agreement</a>
+          Tôi đồng ý với <a href="/">điều khoản và quy định</a>
         </Checkbox>
       </Form.Item>
       <Form.Item

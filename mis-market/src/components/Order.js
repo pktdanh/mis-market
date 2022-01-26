@@ -76,6 +76,7 @@ const Order = ({userID}) => {
         }).catch(err => {
         console.log(err);
         }).then(res => {
+            console.log("user id", userID);
             console.log(res.data)
             setListInvoice(res.data)
         });

@@ -136,9 +136,9 @@ const Address = ({userID}) => {
         }).catch(err => {
         console.log(err);
         }).then(res => {
-            setAddress(res.data.diaChiHienTai.diaChi)
+            setAddress(res.data.diaChi.diaChi)
             setData(res.data)
-            setWardID(res.data.diaChiHienTai.diaChiChiTiet.maPhuongXa)
+            setWardID(res.data.diaChi.diaChiChiTiet.maPhuongXa)
         });
     }, [])
 

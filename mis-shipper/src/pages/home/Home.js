@@ -42,7 +42,10 @@ const FindInvoice = () => {
     return (
       <>
         <Button type="primary" onClick={showModal}>
-          {context.status === true ? "ẤN ĐỂ TÌM ĐƠN HÀNG" : "BẬT TRẠNG THÁI SHIPPER ĐỂ NHẬN ĐƠN HÀNG"}
+          {context.status === true ? "TÌM ĐƠN HÀNG GẦN ĐÂY" : "BẬT TRẠNG THÁI SHIPPER ĐỂ NHẬN ĐƠN HÀNG"}
+        </Button>
+        <Button type="primary" onClick={showModal} style={{"margintLeft": "100px"}}>
+          {context.status === true ? "TÌM TẤT CẢ ĐƠN HÀNG" : "BẬT TRẠNG THÁI SHIPPER ĐỂ NHẬN ĐƠN HÀNG"}
         </Button>
         <Modal title="ĐƠN HÀNG ĐANG CHỜ NHẬN" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
           <p>Some contents...</p>

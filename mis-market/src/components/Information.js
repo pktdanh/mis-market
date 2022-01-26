@@ -116,11 +116,12 @@ const Information = ({userID}) => {
         }).catch(err => {
         console.log(err);
         }).then(res => {
-            setAddress(res.data.diaChiHienTai.diaChiChiTiet.diaChiChiTiet)
+            console.log("res diachichitiet", res);
+            setAddress(res.data.diaChi.diaChiChiTiet.diaChiChiTiet)
             setBirthday(res.data.ngaySinh.split(' ')[0])
             setData(res.data)
             console.log(res.data)
-            setWardID(res.data.diaChiHienTai.diaChiChiTiet.maPhuongXa)
+            setWardID(res.data.diaChi.diaChiChiTiet.maPhuongXa)
         });
     }, [])
 
