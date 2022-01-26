@@ -19,7 +19,7 @@ const Me = () => {
     return <MeContainer>
       <PersionalInformation></PersionalInformation>
       <InvoiceNow title="Đơn hàng đang giao"></InvoiceNow>
-      <HistoryInvoices></HistoryInvoices>
+      <HistoryInvoices title="Tất cả đơn hàng"></HistoryInvoices>
   </MeContainer>
        
 }

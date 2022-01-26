@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
+import { Modal, Button, Space, Card, Empty, notification  } from 'antd';
 import axios from 'axios';
+import { MyContext } from '../../App';
 
 const INContainer = styled.div`
     padding: 20px;
@@ -16,8 +18,49 @@ const TitleTag = styled.div`
 `;
 
 function InvoiceNow({title}) {
+    let context = useContext(MyContext)
+    const [allInvoice, setAllInvoice] = useState([])
+    useEffect(() => {
+        let fetchData = async () =>{
+            const result = axios.post('https://localhost:44352/api/invoice/shipper', 
+                {
+                    "account_S": JSON.parse(context.user).accountID
+                }
+            ).then(function (res) { 
+                console.log("all inv", res.data);
+                setAllInvoice(res.data)
+                
+            }).catch(function (error) {
+                console.log(error);
+            });
+            
+            return result
+        }
+            
+        fetchData()
+        console.log(allInvoice);
+        // setData(result.data);
+    }, []);
   return <INContainer>
       <TitleTag>{title}:</TitleTag>
+      
+      {
+          allInvoice.map((item, index) => 
+                <Space direction="vertical" key={index} style={{ marginLeft: "30px"}}>
+                    <Card title="Đơn hàng:" >
+                    <p>Mã đơn hàng: {item.maDH}</p>
+                    <p>Tên cửa hàng: {item.tenCH}</p>
+                    <p>Địa chỉ cửa hàng: {item.diaChiCuaHang.diaChiChiTiet}</p>
+                    <p>Địa chỉ khách hàng: {item.diaChiKhachHang.diaChiChiTiet}</p>
+                    <p>Tổng tiền:{item.tongTien}</p>
+                    <p>Phí ship:{item.phiShip}</p>
+                    <p>Hình thức thanh toán:{item.tenTT}</p>
+                    
+                    </Card>
+                </Space>
+        ) 
+          
+      }
   </INContainer>;
 }
 

@@ -33,6 +33,10 @@ const FindInvoice = () => {
   
     const showModal1 = () => {
         // if(context.status === false) return;
+        if(context.status == false){
+          setModel1(false);
+          return 
+        }
         setModel1(!model1);
         // setModel2(false);
     };
@@ -40,6 +44,10 @@ const FindInvoice = () => {
 
     const showModal2 = () => {
       // if(context.status === false) return;
+      if(context.status == false){
+        setModel2(false);
+        return 
+      }
       setModel2(!model2);
       // setModel1(false);
     };
