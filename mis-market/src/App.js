@@ -7,6 +7,7 @@ import {
    Redirect,
    useLocation
  } from "react-router-dom";
+ import "antd/dist/antd.css";
 import Cart from './components/Cart';
 import Header from './components/Header';
 import Product from './components/Products';

@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { MyContext } from '../../App';
 import { Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { DownOutlined, QuestionCircleOutlined } from '@ant-design/icons';
@@ -7,16 +8,20 @@ import axios from 'axios'
 import Model from '../model/Model';
 
 const Table = () => {
+    let context = useContext(MyContext)
+    console.log("accountID", typeof JSON.parse(context.store).accountID);
+    console.log(context);
     const [listProduct, setListProduct] = useState([])
     useEffect(() => {
         let fetchData = async () =>{
             const result = axios.post('http://localhost:8080/api/store/one', 
                 {
-                    "AccountID": "ch001"
+                    "accountID": JSON.parse(context.store).accountID
                 }
             ).then(function (res) {
-                console.log(res.data.DanhSachSanPham);
-                setListProduct(res.data.DanhSachSanPham)
+                console.log(res.data.danhSachSanPham);
+                console.log(res.data);
+                setListProduct(res.data.danhSachSanPham)
                 console.log(listProduct);
             }).catch(function (error) {
                 console.log(error);
@@ -40,19 +45,19 @@ const Table = () => {
             
             tableListDataSource.push({
                 key: i,
-                productId: listProduct[i]['MaSP'],
-                productName: listProduct[i]['TenSP'],
+                productId: listProduct[i]['maSP'],
+                productName: listProduct[i]['tenSP'],
                 status: valueEnum[0],
-                createdAt: listProduct[i]['NgayDang'],
-                productGroup: listProduct[i]['TenNhomSP'],
-                productType: listProduct[i]['TenLoaiSP'],
-                description: listProduct[i]['MoTaSP'],
-                img: listProduct[i]['AnhSP'],
-                price: listProduct[i]['GiaSP'],
-                quantityRest: listProduct[i]['SoLuongTon'],
-                quantitySold: listProduct[i]['SoSPDaBan'],
-                quantityRating: listProduct[i]['SoRating'],
-                avgRating: listProduct[i]['AvgRating'],
+                createdAt: listProduct[i]['ngayDang'],
+                productGroup: listProduct[i]['tenNhomSP'],
+                productType: listProduct[i]['tenLoaiSP'],
+                description: listProduct[i]['moTaSP'],
+                img: listProduct[i]['anhSP'],
+                price: listProduct[i]['giaSP'],
+                quantityRest: listProduct[i]['soLuongTon'],
+                quantitySold: listProduct[i]['soSPDaBan'],
+                quantityRating: listProduct[i]['soRating'],
+                avgRating: listProduct[i]['avgRating'],
             });
         }
     }, [listProduct])

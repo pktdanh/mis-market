@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------------------------------------------------
 					SERVER C#
 
-REGISTER BODY
+REGISTER SHIPPER BODY
 {
   "hoTen": "Tran Van B",
   "cmnd": "123456789",
@@ -70,6 +70,44 @@ POST INVOICE STORE HANDLING:
 
 
 
+POST BUY:
+{
+  "phiShip": "20000",
+  "tongTien": "500000",
+  "account_CH": "ch001",
+  "account_KH": "kh001",
+  "danhSachSanPham": [
+    {
+      "maSP": "sp117",
+      "soLuong": "3"
+    },
+    {
+      "maSP": "sp61",
+      "soLuong": "2"
+    },
+    {
+      "maSP": "sp12",
+      "soLuong": "2"
+    }
+  ]
+}
+
+
+POST UPDATE DEFAULT ADDRESS
+{
+   "maDC": "string",
+   "accountID": "string"
+}
+
+
+POST ADD NEW ADDRESS
+{
+   "accountID": "string",
+   "diaChi": "string",
+   "maPhuongXa": "string"
+}
+
+
 
 
 
@@ -79,6 +117,10 @@ POST INVOICE STORE HANDLING:
 
 				SERVER JAVA
 
+GET ALL ACCOUNT:
+http://localhost:8080/api/account/all
+
+------------------------------------------------------------
 
 
 GET ALL STORE: 
@@ -119,5 +161,71 @@ http://localhost:8080/api/store/upproduct
   "soRating": "0",
   "loaiSP": "lsp001",
   "account_CH": "ch001" 
+}
+
+
+
+POST ADD STORE:
+http://localhost:8080/api/account/register/store
+{
+    "tenCH": "Đại Nam BHX",
+    "cmnd": "123456789",
+    "ngayThamGia": "2022-01-24",
+    "sdt": "0123456789",
+    "email": "mail1123@gmail.com",
+    "diaChi": "Chỗ này nè",
+    "maPhuongXa": "hcm0201",
+    "maGPKD": "ajsd3213213",
+    "maCNATTP": "a5sd465a2sd",
+    "taiKhoan": {
+        "username": "ch123",
+        "password": "nam"
+    }
+}
+
+
+POST CHANGE STATUS:
+http://localhost:8080/api/history/change
+{
+    "maHD": "kh00203",
+    "thoiGian": "2022-01-24 21:00:00"
+}	
+
+
+POST REGISTER CUSTOMER:
+http://localhost:8080/api/account/register/customer
+{
+    "hoTen": "Đường Huyền Trang",
+    "cmnd": "01234567890",
+    "ngaySinh": "1/4/2000 12:00:00 AM",
+    "gioiTinh": "Nam",
+    "sdt": "01234567890",
+    "email": "thphat@gmail.com",
+    "diaChiHienTai": {
+      "diaChi": "Tây Thiên",
+      "maPhuongXa": "hcm0901"
+    },
+    "taiKhoan": {
+      "username": "customer123",
+      "password": "ngoc"
+    }
+}
+
+LOGIN CUSTOMER
+http://localhost:8080/api/account/login/customer
+{
+  "username": "kh001",
+  "password": "2",
+  "role": "kh"
+}
+
+
+
+LOGIN STORE
+http://localhost:8080/api/account/login/store
+{
+  "username": "ch12345",
+  "password": "1",
+  "role": "ch"
 }
 

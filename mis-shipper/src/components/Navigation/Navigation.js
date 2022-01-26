@@ -55,12 +55,12 @@ function Navigation() {
     const [active, setActive] = useState(location.pathname.split("/")[1] === "" ? 2 : (location.pathname.split("/")[1] === "shipping" ? 1 : 3))
     return (
         <Nav>
-            <StyledLink to="/shipping">
+            {/* <StyledLink to="/shipping">
                 <NavItem status={ active === 1 ? "active" : "deactive" } onClick={()=>{setActive(1)}}>
                     <Icon fs="24px"><i className="fas fa-shipping-fast"></i></Icon>
                     <NavTitle>Đơn Hàng</NavTitle>
                 </NavItem>
-            </StyledLink>
+            </StyledLink> */}
             <StyledLink to="/">
                 <NavItem status={ active === 2 ? "active" : "deactive" } onClick={()=>{setActive(2)}}>
                     <Icon fs="28px"><i className="fas fa-home"></i></Icon>

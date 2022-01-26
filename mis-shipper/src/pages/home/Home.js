@@ -4,10 +4,19 @@ import { Modal, Button } from 'antd';
 import { MyContext } from '../../App';
 
 
+const TitleTag = styled.div`
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    border-left: 8px solid #FF6651;
+    padding-left: 10px;
+    margin: 30px 0px 10px 0px;
+`;
+
 function Home() {
     return (
         <div>
-            home
+            <TitleTag>TRANG CHỦ</TitleTag>
             <FindInvoice></FindInvoice>
         </div>
     )
@@ -33,9 +42,9 @@ const FindInvoice = () => {
     return (
       <>
         <Button type="primary" onClick={showModal}>
-          {context.status === true ? "Tim Don Hang" : "Bat trang thai shipper de tim don hang"}
+          {context.status === true ? "ẤN ĐỂ TÌM ĐƠN HÀNG" : "BẬT TRẠNG THÁI SHIPPER ĐỂ NHẬN ĐƠN HÀNG"}
         </Button>
-        <Modal title="Don hang dang cho" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <Modal title="ĐƠN HÀNG ĐANG CHỜ NHẬN" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
           <p>Some contents...</p>
           <p>Some contents...</p>
           <p>Some contents...</p>

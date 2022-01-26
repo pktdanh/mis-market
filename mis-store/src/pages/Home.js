@@ -43,7 +43,7 @@ function Home() {
         let fetchData = async () =>{
           const result = axios.post(url, 
             {
-              "account_CH": "ch001"
+              "account_CH": context.store.accountID
             }
           ).then(function (res) {
               console.log(res.data.length);
@@ -113,7 +113,9 @@ function Home() {
             {"Shiro"}
           </Avatar>
         </Badge>
-        <span className="logout" style={{"color": "#fff", "margin": "0 auto", "cursor": "pointer"}}>LOGOUT</span>
+        <span className="logout" onClick={() => {
+          context.updateLogin();
+        }} style={{"color": "#fff", "margin": "0 auto", "cursor": "pointer"}}>LOGOUT</span>
       </Header>
       <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
         <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>

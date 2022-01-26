@@ -29,9 +29,9 @@ function App() {
         setIsLogin(!isLogin);
         localStorage.setItem("MIS_StoreisLogin",!isLogin);
       },
-      updateStore: () =>{
-        setStore(!store);
-        localStorage.setItem("MIS_Store",!store);
+      updateStore: (d) =>{
+        setStore(d);
+        localStorage.setItem("MIS_Store",d);
       },
       updateNewInvoice: (n) =>{ // n: number of new invoice
         setNewInvoice(n);

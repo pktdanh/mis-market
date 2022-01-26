@@ -114,7 +114,7 @@ const Login = () => {
         <div>
             <Row>
                 <div>
-                    <label for="username">
+                    <label htmlFor="username">
                         Tên đăng nhập:
                     </label>
                     <input onChange={e => setData({username: e.target.value, password: data.password})} id="username" placeholder="tên đăng nhập..."></input>
@@ -123,7 +123,7 @@ const Login = () => {
            
             <Row>
                 <div>
-                    <label for="password">
+                    <label htmlFor="password">
                         Mật khẩu:
                     </label>
                     <input onChange={e => setData({username: data.username, password: e.target.value})} type="password" id="password" placeholder="mật khẩu..."></input>
