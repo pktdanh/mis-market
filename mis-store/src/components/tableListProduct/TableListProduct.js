@@ -9,8 +9,8 @@ import Model from '../model/Model';
 
 const Table = () => {
     let context = useContext(MyContext)
-    console.log("accountID", typeof JSON.parse(context.store).accountID);
-    console.log(context);
+    // console.log("accountID", typeof JSON.parse(context.store).accountID);
+    // console.log(context);
     const [listProduct, setListProduct] = useState([])
     useEffect(() => {
         let fetchData = async () =>{
@@ -19,10 +19,10 @@ const Table = () => {
                     "accountID": JSON.parse(context.store).accountID
                 }
             ).then(function (res) {
-                console.log(res.data.danhSachSanPham);
-                console.log(res.data);
+                // console.log(res.data.danhSachSanPham);
+                // console.log(res.data);
                 setListProduct(res.data.danhSachSanPham)
-                console.log(listProduct);
+                // console.log(listProduct);
             }).catch(function (error) {
                 console.log(error);
             });

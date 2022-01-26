@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Button, message, Image } from 'antd';
 import ProForm, { ModalForm, ProFormText, 
   ProFormDateRangePicker, ProFormSelect, ProFormDatePicker, ProFormUploadButton, ProFormDigit, ProFormTextArea, ProFormCascader, ProFormMoney} from '@ant-design/pro-form';
@@ -8,6 +8,8 @@ import { Cascader } from 'antd';
 
 import Uploader from '../uploader/Uploader';
 
+import axios from 'axios';
+import { MyContext } from '../../App';
 const options = [
     {
       value: 'zhejiang',
@@ -152,6 +154,7 @@ const optionsCascader = [
 ];
 
 const Model =  () => {
+  let context = useContext(MyContext)
     return (<ModalForm title="Sản Phẩm Mới" 
         trigger={
             <Button type="primary">
@@ -163,8 +166,32 @@ const Model =  () => {
             onCancel: () => console.log('run'),
         }} onFinish={async (values) => {
             await waitTime(2000);
-            console.log(values);
-            message.success('OK');
+            console.log("Data add product: ", values);
+            let data = {
+              "maSP" : "sp10000",
+              "tenSP": values.name,
+              "anhSP": values.image,
+              "moTaSP": values.des,
+              "ngayDang": new Date().getFullYear()+"-"+(parseInt(new Date().getMonth())+1)+"-"+new Date().getDate(), 
+              "giaSP": `${values.price}`,
+              "soLuongTon": `${values.quantityRest}`,
+              "soSPDaBan": "0",
+              "avgRating": "0",
+              "soRating": "0",
+              "loaiSP": values.area[1],
+              "account_CH": JSON.parse(context.store).accountID 
+            }
+            console.log(data);
+            console.log(JSON.stringify(data));
+            const result = axios.post('http://localhost:8080/api/store/one', 
+                data
+            ).then(function (res) {
+              console.log("RES add product: ", res);
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            message.success('Thêm sản phẩm thành công');
             return true;
         }}>
       <ProForm.Group>
@@ -196,8 +223,10 @@ const Model =  () => {
       </ProForm.Group>
 
       <ProForm.Group>
-        <ProFormDatePicker name="date" label="Ngày sản xuất" required rules={[{ required: true, message: '' }]}/>
-        <ProFormDatePicker name="date" label="Hạn sử dụng" required rules={[{ required: true, message: '' }]}/>
+        <ProFormDatePicker name="nsx" label="Ngày sản xuất" required rules={[{ required: true, message: '' }]}/>
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormDatePicker name="hsd" label="Hạn sử dụng" required rules={[{ required: true, message: '' }]}/>
       </ProForm.Group>
 
       
