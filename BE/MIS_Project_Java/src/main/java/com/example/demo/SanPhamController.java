@@ -28,7 +28,7 @@ public class SanPhamController {
 	{
 		 List<SanPham> products = new ArrayList<SanPham>();
 		 SanPham product = new SanPham();
-		 products = product.getMany(data.AccountID);
+		 products = product.getMany(data.accountID);
 		 return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 }

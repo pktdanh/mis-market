@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @CrossOrigin
 @Controller
-public class PagingAccountController {
-	@RequestMapping(value = "/api/account/all/paging", method = RequestMethod.POST)
-	public ResponseEntity<PagingAccount> All(@RequestBody PagingAccount data) 
+public class ThongKeTaiKhoanController {
+	@RequestMapping(value = "/api/statistic/account", method = RequestMethod.GET)
+	public ResponseEntity<List<ThongKeTaiKhoan>> Year() 
 	{
-		 PagingAccount paging = new PagingAccount();
-		 paging = paging.get(data.AccountPerPage);
-		 return new ResponseEntity<>(paging, HttpStatus.OK);
+		 List<ThongKeTaiKhoan> statistics = new ArrayList<ThongKeTaiKhoan>();
+		 ThongKeTaiKhoan statistic = new ThongKeTaiKhoan();
+		 statistics = statistic.All();
+		 return new ResponseEntity<>(statistics, HttpStatus.OK);
 	}
 }

@@ -1,8 +1,5 @@
 package com.example.demo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @CrossOrigin
 @Controller
-public class PagingAccountController {
-	@RequestMapping(value = "/api/account/all/paging", method = RequestMethod.POST)
-	public ResponseEntity<PagingAccount> All(@RequestBody PagingAccount data) 
+public class LichSuGiaoHangController {
+	@RequestMapping(value = "/api/history/change", method = RequestMethod.POST)
+	public ResponseEntity<LichSuGiaoHang> RegisterStore(@RequestBody NhanDonHang data) 
 	{
-		 PagingAccount paging = new PagingAccount();
-		 paging = paging.get(data.AccountPerPage);
-		 return new ResponseEntity<>(paging, HttpStatus.OK);
+		LichSuGiaoHang history = new LichSuGiaoHang();
+		history = history.StatusChange(data);
+		return new ResponseEntity<>(history, HttpStatus.OK);
 	}
 }

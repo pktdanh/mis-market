@@ -27,7 +27,7 @@ public class CuaHangController {
 	public ResponseEntity<CuaHang> One(@RequestBody CuaHang data)
 	{
 		 CuaHang store = new CuaHang();
-		 store = store.getOne(data.AccountID);
+		 store = store.getOne(data.accountID);
 		 return new ResponseEntity<>(store, HttpStatus.OK);
 	}
 	
@@ -35,7 +35,15 @@ public class CuaHangController {
 	public ResponseEntity<String> Delete(@RequestBody CuaHang data)
 	{
 		 CuaHang store = new CuaHang();
-		 String message = store.delete(data.AccountID);
+		 String message = store.delete(data.accountID);
+		 return new ResponseEntity<>(message, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/store/upproduct", method = RequestMethod.POST)
+	public ResponseEntity<String> UpProduct(@RequestBody SanPham data)
+	{
+		 CuaHang store = new CuaHang();
+		 String message = store.upProduct(data);
 		 return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 }

@@ -14,45 +14,50 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(value = { "all" })
 public class CuaHang {
-	public String AccountID;
-    public String TenCH;
-    public String CMND;
-    public String NgayThamGia;
-    public String SDT;
-    public String Email;
-    public String DiaChi;
-    public String MaPhuongXa;
-    public String MaGPKD;
-    public String MaCNATTP;
-    public List<SanPham> DanhSachSanPham;
+	public String accountID;
+    public String tenCH;
+    public String cmnd;
+    public String ngayThamGia;
+    public String sdt;
+    public String email;
+    public String diaChi;
+    public String maPhuongXa;
+    public String maGPKD;
+    public String maCNATTP;
+    public List<SanPham> danhSachSanPham;
+    public DiaChi diaChiCuaHang;
+    public TaiKhoan taiKhoan;
+    
     public CuaHang()
     {
-    	this.AccountID = "";
-        this.TenCH = "";
-        this.CMND = "";
-        this.NgayThamGia = "";
-        this.SDT = "";
-        this.Email = "";
-        this.DiaChi = "";
-        this.MaPhuongXa = "";
-        this.MaGPKD = "";
-        this.MaCNATTP = "";
-        this.DanhSachSanPham = null;
+    	this.accountID = "";
+        this.tenCH = "";
+        this.cmnd = "";
+        this.ngayThamGia = "";
+        this.sdt = "";
+        this.email = "";
+        this.diaChi = "";
+        this.maPhuongXa = "";
+        this.maGPKD = "";
+        this.maCNATTP = "";
+        this.danhSachSanPham = new ArrayList<SanPham>();
+        this.diaChiCuaHang = null;
     }
 
-    public CuaHang(String AccountID, String TenCH, String CMND, String NgayThamGia, String SDT, String Email, String DiaChi, String MaPhuongXa, String MaGPKD, String MaCNATTP, List<SanPham> DanhSachSanPham)
+    public CuaHang(String AccountID, String TenCH, String CMND, String NgayThamGia, String SDT, String Email, String DiaChi, String MaPhuongXa, String MaGPKD, String MaCNATTP, List<SanPham> DanhSachSanPham, DiaChi DiaChiCuaHang)
     {
-    	this.AccountID = AccountID;
-        this.TenCH = TenCH;
-        this.CMND = CMND;
-        this.NgayThamGia = NgayThamGia;
-        this.SDT = SDT;
-        this.Email = Email;
-        this.DiaChi = DiaChi;
-        this.MaPhuongXa = MaPhuongXa;
-        this.MaGPKD = MaGPKD;
-        this.MaCNATTP = MaCNATTP;
-        this.DanhSachSanPham = DanhSachSanPham;
+    	this.accountID = AccountID;
+        this.tenCH = TenCH;
+        this.cmnd = CMND;
+        this.ngayThamGia = NgayThamGia;
+        this.sdt = SDT;
+        this.email = Email;
+        this.diaChi = DiaChi;
+        this.maPhuongXa = MaPhuongXa;
+        this.maGPKD = MaGPKD;
+        this.maCNATTP = MaCNATTP;
+        this.danhSachSanPham = DanhSachSanPham;
+        this.diaChiCuaHang = DiaChiCuaHang;
     }
     
     public List<CuaHang> getAll()
@@ -60,6 +65,7 @@ public class CuaHang {
 		List<CuaHang> stores = new ArrayList<CuaHang>();
 		try 
 		 {
+			
 			 String dbURL = "jdbc:sqlserver://localhost;databaseName=MIS;user=sa;password=t";
 		     Connection conn = DriverManager.getConnection(dbURL);
 		     if (conn != null) 
@@ -69,8 +75,9 @@ public class CuaHang {
 	             while (rs.next()) 
 	             {
 	            	 List<SanPham> temp = (new SanPham()).getMany(rs.getString(1));
-	            	 CuaHang product = new CuaHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), temp);
-	            	 stores.add(product);
+	            	 DiaChi temp2 = new DiaChi(rs.getString(8), rs.getString(7));
+	            	 CuaHang store = new CuaHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), temp, temp2);
+	            	 stores.add(store);
 	             }
 	             conn.close();
 	             return stores;
@@ -96,9 +103,10 @@ public class CuaHang {
 	             ResultSet rs = stmt.executeQuery("SELECT * FROM CuaHang WHERE accountID = '" + StoreID + "'");
 	             while (rs.next()) 
 	             {
+	            	 DiaChi temp2 = new DiaChi(rs.getString(8), rs.getString(7));
 	            	 List<SanPham> temp = (new SanPham()).getMany(rs.getString(1));
-	            	 CuaHang product = new CuaHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), temp);
-	            	 stores.add(product);
+	            	 CuaHang store = new CuaHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), temp, temp2);
+	            	 stores.add(store);
 	             }
 	             conn.close();
 	             return stores.get(0);
@@ -111,25 +119,59 @@ public class CuaHang {
 		 	 return null;
 	}
     
+    
     public String delete(String StoreID)
 	{
 		try 
 		 {
 			 String dbURL = "jdbc:sqlserver://localhost;databaseName=MIS;user=sa;password=t";
 		     Connection conn = DriverManager.getConnection(dbURL);
-		     if (conn != null) 
+		     if (conn != null)
 		     {
 		         Statement stmt = conn.createStatement();
-	             ResultSet rs = stmt.executeQuery("DELETE FROM STORE WHERE accountID = '" + StoreID + "'");
+	             stmt.executeUpdate("DELETE FROM CuaHang WHERE accountID = '" + StoreID + "'");
 	             conn.close();
 	             return "Successfully!";
 		     }
-		 } 
-		 catch (SQLException ex) 
+		 }
+		 catch (SQLException ex)
 		 {
 			 System.err.println("Cannot connect database, " + ex);
 			 return ex.getMessage();
 		 }
-		return null;
+		 	 return null;
+	}
+    
+    public String upProduct(SanPham product)
+	{
+    	product.maSP = "sp" + ((new SanPham()).getAll().size() + 1);
+		try 
+		 {
+			 String dbURL = "jdbc:sqlserver://localhost;databaseName=MIS;user=sa;password=t";
+		     Connection conn = DriverManager.getConnection(dbURL);
+		     if (conn != null)
+		     {
+		         Statement stmt = conn.createStatement();
+		         if (product.anhSP == "")
+		         {
+		        	 product.anhSP = "https://imgur.com/78A2zxD";
+		         }
+		         if (product.moTaSP == "")
+		         {
+		        	 product.moTaSP = "Không có mô tả.";
+		         }
+		         
+	             stmt.executeUpdate("INSERT INTO SanPham VALUES('" + product.maSP + "', N'" + product.tenSP + "', '" + product.anhSP + "', N'" + product.moTaSP + "', '" + product.ngayDang + "', '" + product.giaSP + "', '" + product.soLuongTon + "', '" + product.soSPDaBan + "', '" + product.avgRating + "', '" + product.soRating + "', '" + product.loaiSP + "', '" + product.account_CH + "')");
+	             
+	             conn.close();
+	             return "Successfully!";
+		     }
+		 }
+		 catch (SQLException ex)
+		 {
+			 System.err.println("Cannot connect database, " + ex);
+			 return ex.getMessage();
+		 }
+		 	 return null;
 	}
 }

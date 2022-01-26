@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,5 +24,37 @@ public class TaiKhoanController {
 		 TaiKhoan account = new TaiKhoan();
 		 accounts = account.getAll();
 		 return new ResponseEntity<>(accounts, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/account/register/store", method = RequestMethod.POST)
+	public ResponseEntity<TaiKhoan> RegisterStore(@RequestBody CuaHang data) 
+	{
+		 TaiKhoan account = new TaiKhoan();
+		 account = account.registerStore(data);
+		 return new ResponseEntity<>(account, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/account/register/customer", method = RequestMethod.POST)
+	public ResponseEntity<TaiKhoan> RegisterStore(@RequestBody KhachHang data) 
+	{
+		 TaiKhoan account = new TaiKhoan();
+		 account = account.registerCustomer(data);
+		 return new ResponseEntity<>(account, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/account/login/customer", method = RequestMethod.POST)
+	public ResponseEntity<TaiKhoan> LoginCustomer(@RequestBody TaiKhoan data) 
+	{
+		 TaiKhoan account = new TaiKhoan();
+		 account = account.CheckLogin(data);
+		 return new ResponseEntity<>(account, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/account/login/store", method = RequestMethod.POST)
+	public ResponseEntity<TaiKhoan> LoginStore(@RequestBody TaiKhoan data) 
+	{
+		 TaiKhoan account = new TaiKhoan();
+		 account = account.CheckLogin(data);
+		 return new ResponseEntity<>(account, HttpStatus.OK);
 	}
 }

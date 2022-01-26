@@ -13,61 +13,61 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(value = { "all" })
 public class SanPham {
-	public String MaSP;
-	public String TenSP;
-	public String AnhSP;
-	public String MoTaSP;
-	public String NgayDang;
-	public String GiaSP;
-	public String SoLuongTon;
-	public String SoSPDaBan;
-	public String AvgRating;
-	public String SoRating;
-	public String LoaiSP;
-	public String Account_CH;
-	public String TenLoaiSP;
-	public String MaNhomSP;
-	public String TenNhomSP;
-	public String TenCH;
+	public String maSP;
+	public String tenSP;
+	public String anhSP;
+	public String moTaSP;
+	public String ngayDang;
+	public String giaSP;
+	public String soLuongTon;
+	public String soSPDaBan;
+	public String avgRating;
+	public String soRating;
+	public String loaiSP;
+	public String account_CH;
+	public String tenLoaiSP;
+	public String maNhomSP;
+	public String tenNhomSP;
+	public String tenCH;
 	
 	public SanPham()
 	{
-		MaSP = "";
-		TenSP = "";
-		AnhSP = "";
-		MoTaSP = "";
-		NgayDang = "";
-		GiaSP = "";
-		SoLuongTon = "";
-		SoSPDaBan = "";
-		AvgRating = "";
-		SoRating = "";
-		LoaiSP = "";
-		Account_CH = "";
-		TenLoaiSP = "";
-		MaNhomSP = "";
-		TenNhomSP = "";
-		TenCH = "";
+		maSP = "";
+		tenSP = "";
+		anhSP = "";
+		moTaSP = "";
+		ngayDang = "";
+		giaSP = "";
+		soLuongTon = "";
+		soSPDaBan = "";
+		avgRating = "";
+		soRating = "";
+		loaiSP = "";
+		account_CH = "";
+		tenLoaiSP = "";
+		maNhomSP = "";
+		tenNhomSP = "";
+		tenCH = "";
 	}
 	
 	public SanPham(String MaSP, String TenSP, String AnhSP, String MoTaSP, String NgayDang, String GiaSP, String SoLuongTon, String SoSPDaBan, String AvgRating, String SoRating, String LoaiSP, String Account_CH, String TenLoaiSP, String MaNhomSP, String TenNhomSP, String TenCH)
 	{
-		this.MaSP = MaSP;
-		this.TenSP = TenSP;
-		this.AnhSP = AnhSP;
-		this.MoTaSP = MoTaSP;
-		this.NgayDang = NgayDang;
-		this.GiaSP = GiaSP;
-		this.SoLuongTon = SoLuongTon;
-		this.SoSPDaBan = SoSPDaBan;
-		this.AvgRating = AvgRating;
-		this.SoRating = SoRating;
-		this.LoaiSP = LoaiSP;
-		this.Account_CH = Account_CH;
-		this.TenLoaiSP = TenLoaiSP;
-		this.MaNhomSP = MaNhomSP;
-		this.TenNhomSP = TenNhomSP;
-		this.TenCH = TenCH;
+		this.maSP = MaSP;
+		this.tenSP = TenSP;
+		this.anhSP = AnhSP;
+		this.moTaSP = MoTaSP;
+		this.ngayDang = NgayDang;
+		this.giaSP = GiaSP;
+		this.soLuongTon = SoLuongTon;
+		this.soSPDaBan = SoSPDaBan;
+		this.avgRating = AvgRating;
+		this.soRating = SoRating;
+		this.loaiSP = LoaiSP;
+		this.account_CH = Account_CH;
+		this.tenLoaiSP = TenLoaiSP;
+		this.maNhomSP = MaNhomSP;
+		this.tenNhomSP = TenNhomSP;
+		this.tenCH = TenCH;
 	}
 	
 	public List<SanPham> getAll()

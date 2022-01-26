@@ -39,15 +39,6 @@ public class PageAccountController {
 	{
 		 PageAccount paging = new PageAccount();
 		 paging = paging.get(9, 1);
-		 System.out.println(paging.Accounts.get(0).AccountID);
-		 System.out.println(paging.Accounts.get(1).AccountID);
-		 System.out.println(paging.Accounts.get(2).AccountID);
-		 System.out.println(paging.Accounts.get(3).AccountID);
-		 System.out.println(paging.Accounts.get(4).AccountID);
-		 System.out.println(paging.Accounts.get(5).AccountID);
-		 System.out.println(paging.Accounts.get(6).AccountID);
-		 System.out.println(paging.Accounts.get(7).AccountID);
-		 System.out.println(paging.Accounts.get(8).AccountID);
 		 return new ResponseEntity<>(paging, HttpStatus.OK);
 	}
 }
