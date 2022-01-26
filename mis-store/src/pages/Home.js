@@ -20,6 +20,8 @@ import Model from '../components/model/Model';
 import Statistic from '../components/statistic/Statistic';
 import StoreInformation from '../components/storeInformation/StoreInformation';
 
+import InvoiceWaiting from '../components/invoiceWaiting/invoiceWaiting';
+
 import { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../App';
 const { Header, Content, Footer, Sider } = Layout;
@@ -37,16 +39,17 @@ function Home() {
     // Call API every 5s
     const [data, setData] = useState({})
     const url = `https://localhost:44352/api/invoice/store/handling`;
+    console.log("context.store.accountID", JSON.parse(context.store).accountID);
     useEffect(() => {      
       const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
         console.log(" - API KIỂM TRA XEM CÓ BAO NHIÊU ĐƠN HÀNG VỪA ĐƯỢC MUA TỪ USER MÀ CHƯA CÓ SHIPPER NHẬN Ở TRONG DATABASE => LẤY RA CON SỐ ĐỂ ĐƯA LÊN BADGE HOẶC LÀM 1 CÁI NOTIFICATION")
         let fetchData = async () =>{
           const result = axios.post(url, 
             {
-              "account_CH": context.store.accountID
+              "account_CH": JSON.parse(context.store).accountID
             }
           ).then(function (res) {
-              console.log(res.data.length);
+              console.log("Co don", res.data);
               setData(res.data)   
               context.updateNewInvoice(res.data.length)           
           }).catch(function (error) {
@@ -54,7 +57,7 @@ function Home() {
           });
         }
         fetchData()
-      }, 20000)
+      }, 5000)
     
       return () => clearInterval(intervalId); //This is important
      
@@ -123,7 +126,7 @@ function Home() {
           {view === 2 && <TableListInvoice></TableListInvoice>}
           {view === 3 && <Statistic></Statistic>}
           {view === 4 && <StoreInformation></StoreInformation>}
-          {view === 4 && <TableListInvoice></TableListInvoice>}
+          {view === 5 && <InvoiceWaiting></InvoiceWaiting>}
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>ADMIN TOOLS - 2022</Footer>

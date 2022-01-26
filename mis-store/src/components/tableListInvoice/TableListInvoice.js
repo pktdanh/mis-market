@@ -12,10 +12,10 @@ const Table = () => {
         let fetchData = async () =>{
             const result = axios.post('http://localhost:8080/api/store/one', 
                 {
-                    "AccountID": "ch001"
+                    "accountID": "ch001"
                 }
             ).then(function (res) {
-                console.log(res.data.DanhSachSanPham);
+                console.log(res.data.danhSachSanPham);
                 // setListProduct(res.data.DanhSachSanPham)
                 console.log(listProduct);
             }).catch(function (error) {
@@ -40,19 +40,19 @@ const Table = () => {
             
             tableListDataSource.push({
                 key: i,
-                productId: listProduct[i]['MaSP'],
-                productName: listProduct[i]['TenSP'],
+                productId: listProduct[i]['maSP'],
+                productName: listProduct[i]['tenSP'],
                 status: valueEnum[0],
-                createdAt: listProduct[i]['NgayDang'],
-                productGroup: listProduct[i]['TenNhomSP'],
-                productType: listProduct[i]['TenLoaiSP'],
-                description: listProduct[i]['MoTaSP'],
-                img: listProduct[i]['AnhSP'],
-                price: listProduct[i]['GiaSP'],
-                quantityRest: listProduct[i]['SoLuongTon'],
-                quantitySold: listProduct[i]['SoSPDaBan'],
-                quantityRating: listProduct[i]['SoRating'],
-                avgRating: listProduct[i]['AvgRating'],
+                createdAt: listProduct[i]['ngayDang'],
+                productGroup: listProduct[i]['tenNhomSP'],
+                productType: listProduct[i]['tenLoaiSP'],
+                description: listProduct[i]['moTaSP'],
+                img: listProduct[i]['anhSP'],
+                price: listProduct[i]['giaSP'],
+                quantityRest: listProduct[i]['soLuongTon'],
+                quantitySold: listProduct[i]['soSPDaBan'],
+                quantityRating: listProduct[i]['soRating'],
+                avgRating: listProduct[i]['avgRating'],
             });
         }
     }, [listProduct])

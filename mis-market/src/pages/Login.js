@@ -96,7 +96,7 @@ const Login = () => {
             console.log("hello: ",res.data)
             loginContext.updateLogin(loginContext.isLogin)
             loginContext.updateUser(JSON.stringify(res.data))
-            window.location = "http://localhost:3000/"
+            window.location = "/"
 
           }
           

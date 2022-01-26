@@ -13,7 +13,7 @@ const Nav = styled.div`
     color: #535c68;
     opacity: .7;
     display: grid;
-    grid-template-columns: 3fr 4fr 3fr;
+    grid-template-columns: 1fr 1fr;
     padding-top: 10px;
 `;
 

@@ -15,9 +15,9 @@ const TitleTag = styled.div`
     margin: 30px 0px 10px 0px;
 `;
 
-function InvoiceNow() {
+function InvoiceNow({title}) {
   return <INContainer>
-      <TitleTag>Đơn hàng đang nhận:</TitleTag>
+      <TitleTag>{title}:</TitleTag>
   </INContainer>;
 }
 

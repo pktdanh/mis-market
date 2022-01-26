@@ -20,9 +20,9 @@ export const MyContext = React.createContext();
 
 
 function App() {
-  const [status, setStatus] = useState(localStorage.getItem("MISstatus") === "true" ? true : false)
-  const [isLogin, setIsLogin] = useState(localStorage.getItem("MISisLogin") === "true" ? true : false)
-  const [user, setUser] = useState(localStorage.getItem("MISuser"))
+  const [status, setStatus] = useState(false)
+  const [isLogin, setIsLogin] = useState(localStorage.getItem("MISisShipperLogin") === "true" ? true : false)
+  const [user, setUser] = useState(localStorage.getItem("MISShipper"))
   const [invoice, setInvoice] = useState({})
   return (
     <MyContext.Provider value={{
@@ -35,11 +35,11 @@ function App() {
       },
       updateLogin: () =>{
         setIsLogin(!isLogin);
-        localStorage.setItem("MISisLogin",!isLogin);
+        localStorage.setItem("MISisShipperLogin",!isLogin);
       },
       updateUser: (data) =>{
         setUser(data);
-        localStorage.setItem("MISuser",data);
+        localStorage.setItem("MISShipper",data);
       }
     }}>
       {

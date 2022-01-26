@@ -29,14 +29,14 @@ const openNotification = (status) => {
         notification.open({
             message: 'Chế độ nhận đơn: TẮT',
             description:
-              'Bạn sẽ được thông báo ngay khi có đơn hàng mới.',
+              'Bạn sẽ được không được thông báo khi có đơn hàng mới.',
             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
           });
     } else {
         notification.open({
             message: 'Chế độ nhận đơn: BẬT',
             description:
-              'Bạn sẽ không được thông báo khi có đơn hàng mới.',
+              'Bạn sẽ được tìm kiếm đơn hàng mới.',
             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
           });
     }
