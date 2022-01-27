@@ -181,9 +181,9 @@ function Statistic() {
             "nam": year4,
             "thang": month4
           }
-          console.log("data", data);
+          console.log("data month4", data);
           const result = axios.post('http://localhost:8080/api/statistic/demand/month', data).then(function (res) {
-              // console.log("year - month: ", res.data);
+              console.log("year - month: ", res.data);
               let t_m = [], t_r = []
               for(let i = 0; i < res.data.length; i++){
                 t_m.push(res.data[i].tenSP)
@@ -201,7 +201,7 @@ function Statistic() {
       }
           
       fetchData()
-    }, []);
+    }, [month4, year4]);
 
 
     const [tenSP1, setTenSP1] = useState([])
@@ -231,7 +231,7 @@ function Statistic() {
       }
           
       fetchData()
-    }, []);
+    }, [year5]);
 
   return <div>
     <h2>THỐNG KÊ DOANH THU THEO:</h2>
@@ -319,7 +319,7 @@ function Statistic() {
         </Select>
           <BarChart dataMonth={tenSP} dataRevenue={nhuCau}></BarChart>
         </TabPane>
-        <TabPane tab="Quý" key="2">
+        <TabPane tab="Năm" key="2">
         <Select
           showSearch
           placeholder="Chọn năm"

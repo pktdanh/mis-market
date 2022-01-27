@@ -5,19 +5,19 @@ import { Descriptions, Badge, Button } from 'antd';
 
 function StoreInformation() {
   let context = useContext(MyContext)
-  const [invoice, setInvoice] = useState([])
+  const [store, setStore] = useState([])
   const [listDetailtProduct, setListDetailtProduct] = useState([])
   useEffect(() => {
-      let url = 'https://localhost:44352/api/invoice/store/handling'
+      let url = 'http://localhost:8080/api/store/one'
       let fetchData =  () =>{
           const result = axios.post(url, 
             {
-              "account_CH": JSON.parse(context.store).accountID
+              "accountID": JSON.parse(context.store).accountID
             }
           ).then(function (res) {
-              console.log("Co don", res.data);
-              setInvoice(res.data)   
-              console.log(JSON.stringify(res.data));
+              
+              setStore(res.data)   
+              console.log(res.data);
           }).catch(function (error) {
               console.log(error);
           });
@@ -51,17 +51,20 @@ function StoreInformation() {
     
   return <div>
       <h2>THÔNG TIN VỀ CỬA HÀNG </h2>
-      {invoice.length > 0  &&  
+      {store  &&  
       <div style={{padding: "20px"}}>
         <Descriptions title="Cửa hàng:" bordered >
-            <Descriptions.Item label="Tên cửa hàng"span={3}>{invoice[0].tenCH}</Descriptions.Item>
-            <Descriptions.Item label="Tài khoản cửa hàng"span={3}>{invoice[0].account_CH}</Descriptions.Item>
-            <Descriptions.Item label="Số lượng sản phẩm hiện có"span={3}>{listProduct ? listProduct.length : 0}</Descriptions.Item>
-            <Descriptions.Item label="Ngày tạo cửa hàng"span={3}>{invoice[0].ngayLap}</Descriptions.Item>
+            <Descriptions.Item label="Tên cửa hàng"span={3}>{store.tenCH}</Descriptions.Item>
+            <Descriptions.Item label="Tài khoản cửa hàng"span={3}>{store.accountID}</Descriptions.Item>
+            <Descriptions.Item label="Số lượng sản phẩm hiện có"span={3}>{store.danhSachSanPham && store.danhSachSanPham.length}</Descriptions.Item>
+            <Descriptions.Item label="Ngày tạo cửa hàng"span={3}>{store.ngayThamGia}</Descriptions.Item>
             <Descriptions.Item label="Địa chỉ" span={3}>
-            {invoice[0].diaChiCuaHang.diaChiChiTiet}
+            {store.diaChiCuaHang && store.diaChiCuaHang.diaChiChiTiet}
             </Descriptions.Item>
-
+            <Descriptions.Item label="Email"span={3}>{store.email}</Descriptions.Item>
+            <Descriptions.Item label="CCCD"span={3}>{store.cmnd}</Descriptions.Item>
+            <Descriptions.Item label="Mã GPKD"span={3}>{store.maGPKD}</Descriptions.Item>
+            <Descriptions.Item label="Mã chứng nhận an toàn thực phẩm"span={3}>{store.maCNATTP}</Descriptions.Item>
             
         </Descriptions>
         {/* <Button type="primary">Xác nhận đã chuyển hàng cho shipper</Button> */}

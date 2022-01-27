@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Drawer, List, Avatar, Divider, Col, Row, Button } from 'antd';
+import { Drawer, List, Avatar, Divider, Col, Row, Button, notification } from 'antd';
 import styled from 'styled-components';
 import axios from 'axios';
 import { MyContext } from '../../App';
@@ -32,6 +32,28 @@ const PersionalInformation = () => {
   
   const [user, setUser] = useState({})
   
+  const notiTrue = () => {
+    const key = `open${Date.now()}`;
+    const btn = (
+      <Button type="primary" size="small" onClick={() => notification.close(key)}>
+        Xác nhận
+      </Button>
+    );
+    notification.open({
+      message: 'Thông báo',
+      description:
+        'Đăng xuất thành công.',
+      btn,
+      key,
+      onClose: () => {
+        localStorage.clear();
+        window.location.href = '/'
+      },
+    });
+    localStorage.clear();
+    window.location.href = '/'
+  };
+
   let showDrawer = () => {
     setvisible(true)
   };
@@ -174,6 +196,7 @@ const PersionalInformation = () => {
         </Col>
       </Row>
     </Drawer>
+    <Button type="danger" style={{marginTop: "20px"}} onClick={() => notiTrue()} >Đăng xuất</Button>
   </MeContainer>
        
 }

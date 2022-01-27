@@ -1,189 +1,130 @@
-import React, {useEffect, useState} from 'react';
-import { Button, Tooltip } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { DownOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import ProTable, { TableDropdown } from '@ant-design/pro-table';
-import axios from 'axios'
-import Model from '../model/Model';
+import React, {useState, useEffect, useContext} from 'react';
+import axios from 'axios';
+import { MyContext } from '../../App';
+import { Descriptions, Badge, Button, notification } from 'antd';
 
-const Table = () => {
-    const [listProduct, setListProduct] = useState([])
-    useEffect(() => {
-        let fetchData = async () =>{
-            const result = axios.post('http://localhost:8080/api/store/one', 
-                {
-                    "accountID": "ch001"
-                }
-            ).then(function (res) {
-                console.log(res.data.danhSachSanPham);
-                // setListProduct(res.data.DanhSachSanPham)
-                console.log(listProduct);
-            }).catch(function (error) {
-                console.log(error);
-            });
-            
-            return result
-        }
-            
-        fetchData()
-        // setData(result.data);
-    }, []);
-
-    const valueEnum = {
-        0: 'online',
-    };
-    const tableListDataSource = [];
-    const creators = ['creators 1', 'creators 2', 'creators 3', 'creators 4', 'creators 5'];
-    
-    useEffect(() => {
-        for (let i = 0; i < listProduct.length; i += 1) {
-            
-            tableListDataSource.push({
-                key: i,
-                productId: listProduct[i]['maSP'],
-                productName: listProduct[i]['tenSP'],
-                status: valueEnum[0],
-                createdAt: listProduct[i]['ngayDang'],
-                productGroup: listProduct[i]['tenNhomSP'],
-                productType: listProduct[i]['tenLoaiSP'],
-                description: listProduct[i]['moTaSP'],
-                img: listProduct[i]['anhSP'],
-                price: listProduct[i]['giaSP'],
-                quantityRest: listProduct[i]['soLuongTon'],
-                quantitySold: listProduct[i]['soSPDaBan'],
-                quantityRating: listProduct[i]['soRating'],
-                avgRating: listProduct[i]['avgRating'],
-            });
-        }
-    }, [listProduct])
-
-    const columns = [
-        {
-            title: 'Mã sản phẩm',
-            width: 120,
-            dataIndex: 'productId',
-            copyable: true,
-            render: (_) => <a>{_}</a>,
-        },    
-        {
-            title: 'Tên sản phẩm',
-            width: 80,
-            dataIndex: 'productName',
-            copyable: true,
-            // valueEnum: {
-            //     all: { text: '全部' },
-            //     付小小: { text: '付小小' },
-            //     曲丽丽: { text: '曲丽丽' },
-            //     林东东: { text: '林东东' },
-            //     陈帅帅: { text: '陈帅帅' },
-            //     兼某某: { text: '兼某某' },
-            // },
-        },
-        {
-            title: 'Trạng thái',
-            width: 80,
-            dataIndex: 'status',
-            initialValue: 'all',
-            valueEnum: {
-                all: { text: 'ALl', status: 'Default' },
-                close: { text: 'Close', status: 'Default' },
-                running: { text: 'Runing', status: 'Processing' },
-                online: { text: 'Online', status: 'Success' },
-                error: { text: 'Error', status: 'Error' },
-            },
-        },
-        {
-            title: (<>
-            Ngày tạo
-            <Tooltip placement="top" title="Tooltip">
-              <QuestionCircleOutlined style={{ marginLeft: 4 }}/>
-            </Tooltip>
-          </>),
-            width: 100,
-            key: 'since',
-            dataIndex: 'createdAt',
-            valueType: 'date',
-            sorter: (a, b) => a.createdAt - b.createdAt,
-        },
-        {
-            title: 'Nhóm sản phẩm',
-            dataIndex: 'productGroup',
-            copyable: true,
-        },
-        {
-            title: 'Loại sản phẩm',
-            dataIndex: 'productType',
-            copyable: true,
-        },
-        {
-            title: 'Mô tả',
-            width: 200,
-            dataIndex: 'description',
-            copyable: true,
-        },
-        {
-            title: 'Giá',
-            dataIndex: 'price',
-            copyable: true,
-        },
-        {
-            title: 'Số lượng còn lại',
-            dataIndex: 'quantityRest',
-            copyable: true,
-        },
-        {
-            title: 'Số lượng đã bán',
-            dataIndex: 'quantitySold',
-            copyable: true,
-        },
-        {
-            title: 'Số lượng đánh giá',
-            dataIndex: 'quantityRating',
-            copyable: true,
-        },
-        {
-            title: 'Đánh giá trung bình',
-            dataIndex: 'avgRating',
-            copyable: true,
-        },
-        {
-            title: 'Option',
-            width: 20,
-            key: 'option',
-            valueType: 'option',
-            render: () => [
-                <TableDropdown key="actionGroup" menus={[
-                        { key: 'copy', name: 'Copy' },
-                        { key: 'delete', name: 'Delete' },
-                    ]}/>,
-            ],
-        },
-    ];
-
-    
-
-    return (
-    <ProTable columns={columns} request={(params, sorter, filter) => {
-            // 表单搜索项会从 params 传入，传递给后端接口。
-            console.log(params, sorter, filter);
-            if ('containers' in params){
-                console.log("");
+function TableListInvoice() {
+  let context = useContext(MyContext)
+  const [invoice, setInvoice] = useState([])
+  const [listDetailtProduct, setListDetailtProduct] = useState([])
+  
+  useEffect(() => {
+      let url = 'https://localhost:44352/api/invoice/store'
+      let fetchData =  () =>{
+          const result = axios.post(url, 
+            {
+              "account_CH": JSON.parse(context.store).accountID
             }
-            return Promise.resolve({
-                data: tableListDataSource,
-                success: true,
-            });
-        }} rowKey="key" pagination={{
-            // showQuickJumper: true,
-            pageSize: 5,
-        }} search={{
-            // optionRender: false,
-            // collapsed: false,
-            // labelWidth: 'auto',
-        }} dateFormatter="string" headerTitle="Danh Sách Đơn Hàng" toolBarRender={() => [            
-            
-        ]}/>
-        );
-};
+          ).then(function (res) {
+              // console.log("Tat ca hoa don", res.data);
+              setInvoice(res.data)   
+            //   console.log(JSON.stringify(res.data));
+          }).catch(function (error) {
+              console.log(error);
+          });
+        }
+      fetchData()
+      
+  }, [])
 
-export default Table;
+  useEffect(() => {
+    console.log("invoice.length", invoice);
+    for(let i = 0; i < invoice.length; i++){
+      console.log("invoice[i].maHD", invoice[i].maHD);
+      let url1 = 'https://localhost:44352/api/invoice/one'
+      let fetchData1 =  () => {
+          const result = axios.post(url1, 
+            {
+              "maHD": invoice[i].maHD
+            }
+          ).then(function (res) {
+              
+              // console.log("setLisDetailtProduct", res.data[0].danhSachSanPham);
+              let temp = listDetailtProduct
+              temp.push(res.data[0].danhSachSanPham)
+              setListDetailtProduct(temp)   
+                      //  console.log(JSON.stringify(res.data));
+          }).catch(function (error) {
+              console.log(error);
+          });
+        }
+      fetchData1()
+    }
+  }, [invoice])
+
+  const openNotification = (title) => {
+    const key = `open${Date.now()}`;
+    const btn = (
+      <Button type="primary" size="small" onClick={() => notification.close(key)}>
+        Xác nhận
+      </Button>
+    );
+    notification.open({
+      message: 'Thông báo',
+      description:
+        title,
+      btn,
+      key,
+      onClose: () => {},
+    });
+  };
+  
+
+  let xacNhan= (maHD) => {
+      let url = 'http://localhost:8080/api/history/change'
+      let fetchData =  () =>{
+          const result = axios.post(url, 
+            {
+              "maHD": maHD,
+              "thoiGian": new Date().getFullYear()+"-"+(parseInt(new Date().getMonth())+1)+"-"+new Date().getDate()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds(),
+          }	
+          ).then(function (res) {
+              // console.log("Co don", res.data);
+              setInvoice(res.data)   
+              // console.log(JSON.stringify(res.data));
+          }).catch(function (error) {
+              console.log(error);
+          });
+        }
+      fetchData()
+      openNotification("Đơn hàng " + maHD + " đã chuyển cho shipper.");
+      window.location.reload()
+  }
+  return <div>
+      <h2>Tất Cả Đơn Hàng</h2>
+      {invoice.length > 0 &&  invoice.map((item, index) => <div style={{padding: "20px", border: "3px solid #21ced7", marginTop: "20px"}}>
+        <Descriptions title="Đơn hàng" bordered >
+            <Descriptions.Item label="Mã hoá đơn">{item.maHD}</Descriptions.Item>
+            <Descriptions.Item label="Phương thức thanh toán">{item.tenTT}</Descriptions.Item>
+            <Descriptions.Item label="Mã shipper">{item.account_S}</Descriptions.Item>
+            <Descriptions.Item label="Ngày lập đơn">{item.ngayLap}</Descriptions.Item>
+            <Descriptions.Item label="Thời gian  chuẩn bị" span={2}>
+            30 phút
+            </Descriptions.Item>
+            <Descriptions.Item label="Trạng thái" span={3}>
+            <Badge status="processing" text={item.trangThai} />
+            </Descriptions.Item>
+            <Descriptions.Item label="Tổng tiền">{item.tongTien}</Descriptions.Item>
+            <Descriptions.Item label="Khuyến mãi">0</Descriptions.Item>
+            <Descriptions.Item label="Tổng tiền cuối cùng">{item.tongTien}</Descriptions.Item>
+            <Descriptions.Item label="Danh sách sản phẩm">
+                {
+                    listDetailtProduct.length > 0 ?  listDetailtProduct[index].map((item1, index1) => {
+                      // console.log("Item 1:", item1)
+                      return (<div style={{textAlign: "left", borderBottom: "1px solid black"}}>
+                        <p>Mã sản phẩm: {item1.maSP}</p>
+                        <p>Tên sản phẩm: {item1.tenSP}</p>
+                        <p>Số lượng: {item1.soLuong}</p>
+                      </div>)
+                    }) : <></>
+                }
+            </Descriptions.Item>
+            
+        </Descriptions>
+        {/* <Button type="primary" onClick={() => xacNhan(`${item.maHD}`)}>Xác nhận đã chuyển hàng cho shipper</Button> */}
+      </div>)}
+  </div>;
+}
+
+export default TableListInvoice;
+

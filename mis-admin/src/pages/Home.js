@@ -22,6 +22,10 @@ import StoreInformation from '../components/storeInformation/StoreInformation';
 
 import InvoiceWaiting from '../components/invoiceWaiting/invoiceWaiting';
 
+import TableListShipper from '../components/tableListShipper/TableListShipper';
+
+import TableListAccount from '../components/tableListAccount/TableListAccount';
+
 import { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../App';
 const { Header, Content, Footer, Sider } = Layout;
@@ -88,17 +92,12 @@ function Home() {
           Quản lý cửa hàng
         </Menu.Item>     
         <Menu.Item key="5" icon={<UploadOutlined />} onClick={() => changeView(5)}>
-          Đơn hàng đang đến
+          Quản lý shipper
         </Menu.Item>
         <Menu.Item key="6" icon={<VideoCameraOutlined />} onClick={() => changeView(6)}>
-          Nguoi quan li
+          Quản lý tài khoản
         </Menu.Item>
-        <Menu.Item key="7" icon={<CloudOutlined />} onClick={() => changeView(7)}>
-          nav 5
-        </Menu.Item>
-        <Menu.Item key="8" icon={<AppstoreOutlined />}>
-          nav 6
-        </Menu.Item>
+
       </Menu>
     </Sider>
     <Layout className="site-layout" style={{ marginLeft: 200 }}>
@@ -128,7 +127,9 @@ function Home() {
           {view === 2 && <TableListInvoice></TableListInvoice>}
           {view === 3 && <Statistic></Statistic>}
           {view === 4 && <StoreInformation></StoreInformation>}
-          {view === 5 && <InvoiceWaiting></InvoiceWaiting>}
+          {view === 5 && <TableListShipper></TableListShipper>}
+          {view === 6 && <TableListAccount></TableListAccount>}
+          
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>ADMIN TOOLS - 2022</Footer>

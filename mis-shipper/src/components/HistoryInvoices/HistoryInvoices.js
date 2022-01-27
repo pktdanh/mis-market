@@ -46,16 +46,18 @@ function HistoryInvoices({title}) {
       
       {
           allInvoice.map((item, index) => 
-                <Space direction="vertical" key={index} style={{ marginLeft: "30px"}}>
+                <Space direction="vertical" key={index} style={{ marginLeft: "0px"}}>
                     <Card title="Đơn hàng:" >
-                    <p>Mã đơn hàng: {item.maDH}</p>
+                    <p>Mã đơn hàng: {item.maHD}</p>
                     <p>Tên cửa hàng: {item.tenCH}</p>
                     <p>Địa chỉ cửa hàng: {item.diaChiCuaHang.diaChiChiTiet}</p>
                     <p>Địa chỉ khách hàng: {item.diaChiKhachHang.diaChiChiTiet}</p>
-                    <p>Tổng tiền:{item.tongTien}</p>
                     <p>Phí ship:{item.phiShip}</p>
+                    <p>Tổng tiền:{parseInt(item.tongTien)+parseInt(item.phiShip)}</p>                    
                     <p>Hình thức thanh toán:{item.tenTT}</p>
-                    
+                    {
+                        item.trangThai == "Đang đóng gói" || item.trangThai == "" ? <p style={{color: "red"}}>Trạng thái: {item.trangThai}</p> : <p style={{color: "green"}}>Trạng thái: {item.trangThai}</p>
+                    }
                     </Card>
                 </Space>
         ) 

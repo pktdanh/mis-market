@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { MyContext } from '../../App';
-import { Descriptions, Badge, Button } from 'antd';
+import { Descriptions, Badge, Button, notification } from 'antd';
 
 function InvoiceWaiting() {
   let context = useContext(MyContext)
@@ -50,7 +50,45 @@ function InvoiceWaiting() {
       fetchData1()
     }
   }, [invoice])
-    
+
+  const openNotification = (title) => {
+    const key = `open${Date.now()}`;
+    const btn = (
+      <Button type="primary" size="small" onClick={() => notification.close(key)}>
+        Xác nhận
+      </Button>
+    );
+    notification.open({
+      message: 'Thông báo',
+      description:
+        title,
+      btn,
+      key,
+      onClose: () => {},
+    });
+  };
+  
+
+  let xacNhan= (maHD) => {
+      let url = 'http://localhost:8080/api/history/change'
+      let fetchData =  () =>{
+          const result = axios.post(url, 
+            {
+              "maHD": maHD,
+              "thoiGian": new Date().getFullYear()+"-"+(parseInt(new Date().getMonth())+1)+"-"+new Date().getDate()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds(),
+          }	
+          ).then(function (res) {
+              console.log("Co don", res.data);
+              setInvoice(res.data)   
+              console.log(JSON.stringify(res.data));
+          }).catch(function (error) {
+              console.log(error);
+          });
+        }
+      fetchData()
+      openNotification("Đơn hàng " + maHD + " đã chuyển cho shipper.");
+      window.location.reload()
+  }
   return <div>
       <h2>Đơn Hàng Đang Đến: </h2>
       {invoice.length > 0 &&  invoice.map((item, index) => <div style={{padding: "20px", border: "3px solid #21ced7"}}>
@@ -72,7 +110,7 @@ function InvoiceWaiting() {
                 {
                     listDetailtProduct.length > 0 ?  listDetailtProduct[index].map((item1, index1) => {
                       // console.log("Item 1:", item1)
-                      return (<div style={{textAlign: "left", borderBottom: "1px solid black"}}>
+                      return (<div style={{textAlign: "left", borderBottom: "1px solid black"}} key={index1}>
                         <p>Mã sản phẩm: {item1.maSP}</p>
                         <p>Tên sản phẩm: {item1.tenSP}</p>
                         <p>Số lượng: {item1.soLuong}</p>
@@ -82,7 +120,7 @@ function InvoiceWaiting() {
             </Descriptions.Item>
             
         </Descriptions>
-        <Button type="primary">Xác nhận đã chuyển hàng cho shipper</Button>
+        <Button type="primary" onClick={() => xacNhan(`${item.maHD}`)}>Xác nhận đã chuyển hàng cho shipper</Button>
       </div>)}
   </div>;
 }

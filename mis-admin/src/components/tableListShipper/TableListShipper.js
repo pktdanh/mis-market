@@ -7,14 +7,14 @@ import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import axios from 'axios'
 import Model from '../model/Model';
 
-const Table = () => {
+const TableListShipper = () => {
     let context = useContext(MyContext)
     // console.log("accountID", typeof JSON.parse(context.store).accountID);
     // console.log(context);
     const [listStore, setListStore] = useState([])
     useEffect(() => {
     
-      let url1 = 'https://localhost:44352/api/store/all'
+      let url1 = 'https://localhost:44352/api/shipper/all'
         let fetchData1 =  () => {
             const result = axios.get(url1, 
             ).then(function (res) {
@@ -39,21 +39,23 @@ const Table = () => {
             tableListDataSource.push({
                 key: i,
                 accountID: listStore[i]['accountID'],
-                tenCH: listStore[i]['tenCH'],
+                bienSo: listStore[i]['bienSo'],
                 cmnd: listStore[i]['cmnd'],
-                diaChi: listStore[i]['diaChi'],
+                diaChi: listStore[i]['diaChi']+listStore[i]['diaChiChiTiet']['diaChiChiTiet'],
                 email: listStore[i]['email'],
-                maCNATTP: listStore[i]['maCNATTP'],
+                hoTen: listStore[i]['hoTen'],
+                maBangLai: listStore[i]['maBangLai'],
+                maPhuongXa: listStore[i]['maPhuongXa'],
+                ngaySinh: listStore[i]['ngaySinh'],
                 sdt: listStore[i]['sdt'],
-                maGPKD: listStore[i]['maGPKD'],
-                ngayThamGia: listStore[i]['ngayThamGia'],
+                status: listStore[i]['status'],
             });
         }
     }, [listStore])
 
     const columns = [
         {
-            title: 'Mã cửa hàng',
+            title: 'Mã shipper',
             width: 120,
             dataIndex: 'accountID',
             copyable: true,
@@ -61,9 +63,9 @@ const Table = () => {
             
         },    
         {
-            title: 'Tên cửa hàng',
+            title: 'Tên shipper',
             width: 80,
-            dataIndex: 'tenCH',
+            dataIndex: 'hoTen',
             copyable: true,
             
             // valueEnum: {
@@ -91,8 +93,13 @@ const Table = () => {
             copyable: true,            
         },
         {
-            title: 'Mã CNATTP',
-            dataIndex: 'maCNATTP',
+            title: 'Biển số',
+            dataIndex: 'bienSo',
+            copyable: true,            
+        },
+        {
+            title: 'Mã bằng lái',
+            dataIndex: 'maBangLai',
             copyable: true,            
         },
         {
@@ -100,17 +107,8 @@ const Table = () => {
             dataIndex: 'sdt',
             copyable: true,            
         },
-        {
-            title: 'Mã GPKD',
-            dataIndex: 'maGPKD',
-            copyable: true,            
-        },
-        {
-            title: 'Ngày tham gia',
-            dataIndex: 'ngayThamGia',
-            copyable: true,            
-        },
         
+
         
     ];
 
@@ -141,10 +139,10 @@ const Table = () => {
             // optionRender: false,
             // collapsed: false,
             // labelWidth: 'auto',
-        }} dateFormatter="string" headerTitle="Danh Sách Cửa Hàng" toolBarRender={() => [            
+        }} dateFormatter="string" headerTitle="Danh Sách Shipper" toolBarRender={() => [            
             // <Model></Model>
         ]}/>
         );
 };
 
-export default Table;
+export default TableListShipper;

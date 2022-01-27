@@ -159,18 +159,18 @@ const Table = () => {
             copyable: true,
             
         },
-        // {
-        //     title: 'Option',
-        //     width: 20,
-        //     key: 'option',
-        //     valueType: 'option',
-        //     render: () => [
-        //         <TableDropdown key="actionGroup" menus={[
-        //                 { key: 'edit', name: 'Sủa' },
-        //                 { key: 'delete', name: 'Xoá' },
-        //             ]}/>,
-        //     ],
-        // },
+        {
+            title: 'Option',
+            width: 20,
+            key: 'option',
+            valueType: 'option',
+            render: () => [
+                <TableDropdown key="actionGroup" menus={[
+                        { key: 'edit', name: 'Sửa' },
+                        { key: 'delete', name: 'Xoá' },
+                    ]}/>,
+            ],
+        },
     ];
 
     

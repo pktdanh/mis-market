@@ -90,15 +90,7 @@ function Home() {
         <Menu.Item key="5" icon={<UploadOutlined />} onClick={() => changeView(5)}>
           Đơn hàng đang đến
         </Menu.Item>
-        <Menu.Item key="6" icon={<VideoCameraOutlined />} onClick={() => changeView(6)}>
-          Nguoi quan li
-        </Menu.Item>
-        <Menu.Item key="7" icon={<CloudOutlined />} onClick={() => changeView(7)}>
-          nav 5
-        </Menu.Item>
-        <Menu.Item key="8" icon={<AppstoreOutlined />}>
-          nav 6
-        </Menu.Item>
+
       </Menu>
     </Sider>
     <Layout className="site-layout" style={{ marginLeft: 200 }}>
@@ -118,6 +110,8 @@ function Home() {
         </Badge>
         <span className="logout" onClick={() => {
           context.updateLogin();
+          localStorage.clear()
+          window.location.href = '/'
         }} style={{"color": "#fff", "margin": "0 auto", "cursor": "pointer"}}>LOGOUT</span>
       </Header>
       <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>

@@ -88,7 +88,7 @@ const Login = () => {
 
   return (
       <LoginContainer>
-          <LoginTitle>Dang Nhap</LoginTitle>
+          <LoginTitle>ĐĂNG NHẬP</LoginTitle>
     <Form
       name="basic"
       labelCol={{
@@ -110,7 +110,7 @@ const Login = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your username!',
+            message: 'Hãy nhập tên đăng nhập',
           },
         ]}
       >
@@ -123,7 +123,7 @@ const Login = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Hãy nhập mật khẩu!',
           },
         ]}
       >
@@ -148,11 +148,11 @@ const Login = () => {
         }}
       >
         <Button type="primary" htmlType="submit">
-          Dang Nhap
+          Đăng Nhập
         </Button>
       </Form.Item>
     </Form>
-    <p style={{"textAlign": "center"}}>Hoac <a href="/register">Dang Ky</a> </p>
+    <p style={{"textAlign": "center"}}>Hoặc <a href="/register">Đăng Ký</a> </p>
     </LoginContainer>
   );
 };

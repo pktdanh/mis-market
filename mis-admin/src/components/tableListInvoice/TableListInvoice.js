@@ -88,7 +88,7 @@ function TableListInvoice() {
   }
   return <div>
       <h2>Tất Cả Đơn Hàng</h2>
-      {invoice.length > 0 &&  invoice.map((item, index) => <div style={{padding: "20px", border: "3px solid #21ced7", marginTop: "20px"}}>
+      {invoice.length > 0 &&  invoice.map((item, index) => <div style={{padding: "20px", border: "3px solid #21ced7", marginTop: "20px"}} key={index}>
       <h3>Đơn hàng thứ {index}</h3>
         <Descriptions title="Đơn hàng" bordered >
             

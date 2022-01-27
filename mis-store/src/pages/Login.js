@@ -10,17 +10,17 @@ const close = () => {
   // window.location.href ='/'
 };
 
-const openNotification = () => {
+const openNotification = (title) => {
   const key = `open${Date.now()}`;
   const btn = (
     <Button type="primary" size="small" onClick={() => notification.close(key)}>
-      Confirm
+      Xác nhận
     </Button>
   );
   notification.open({
     message: 'Thông báo',
     description:
-      'Đăng ký tài khoản cửa hàng thành công.',
+      title,
     btn,
     key,
     onClose: close,
@@ -41,13 +41,17 @@ const Login = () => {
     const result = axios.post('http://localhost:8080/api/account/login/store', 
       data
     ).then(res => {
-      console.log(res);
-      context.updateStore(JSON.stringify(res.data))      
-      context.updateLogin();
-      openNotification()
+      if(res.data.password !== ""){
+        console.log(res);
+        context.updateStore(JSON.stringify(res.data))      
+        context.updateLogin();
+        openNotification('Đăng nhập vào tài khoản cửa hàng thành công.')
+      } else {
+        openNotification('Đăng nhập vào tài khoản cửa hàng không thành công. Bạn cần đợi hệ thống cho phép đăng nhập. Thông tin chi tiết sẽ được gửi qua email.')
+      }
     })
-    context.updateLogin();
-    context.updateStore({});
+    // context.updateLogin();
+    // context.updateStore({});
   };
   const context = useContext(MyContext)
   

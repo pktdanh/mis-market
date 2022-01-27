@@ -161,7 +161,7 @@ const Table = () => {
             valueType: 'option',
             render: () => [
                 <TableDropdown key="actionGroup" menus={[
-                        { key: 'edit', name: 'Sủa' },
+                        { key: 'edit', name: 'Sửa' },
                         { key: 'delete', name: 'Xoá' },
                     ]}/>,
             ],
@@ -174,10 +174,15 @@ const Table = () => {
     <ProTable columns={columns} request={(params, sorter, filter) => {
             
             console.log(params, sorter, filter);
-            if ('productId' in params){
-                console.log(params.productId);
-                let result = listProduct.find(item => item.productId.includes(params.productId))
+            if ('productID' in params){
+                console.log(params.productID);
+                let result = listProduct.find(item => item.productID.includes(params.productID))
                 console.log("result", result);
+                let t = []
+                t.push(result)
+                setListProduct(t)
+                console.log("t", t);
+                console.log(listProduct);
             }
             return Promise.resolve({
                 data: tableListDataSource,

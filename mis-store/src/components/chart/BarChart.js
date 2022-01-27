@@ -1,48 +1,41 @@
-import { Chart } from "react-google-charts";
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
+import Chart from 'chart.js/auto'
 
-function GoogleChart() {
-
-    const data = [
-        ["Year", "Sales", "Expenses"],
-        ["2004", 1000, 400],
-        ["2005", 1170, 460],
-        ["2006", 660, 1120],
-        ["2007", 1030, 540],
-    ];
-
-    const options = {
-        title: "Company Performance",
-        curveType: "function",
-        legend: { position: "bottom" },
-    };
-
-    return (
-        <div>
-            <Chart
-                chartType="LineChart"
-                width="100%"
-                height="400px"
-                data={data}
-                options={options}
-            />
-
-            <Chart
-                chartType="AreaChart"
-                width="99%"
-                height="400px"
-                data={data}
-                options={options}
-            />
-
-            <Chart
-                chartType="Bar"
-                width="90%"
-                height="300px"
-                data={data}
-                options={options}
-            />
-        </div>
-    );
+function BarChart({dataMonth, dataRevenue}) {
+  return <div>
+      <Bar  
+        data = {{
+            labels: dataMonth,
+            datasets: [{
+                label: 'doanh thu (đvt: VND)',
+                data: dataRevenue,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]}}
+        
+        height={400}
+        width={600}
+        options={{
+            maintainAspectRatio: false
+        }}
+      />
+  </div>;
 }
 
-export default GoogleChart;
+export default BarChart;
