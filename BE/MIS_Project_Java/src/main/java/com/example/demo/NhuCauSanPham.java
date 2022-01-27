@@ -68,7 +68,7 @@ public class NhuCauSanPham {
 		     {
 		    	 DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
 		         Statement stmt = conn.createStatement();
-	             ResultSet rs = stmt.executeQuery("select s.tenSP, sum(c.soLuong) as nhuCau from [dbo].[ChiTietHoaDon] c, [dbo].[SanPham] s, [dbo].[HoaDon] h  where c.maSP = s.maSP and h.maHD = c.maHD and year(h.ngayLap) = '" + data.nam + "' and month(h.ngayLap) = '"+ data.thang +"' group by s.tenSP");
+	             ResultSet rs = stmt.executeQuery("select s.tenSP, sum(c.soLuong) as nhuCau from [dbo].[ChiTietHoaDon] c, [dbo].[SanPham] s, [dbo].[HoaDon] h  where c.maSP = s.maSP and h.maHD = c.maHD and year(h.ngayLap) = '"+ data.nam +"' and month(h.ngayLap) = '"+ data.thang +"' group by s.tenSP");
 	             while (rs.next()) 
 	             {
 	            	 NhuCauSanPham demand = new NhuCauSanPham(rs.getString(1), rs.getString(2));

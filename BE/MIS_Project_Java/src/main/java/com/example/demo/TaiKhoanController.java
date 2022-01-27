@@ -57,4 +57,20 @@ public class TaiKhoanController {
 		 account = account.CheckLogin(data);
 		 return new ResponseEntity<>(account, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/api/account/active", method = RequestMethod.POST)
+	public ResponseEntity<TaiKhoan> Active(@RequestBody TaiKhoan data) 
+	{
+		 TaiKhoan account = new TaiKhoan();
+		 account = account.Active(data.accountID);
+		 return new ResponseEntity<>(account, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/account/deactive", method = RequestMethod.POST)
+	public ResponseEntity<TaiKhoan> DeActive(@RequestBody TaiKhoan data) 
+	{
+		 TaiKhoan account = new TaiKhoan();
+		 account = account.DeActive(data.accountID);
+		 return new ResponseEntity<>(account, HttpStatus.OK);
+	}
 }

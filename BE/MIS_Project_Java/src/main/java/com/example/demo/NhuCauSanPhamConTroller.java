@@ -28,7 +28,7 @@ public class NhuCauSanPhamConTroller {
 	{
 		 List<NhuCauSanPham> demands = new ArrayList<NhuCauSanPham>();
 		 NhuCauSanPham demand = new NhuCauSanPham();
-		 demands = demand.InYear(data);
+		 demands = demand.MonthInYear(data);
 		 return new ResponseEntity<>(demands, HttpStatus.OK);
 	}
 }

@@ -67,6 +67,33 @@ public class TaiKhoan {
 		 	 return null;
 	}
 	
+	public TaiKhoan getOne(String AccountID)
+	{
+		List<TaiKhoan> accounts = new ArrayList<TaiKhoan>();
+		try 
+		 {
+			 String dbURL = "jdbc:sqlserver://localhost;databaseName=MIS;user=sa;password=t";
+		     Connection conn = DriverManager.getConnection(dbURL);
+		     if (conn != null) 
+		     {
+		         Statement stmt = conn.createStatement();
+	             ResultSet rs = stmt.executeQuery("SELECT * FROM TaiKhoan WHERE accountID = '"+ AccountID +"'");
+	             while (rs.next()) 
+	             {
+	            	 TaiKhoan account = new TaiKhoan(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+	            	 accounts.add(account);
+	             }
+	             conn.close();
+	             return accounts.get(0);
+		     }
+		 } 
+		 catch (SQLException ex)
+		 {
+			 System.err.println("Cannot connect database, " + ex);
+		 }
+		 	 return null;
+	}
+	
 	public TaiKhoan registerStore(CuaHang newStore)
 	{
 		TaiKhoan account = new TaiKhoan();
@@ -252,6 +279,46 @@ public class TaiKhoan {
 			 System.err.println("Cannot connect database, " + ex);
 		 }
 		return null;
+	}
+	
+	public TaiKhoan Active(String AccountID)
+	{
+		try 
+		 {
+			 String dbURL = "jdbc:sqlserver://localhost;databaseName=MIS;user=sa;password=t";
+		     Connection conn = DriverManager.getConnection(dbURL);
+		     if (conn != null) 
+		     {
+		         Statement stmt = conn.createStatement();
+		         stmt.executeUpdate("UPDATE TaiKhoan SET kichHoat = 1 WHERE accountID = '"+ AccountID +"'");
+	             conn.close();
+		     }
+		 } 
+		 catch (SQLException ex)
+		 {
+			 System.err.println("Cannot connect database, " + ex);
+		 }
+		return getOne(AccountID);
+	}
+	
+	public TaiKhoan DeActive(String AccountID)
+	{
+		try 
+		 {
+			 String dbURL = "jdbc:sqlserver://localhost;databaseName=MIS;user=sa;password=t";
+		     Connection conn = DriverManager.getConnection(dbURL);
+		     if (conn != null) 
+		     {
+		         Statement stmt = conn.createStatement();
+		         stmt.executeUpdate("UPDATE TaiKhoan SET kichHoat = 0 WHERE accountID = '"+ AccountID +"'");
+	             conn.close();
+		     }
+		 } 
+		 catch (SQLException ex)
+		 {
+			 System.err.println("Cannot connect database, " + ex);
+		 }
+		return getOne(AccountID);
 	}
 	
 	
